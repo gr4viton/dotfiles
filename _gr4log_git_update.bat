@@ -9,7 +9,8 @@
 ::C:\PROG\dev\Git\bin\sh.exe _gr4log_git_update.sh
 
 ::git config --global credential.helper 'cache --timeout=28800'
-
+D:
+cd D:\LOG\gr4LOG\
 git.exe add .
 git.exe commit -m "%date% %time%"
 git.exe pull -v --no-rebase --progress "origin"
