@@ -18,6 +18,4 @@ git.exe push origin master
 ::exit()
 python.exe -c "print('\7')" :: BEEP
 
-powercfg /hibernate on
-shutdown /h
 
