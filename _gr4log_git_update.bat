@@ -1,6 +1,6 @@
+ECHO %date%_%time% > a.txt
 ::python.exe main.py
 
-Echo %date%_%time%
 ::ssh-agent -s
 ::ssh-add C:\Users\gr4viton\.ssh\bitbucket_priv.ppk
 ::git.exe config --global remote.origin.receivepack "git receive-pack"
@@ -10,10 +10,10 @@ Echo %date%_%time%
 
 ::git config --global credential.helper 'cache --timeout=28800'
 
-git add .
-git commit -m "%date% %time%"
-git pull -v --no-rebase --progress "origin"
-git commit -m "%date% %time% after pull"
+git.exe add .
+git.exe commit -m "%date% %time%"
+git.exe pull -v --no-rebase --progress "origin"
+git.exe commit -m "%date% %time% after pull"
 git.exe push origin master
 ::exit()
 python -c "print('\7')" :: BEEP
