@@ -1,4 +1,4 @@
-ECHO %date%_%time% > a.txt
+::ECHO %date%_%time% > a.txt
 ::python.exe main.py
 
 ::ssh-agent -s
@@ -16,6 +16,6 @@ git.exe pull -v --no-rebase --progress "origin"
 git.exe commit -m "%date% %time% after pull"
 git.exe push origin master
 ::exit()
-python -c "print('\7')" :: BEEP
+python.exe -c "print('\7')" :: BEEP
 
 
