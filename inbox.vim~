@@ -1,0 +1,1199 @@
+inbox bude místo jen pro vkládání nápadu etc.. aby byli èasovì správnì
+do thisMonth se budou dávat plány a co se má udìlat a udìlalo -> sem vše ostatní
+
+struktura inboxu podobná té z thisMonth
+a nad inboxem se bude pouštìt skript kery to šecko nasosá do databáze
+a bude inbox.vim promazávat tak aby v nìm byli pouze poslední dva mìsíce (pro pøehled)
+
+pro zjištìní co jsem napsal.. se pomocí jiného skriptu mou vypsat tu databazi (kera se naplnila skriptem s pomocí obsahu inbox.vim)
+do dalšího souboru..
+kterı bude strukturován takto:
+
+
+struktura inbox.vim tak jak ji chci
+
+BOF
+tag1,tag3,tag2
+%%%%%%%%%%%%%%%%%%%%%> tag1 <%%%%
+[] tag3 text text
+- text text
+-> text text
+
+% c = create
+[] c tag5 text
+
+[]x@tag -> kde x znaèí prioritu od 0-9-a-z
+[]30@tag -> kde 30 znaèí minuty
+
+%-> rest of the document is sorted automaticly from inbox
+%%%%%%%%%%%%%%%%%%%%%> tag1 <%%%%
+[] tag1 text
+%%%%%%%%%%%%%%%%%%%%%> tag3 <%%%%
+[] tag3 text text
+- text text
+-> text text
+[] tag3 text
+%%%%%%%%%%%%%%%%%%%%%> tag2 <%%%%
+[] tag2 text
+%%%%%%%%%%%%%%%%%%%%%> tag5 <%%%%
+[] tag5 text
+EOF
+
+inbox
+thisMonth
+fromStart
+dreamDiary
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+@inbox; @jidlo; @ele; @applist @dream
+
+[] vyzkoušet DATABASE z LO
+[] doplnit do lsPeople -> vztah co od nás oèekává, a co oèekáváme od nich
+[] frantovi z tabora- https://www.youtube.com/watch?v=BKorP55Aqvg
+
+domluveno
+4 motory - pololu - zmìøit atd
+4 cny do rohù
+infra TOF - tak 2 dopøedu 2 dozadu 2 do bokù
+- úzkı nebo širokı?
+ultra jenom moná
+radlice - nevime
+kola ze silikonu
+
+
+
+
+
+Brainstorm
+radlice
+akcelerometr
+vyuít všeho co má v sobì STM32F4
+dotykovy senzor
+torro - odvest pozornost
+rušit reprákem
+
+pyramida = asi ne
+pøísavky - asi ne
+4 motory = 2 fwd bck a  2 left right - vyvıšené motory s pøevodem- zmìna podle = asi ne
+
+- vybrat senzory
+
+Jirka - vyzkoušet senzory ( infra )
+- zmìøit motory a zistit parametry a vahu
+- budièe?
+
+Michal - zeptat se fbiho na budièe
+
+
+
+Dan 
+- rozchodit STM32F4 i s prostøedím
++ git
+- domluvit kola silikon
+
+
+
+%%%%%%%%%%%%%%%%%%%%%> inbox <%%%%%%%%%%%%%%%%%%%%%
+= insert here everything what comes to your mind -> untagged things belong here
+2015_01_01
+[] kapela která by mìla 4 lidi pøevleèenı za jeptišky a zpìvák by byl ïábel 
+
+2014_07_11
+[] unix - fsn file explorer
+[] @goal SPS v roce 2015!!! s robokachnou nebo nìco :) - http://www.prozivot.eu/pr/soutez
+
+2014_05_01
+[] dorovnavaci 3d tiskarna??
+[] unix - kdevelop - doporuèil.. radek?
+[] ve škole je 3d scanner!!
+[] propojit poè vid a robotiku na Fektu
+[] rozpoznavani znakove øeèi
+[] jirka S kníka Rayly
+[] postavit jednopixelovı rozmitany termovizní kameru
+[] jenom digitalni hodinky na brylych (viz google glass)
+[] _needed git !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[] robot postak fekt
+[] namluvit audioknihu - michald .. jirkas zna Alfreda Strejèka (daber)
+[] new competition - beer rescue
+[] lsLife doktorantura na erasmu!!! 
+[] fagi brno (jirkas)
+[] lsNook - znameni, souhvezdi, zapojeni s opamp, filtry regulatory, fft
+
+[] Rum Kontušovka èert, jeøabinka oøechovka višòovka a malinováá..
+[] tisk hraèky - jeøáb
+[] android znakujte s nami
+[] evka cd s znakovou øeèí
+[] zdenda tyèky
+[] youtube - vidouci ale nevidena - evi
+[] lsDoc - stranku z odkazama na ostatní bo v práci nejde drive ale jde doc
+[] lsDEV - foobar vylepsittt :)
+
+
+
+
+
+2014_04_15
+prodluka co bude na konci kulatá
+
+2014_04_02
+[] fit tábor
+[] koupit velorex
+
+2014_04_01
+[] laser pointer stabilizator - with camera and lowpass filter
+[] simulator 2048
+
+2014_03_15
+[] googlecl
+pøíkaz kterı vloí do google drive na novı øádek pøíspìvek
+$ gadd lsBlog
+# gdrive_add
+# format 
+# $ gadd <filename>;n<name>;a<awsomness>;c<cathegory>;s<subcat>;u<url>
+# you may use spaces between character and value.
+$ lsBlog;nFork a repo;a100;cdev;s git;u https://help.github.com/articles/fork-a-repo
+
+2014_03_14
+[] google latexlab - https://code.google.com/p/latex-lab/
+http://docs.latexlab.org/docs#1riBu6BPF6my-0sfbHKmJL1AjJEw4aocQCTF8gum5pAw
+[] external disc enclosure + with numeric keyboard
+[] @dev perl / python - databáze knih
+
+[] duke elington.. hmm 890 a pha ??
+
+[] sepsat úèty
+[] 30@time SPRAVNY DNY AUTO INTERNET UPDATE
+[] 30@brno rozjezdy vlaky na zachod tisk
+[] 10@gdrive - doplnit wanna do lswatch...
+[] 20@gdrive - nauèit se øadit øádky
+[] #30 ahk - skript co vybere náhodnì todo event podle toho kolik zadám e mám èasu- k eventùm dopisovat èas
+[] win7 find out in which program is the directory openned
+[] @fire aplikacu pro kemler kody atd. - 
+
+
+2014_03_13
+[] @goal postavit seqway
+[] @book
+staèí vyfotit nìkomu klíè a pak si ho vytisknout
+[] @goal nauèit se mluvit cikánsky
+[] skript co vytvoøí sloku se všema potøebnıma / nezbytnıma konfigama do jedné sloky - napø flashdisk - pøi pøechodu na novı komp
+- ahk
+
+
+E:\PROG\control\AutoHotkey
+- klávesnice
+D:\CREATION\CONTROL\keyboard layout\mine\gr4vYH1_ASI TADLE\gr4vYH12 = gr4viton_v1.2
+- wizmouse
+Q:\PROG\control\WizMouse\WizMouse.exe
+- zkratky do startmenu
+C:\ProgramData\Microsoft\Windows\Start Menu\Programs\_ALL_START
+- gvim
+Q:\PROG\office\Vim
+
+2014_03_12
+ad 1] reportuje se to tady: http://forums.codeblocks.org/index.php/board,20.0.html k patøièné verzi kterou máš. Pokud rozjedeš kompilaci Code::Blocks (abys to opravil sám), rád se pøiuèím - mì se to nepovedlo.
+
+2014_03_11
+[] github visualizer
+
+2014_03_10
+[] mp3 for audiophiles - http://www.engadget.com/2014/03/09/ponoplayer/?ncid=rss_truncated&utm_campaign=sf
+
+2014_03_09 
+[] @events - ibrno soutìe o lístky atd
+[] Simple Pi Rack
+
+2014_03_07
+[] @buy keyboard wireless - for tablet and laptop
+[] @buy joypad wireless - for tablet 
+
+[] @ele usb2go - http://sven.killig.de/android/Blade/usb_host/
+[] opencv android
+[] @tisk - raminka, pistalku na kachny, saxofon, ruku
+[] @ele - Arduino-like knihovny - BROB
+Existuje jich velké mnoství s rùznì pochybnou kvalitou.
+Hodí se na programování jednoduchıch vìcí v jazyce C++
+Je snaha pod VUT vytvoøit jednu takovou portabilní a efektivní knihovnu pro celou rodinu STM32
+
+2014_03_09
+[] background modelling - 
+http://www.zoranz.net/Publications/zivkovic2004ICPR.pdf
+opencv - https://github.com/safeng/Background-Modeling
+[] start it up
+http://www.startitup.sk/event/detail/e5-node5-data-iot-computer-vision-machine-learning-hackaton#.Uw3xjflG0eo
+[] googlecl -> pøíkaz na vytvoøení do kalendáøe exercise
+/ notes poznamku prostì z øádku..
+[] další scholar ships vybrat..
+a pak ty aktiva
+http://collegeapps.about.com/od/grantsandscholarships/tp/college-scholarships-engineering.htm
+[] @ahk - add pausing script--
+on key - start pausing script and exit/pause ahk
+in pausing script on key -> kill pausing script and start/resume ahk
+
+
+2014_03_03
+[] @food domácí pivní sláma
+[] americká panna, prostøedníci, 
+
+2014_02_25
+[] google calc misto -> gdocs v sheetu nìjakej get z calendara
+nevyhoda zapisovani do ruznych kalendaøu je e pøi vytvaøeni  vmobilu se musí vybrat z listu.. a není to pøehledny bo nevim jak vynechat
+
+[] @www podmínky google-sites, google-docs |komu patøí data -> nebo najít do drpalu nìjaky modul na lepší tabulky!
+
+[] albert mendlak - napsat mail a rozšiøiou nebo petici všedni dny o pul6 pøed nim to podepiše tisic lidi
+
+
+2014_02_23
+[] microwave oven is not evil - jednu centrální stránku - ve všech jazycích
+zasahující všechny odkazy
+sekce kde mùete vloit citaci z jiné stránky - najde se v databázi a vysvìtlí se jednotlivé pojmy
+- protinázor, kdo by šíøil info otom e mikrovlnka je zlo, ikdy by vìdìl e není - prodejci jiné bílé elektroniky? 
+    - misantrop pøepsané - http://www.misantrop.info/trvale-udrzitelna-krava/
+- v hlavièce, nehlásáme e mikrovlny nejsou zlo, ani e nejsou dobro, pouze se snaíme potírat nevalidní data! 
+- obecnı algoritmus pro pøevedení vìt na logická tvrzení a jejich vyhodnocení èi pøiøazení k jednotlivım bodùm viz mizantrop..
+
+[] udìlat si svoje vùnì a nacpat je do brise rozprašovaèe
+[] @www na stránky lsSites
+jeden èlánek pro kadı google dokument
+a do menu udìlat poloku pro google folder
+[] @www lokalizovatelná padesatikoruna
+
+[] @gdrive http://www.maxiorel.cz/jak-importovat-parsovat-data-z-webu-do-tabulky-v-google-docs
+[] @gdoc - google scripts
+[] iniciativa za monost pøipojení monitoru kabelem ve škole
+
+[] @www motto na stránky 2014_02_23 - Prosím, nemìjte strach z neznámého a radši se snate vìci pochopit  ze všech úhlù. Je to vdy lepší!				
+
+[] @www @book - dylema pokud máte svátky a narozeniny poznaèené v offline kalendáøi a podíváte se do nìj kadı den, a na narozeiny pøejete smskou. Skrıvá se nìjaké dylema v tom kdy si je uloíte do gcal a zapnete si upozornìní na mobilu. a popøípadì skript / aplikace jen podle zadaného jména - najde èíslo a spustí program pro sms, popøípadì do nìj vloí 'prvotní frázi' jen mùete doplnit o aktuální znalost o èlovìku 
+- minimalizujete tím sice èas strávenı myslením na èlovìka (pokud mu tedy stejnì nepujdete popøá osobnì).. ale nadruhou stranu.. kdy byste stejnì psali sms, tak vánì minimalizujete èas strávenı na èlovìka? nebo èas strávenı pouíváním techniky?
+
+[] @soon milos nabijeèka baterek ze slunce - pulsni - kondik a 555ka
+[] @soon postavit ze strycem quadrupteru a kameru
+[] @soon zkusit ze strycem hrat si s magnetronem
+
+2014_02_22
+[] @idea fungovala by gravitace kdyby nebìel èas
+[] @www 2014_02_22 Protoe "pravda", která není z první ruky málokdy bıvá pro jednotlivce absolutnì pøíznivá - optimistická.
+
+2014_02_21
+[] ahk pøidat do generatoru
+nedìle - 19h swing tanèírna - gracian - lidická 17 
+utery plavani
+ètvrtek swing
+[] s fbim do hospy - kdy si øíkal e bys nìkam zašel taxem myslel e nemyslíš jenom do kuchynì :D
+
+
+[] @goal - bıt Image Phorensics 2014_02_22
+[] @book - bıt Image Phorensics - zjišovat zda jsou data platná - zejména pak obrazová data! - všechno jsou systémy jimi prochází signaly, ijeme v dobì e nìkteré signály které jsme døíve povaovali za autentické, jsou snadno upravitelné. My se snaíme v zájmu korektnosti odhalit tyto úpravy pravdy. Neb krutá pravda urychluje vıvoj lidstva. A pár obrázkù s jednoduchımi motivy mùe zpùsobit velmi zbyteènou vlnu násilí. Je to jako pohrávat si s vlnkami vìdomí v cizích mozcích, ale zatím upravujeme signál jen je na do mozku vkládán z vnìjšku, skrze oèi.
+
+2014_02_15
+[] napsat MACRO CREATOR autorovi co by tam mohl napsat!!
+[] udìlat šablonu tabulky na gdrive!
+[] udìlat poøádek v papírech do školy
+
+[] steampunk brno ples nìjaky..
+[] @www citat .. Já mám v biosu jenom nastavení èasu
+
+[] horák má prácu
+[] @mind program nebo addon do GVIMu -> aby bylo moné pøesouvat poznámky
+-> byla by to zkratka volající skript jen by pomocí regexpu vybral poznámku na které je kurzor, a posunul ju (nahoru dolu o poèet..)
+a pak druha kera by to seøadila -> napsat to v gvimu
+[] @www citát já 2014_02_13 - 'nedostatek spánku zkracuje ivot, ale prodlouuje poèet probdìlıch okamikù, v daném èasovém období ivota'
+[] @gdrive lsNames Jonatáš
+
+2014_02_13
+[] pøihlásit se ing krajèírová, - prezentace vutbr fekt
+[] návrh infostánku v NC královo pole - http://student.vutbr.cz/?p=1076
+
+[] absolventské koncerty!!studenti vstup zdarma / 50kÈ
+
+[] simona stránská - google na linkedin wtf? - pøidal ale kdo je to?
+
+[] fotka - od bary oliviková - tiskárna
+
+[] napsat štìpánovy poláškovi freescale ronov?
+[] sehnat betu Kingdom come pøes mirka èecha
+
+[] iet
+[] MDRE.pdf - poslat erratu
+
+[] THUNDERBIRD + gmail pro fekt http://www.youtube.com/watch?v=TRHZwH64lG0&feature=youtu.be
+[] pouij krtka / sodu
+
+[] @time velká houba na tabuli na celou -široka
+[] find out oculus  - http://www.oculusvr.com/
+[] biu
+[] @buy ebay - tašku koenou - z èeskıch
+[] googledocs - draw místo twiddly!
+[] udìlat tag kickstarter a sepsat pod nìj vìci ktery by se mohli chytnout :O
+
+[] nechtìl bych operni pìvkyni za manelku :D
+[] zkusit frekvenci zvuku po nasátí hélia - pomocí mobilu
+
+
+[] barva zvuku.. dívat se na zvuk jako na signál
+
+2014_02_09
+[u ne] @goal zajit s laskou k tomu stromu na pavlovickım kopcu
+2014_02_07
+
+
+2014_02_05
+[] šifra - zahrnout i google drive id nìjakıho public obrázku s další èástí
+2014_02_02 
+
+[] zajít na kompetní preventivku 
+
+[] @buy - spojka rj45 f/f
+
+
+
+
+2014_01_31
+[] streaming music comparison - http://www.engadget.com/discuss/streaming-music-services-comparison-1nox/
+[] @read http://www.engadget.com/2014/01/31/spotify-web-app-forgotify/
+[] @www http://phys.org/news/2014-01-field-microscopy-brain.html#nRlv
+2014_01_30
+[] sound http://rd.io/x/Rl5G3zorvhP9/
+
+[] idea / book - obchod kde by vìci stáli podle èasu kterı vám ušetøí.. - den/rok..
+- seznam nákup -> vytisklı zafoliovanı -> poznaèí se jenom fixou
+
+2014_01_28
+[] @www macrocreator - http://www.macrocreator.com/help/ 
+[] @www ssd - indexing of -> but copy zastupce do sloky pro start hledání
+[] @www google file revisions - https://support.google.com/drive/answer/2409045
+[] @read http://www.theverge.com/, http://www.irishexaminer.com/
+[] @ahk maps add https://foursquare.com/explore?mode=url&near=Brno%2C%20CZ&q=VUT
+[] @buy - vut things
+[] @home látku pøed skøíòku - a to nevypadá jako v dílnì :)
+
+2014_01_27
+[] google http://www.google.co.uk/trends/explore#q=gr4viton&cmpt=q
+[] kartièky na kafe - jak na táboøe dycky chtìl ?Honza -> tak vytisknout.. a na zatrhávání 
+[] @dn - ocelovı mìsíc, já padouch
+[] @work milovice http://www.cavs.cz/cs/konference/
+
+[] @soon motylka vazat
+[] @soon - cashflow
+[] @soon metoda loci -pamatov
+
+[] @soon art nook - robert bowen
+[] @soon ERASMUS!!! checkitout
+http://www.feec.vutbr.cz/vztahy/llp/erasmus_univerzity.php
+http://spectrum.ieee.org/automaton/robotics/humanoids/details-on-darpa-robotics-challenge-trial-events
+[] @soon aktivovat - nulového tarifu Na míru pro klienty Vodafone a Èeskıch drah ( cdbonus.vodafone.cz -nejde)
+vytøí
+[] @soon mp3 pøidìlat
+
+[] @soon bullet C++
+[] èti
+http://www.google.com/intl/cs/policies/privacy/
+[] check - norimberg - https://docs.google.com/forms/d/1wwSBIMdYygCoulk-Tqkrc4kjKEqDFvGNwfpYKBnIreU/viewform
+[] http://typingclub.com/typing-qwerty-en
+
+[] win -start vyhledavani bez indexace
+[] oddìlej win TEMP
+[] zajít s honzou na pivko
+[] ples hasièskı 14.1.2014
+[] priorita (+do kdy) + èasová nároènost -> na zkratku vyjede souhrn seøazen dle priorit s tagama bez tagu - z kadé note první øádek / xznakù
+
+
+[] naplánovat mìsíc do pøedu
+[] mìsíc - anketa copyright! hodnocení! freescale! etc -> nook gdrive, drivers, pøepiš jídlo
+[] odorik - komp
+[] esmska - komp!!
+
+[] offline typing practice program
+[] drivers - tlaèítka
+
+[] vypalit mamce elany dvd na svatek v dubnu
+[] aircrack!
+
+[] dat si do notesu lepší speakery
+[] @ahk doctor who online project free tv S04E02
+[] music play sing - you and me was meant to be
+[] find program na tagové tøídìní lines v txt -> nebo ho koneènì napsat!
+[] koupit vínovou nálevku - to co pouívají vinaøi -> pro pøeèerpávání saké
+[] elvu - trubku o prumìru tak 50cm prùhlednı plast - na vıšku -> zalít vodou -> i s kolenem nebo spíš obrácenı úèko -> a moe plavat aj nahoru aj dolu aj rovnì 
+- http://www.drsfostersmith.com/pic/article.cfm?articleid=2230
+- mít tam aj èistièky vody takovy ty co se pøisajou na sklo
+- pøidìlat tam aj kameru a udìlat jim web!
+
+2014_01_26
+[] @gdrive do google drive klasické potøebné vìci
+- abecedy -rus øec ..
+- písnièky
+-> shared to mobile and ebook
+
+[] @ahk - dr who - http://www.tvids.me/watch58/DOCTOR-WHO/season-04-episode-17-The-End-of-Time-(1)
+dn - http://www.alluc.to/tv-shows/watch-doctor-who-2005-online/season-04/episode-17/43294.html
+http://www.alluc.to/tv-shows/watch-doctor-who-2005-online/season-05/episode-02/185824.html
+[] @gdrive -seznam serialy
+koukej - lowspeed
+koukej - hd
+download
+
+2014_02_02
+[] @work freescale pohovor pøeobjednat zpátky sem??
+
+[] @read google policies - http://www.google.com/intl/cs/policies/privacy/
+[] @play zahrát kytara pøátele
+[] @dev android app se slizem panorama
+[] change priorities for C:\PROG and others
+
+[] @dev pulover -> add picture points of interest -> relative points from picture clicking -> github!!
+[] @ahk - nespouštìt víckrát - jenom fokus.. na šecko?
+[] psat si co jíš, úèty vpisovat rovnou - google-docs dokument <<<<<<<<<<<<<<<<<<<<<<<<
+
+[] @ahk - zkratka na vkládání do inbox -> nebo jen na navigaci vrámci..
+
+[] @dn lindzey sterling -housle
+
+[] @brno brusle do brna? poïme..
+[] @read irwing 
+[] @www na stranky sharing button
+
+[] launcher?
+[] @play kytara - skyrim
+
+[] pujèit si segway - s herem etc
+[] app google calendar alarm - novı kalendáø
+[] fazil say
+[] valeo -car - gps navigation spreading through cars -> local gps sensors spreading it through other cars - https://valeoinnovationchallenge.valeo.com/rules#art10
+= 234kKè
+
+2014_01_22
+[] penny battery charger for 1$ - http://hackaday.com/2014/01/17/1-coin-cell-charger/
+[] periistaltic pump - http://www.instructables.com/id/Inexpensive-easy-to-build-peristaltic-pump/
+
+2014_01_20
+[] matlab - zvìtšenı simulink pøi zmáèknutí [ctrlaltshift]+[/](vedle pravyho shiftu = [shift]+[^]
+
+2014_01_20
+[] @wwwrite - like xkcd dùvody k rozvodu / manelství porovnání 
+[] @ahk - programy správné umístìní -> nebo hledat s prioritou na ssd disku
+[] nauèit o lhani aby mì neoblafli
+pravda - nahoru a doleva -> vizualni centra 
+lhaní - nahoru a doprava -> kreativní centra
+
+[] @wwwrite - rubrika PROÈ - proè všechy firmy nepouívají internetové volání - respektive callback odorik - fakt to nevyjde levnìji??
+[] zabezpeèení mobilu - mobile tracker + zamknutí rootu pod heslem.
+[] nahravani hovoru odorik
+[] Visit Faroe Islands
+[] wwwrite 
+http://www.kdo-volal.cz/
+
+
+2014_01_18
+[] tB konzole
+[] wwwrite -> 'pin to top èlánky' - ahk config etc..
+[] @www google vyhledávání na stránkách
+
+2014_01_15
+[] kšandy èi sou?
+[] what to put into gdrive - 
+portaprog - vim
+
+2014_01_12
+[] w/sliz android panorama +++
+
+2014_01_11
+[] @home doma pøevlek - kabát gigolo nebo prost..
+
+[] pøispìt / koupit triko NFPK
+http://obchod.nfpk.cz/shop/triko-panske-cerne-quot-naplast-quot/114
+[] steampunk
+https://www.facebook.com/groups/SteampunkSteampunkFashion/
+
+[] dodìlat pizza party creation 
+https://www.facebook.com/events/630032720389294/?context=create&ref_dashboard_filter=upcoming
+
+[] porada s J Dokoupilem -> viz MTDS -> Kalman bakaláøka
+[] kuèera roboruka puèit domu
+[] ahk SORT!
+[] ANTLR - http://www.antlr.org/wiki/display/ANTLR4/Getting+Started+with+ANTLR+v4
+[] program na sdílení vìcí z facebooku do drupalu!
+
+[] iet
+[] tron laser arena 
+[] @dev GENIAL snimat kamerou i zornièku - ne jenom tøide ale i zaostøování
+
+[] blaha ceitec! nechceš koneènì pracovat na nìèem co má smysl?
+-> bratøi veselí
+[] @ahk zkratka - koukni.cz, eserial.cz etc
+[] MURAL.LY = https://chrome.google.com/webstore/detail/murally/nnhlnnalackljjehlfocmheepffkiihf
+[] windows easy transfer
+[] pizzaparty zaloit okolo 20teho.2
+1) vlady++, jirka++, lucka++, miloš++, ja++, odkati nìkdo?, marina++
+2) hero, rosa others
+[] èíst google podmínky
+[] zazálohovat fotky na google-drive?
+[] gta4 replay cli player
+
+
+2014_&_OLDER
+
+adapter milda
+adapter router
+robokachna + software - ultimate pøes tøídy??!! ale na jaké platformì?
+
+[] @buy mushimeter - http://www.dragoninnovation.com/projects/34-mooshimeter
+
+[] sfm - use older driver? - http://drivers.softpedia.com/get/GRAPHICS-BOARD/NVIDIA/Asus-U30JC-Notebook-Nvidia-VGA-Driver-817125741.shtml
+
+[] @quartal chrome addons
+- geogebra
+- google apps script https://chrome.google.com/webstore/detail/google-apps-script/eoieeedlomnegifmaghhjnghhmcldobl
+- Mural.ly = mind
+
+[] @quartal add do infa 
+https://www.google.com/settings/chrome/sync?hl=en-US
+
+
+git enabled ftp syncing - not possible?
+git pro zálohování ftp pøímo ze serveru- not possible?
+
+make D:\SOUND\RING - mario ringtone
+
+[] @dn poznahravat hudbu jazzradio google music
+
+android emulators http://www.androidauthority.com/best-emulators-for-android-315958/
+
+[] napsat tB jim o tom!!!!!!!!!!!
+[] tB cli insertion mode -GENIAL
+addng <newGroupName>
+addnt <newTagName>,<newTag2Name>
+add <nameOfNode>; text
+addt <tagName>,<tag2Name>; text
+
+[] @presenting add presentation "http://www.codinghorror.com/blog/2006/11/screencasting-for-windows.html"
+
+
+[] pøepsat statusy z facebooku na stránky ->automaticky??
+[] skript na vkládání lidí do brainu -> oznaè zkratka fotka, oznaè zkratka jméno, oznaè zkratka email etc
+
+
+[] zalohovat nastavení všeho
+- user/name/.*
+
+syntax highliting 
+první znaky øádku - moe bıt víc za sebou aplikují se všechny
+_ red bold = day and day-name
+! bold = needed tas
+k
+. or [] normal = undone - todo task
+[x] or [X] or [#] grayed = done
+without anything -> normal or a little gray
+
+[] skript na vyèítání vìcí z google-calendáøa -> vkládání do thisMonth -> na jednotlivé dny
+[] @ahk skript co by takhle zapsanı øádek po stisku klávesy oznaèil a pak zaøadil do theBrain
+- openoffice draw >try>app
+
+[] Markdown http://daringfireball.net/projects/markdown/syntax 
+[] googlecl use it http://lifehacker.com/5568817/five-really-handy-google-command-line-tricks
+
+[] XML to TeX -> better for further processing
+-> if you want pdf -> xml2latex = CONtex / xmltex
+[] JadeTex & PassiveTeX
+[] novı tex - NTS, Omega
+
+[] okna do popøedí pøi spuštìní DEXpot
+[] zástupce pro aktualizaci èasu z internetu + ahk
+[] sfm -> psát si kterı tutoriály jsi projel
+[] steig larson?
+
+
+[] gvim odkazy v rámci souboru
+gvim otevøít na aktuálním dni -sekvence parametr pro spuštìní aplikace
+
+[] make a server FreeNAS
+
+[] @buy šupleru?
+[] @buy iRig for android
+[] @buy ide adapter hd vyber
+[] @home mama kup sadu hmodinek a vrutù spolu s vìšáèkama na obrazy a høebíèkama a høebíkama
+
+
+[] @buy rj45 spojka f/f 
+
+[] @view hobit, machety kills, ironman3
+
+pøevést na lepší formát
+
+http://aleph.lib.vutbr.cz/F/ALJEQ3G9Q2LUU87BLP4Q4Q544XJ188TQ93UEX4552GYMJMCFY1-09384?func=bor-loan&adm_library=BUT50
+
+[] auto awsome google+
+[] ahk git bash here
+
+[] gvim - dvojitá záloha -> kdy se zálohuje
+
+[] skript na samoukládání thisMonth.txt do theBrain + ahk zkratka
+[] syntaxe v tomhle souboru aby to svítilo
+
+
+[] @buy EYE-fi ?
+
+[] pøepsat google calendar
+[] @buy tablet koupit dom po vánocích
+
+[] aplikaca sms - opodìné odeslání
+
+[] @book - sekretáøka smlouva - spravuje moje myšlenky a tb.. ale ve smlouvì má e nemùe pouít nic co si pøeète v mıch poznámkách.. jediná monost jak se pøed tím bránit je aby si dìlala svoje poznámky a upladovala ho vdy pøed pøeètením mojich poznámek.
+#>@15d1<#################################################
+[] @ahk zkratkou otevøít všechny grinding pages v novém oknì
+[] @read add page; http://www.codinghorror.com/blog/
+
+[] @www - zmìnit na styl http://www.codinghorror.com/blog/
+[] @www mód pro zvìtšené úvodníky?
+
+bluetooth low energy explained -> add status
+
+[] @song fekt lyrics
+Senzory a pøevodníky 
+lupièi a loupeníky, 
+teï mùete pøilepšit si.. a jak?
+chyte je, svate je, zmìøte je, zabte je, jasné?... JASNÉ.. na svá místa !!!
+
+zmìøte je
+
+poèkej.. brázdile já ti to ukáu.
+poèkej.. brázdile já ti to ukáu,
+poèkej.. brázdile já ti to ukáu
+kdy si sedneš zamne, tak ti to ukáu.. moná
+
+
+[] @holyday francie na kolo!
+[] gvim - two files in one window? or not?
+[] @www Snad by šlo najít nìjakou web stránku která má jako vstup v adresním øádku latex seqenci a vrací na dané adrese obrázek s rovnicí vykreslenou v latexu
+
+[] E:\PROG\video\vlc-2.0.5 - delete?
+
+[] @breeding - modelování jako krouek
+[] @breeding kategorie do brainu
+[] @buy pasek k hodinkam
+[] @buy sprcháè
+
+[] @book - otvor v kuchyòské desce pod kterım je koš - snadno smeteš cokoliv do koše
+[] @fun pics - ta osmismìrka kdy prvni tøi co pøeèteš ti øeknou jaxe budeš mít pøíští rok.. -> pro ema - smrt zrada etc -> pro mue sexsexsex trojka...
+[] offline prohlíení google doc v nooku - google-docs cosi de viewer..
+[] sync prog http://en.wikipedia.org/wiki/Category:Concurrency_control
+
+[] @vim syntax
+[] @drive stranky co stojí zato tøídit do brainu + odkaz ze stránek
+[] @drive http://people.revoledu.com/kardi/tutorial/KNN/index.html
+
+[] @dev rtx > rtlinux pøekladaè (resampler-parser) kódu
+
+[] @www http://joncave.co.uk/2011/02/road-to-wordpress-3-1/
+[] @read thereforei.am
+[] @health mìøit si tlak + tlak okolí v prùbìhu dne a zapisovat si náladu, schopnost koncentrace a pracovní úkoly
+[] @culture kam-veèer http://www.kinokavarna.cz/program.html
+[] @goal vychovat si vlastní realizaèní koncovku - gympláci - v rámci GE
+[] @game Street Fighter II Championship Edition
+
+[] @ele hodinky - oled good - http://voodoomanmiracle.com/wp/?p=127
+
+[] thebrain addon - tag jakoe je to todo projekt.. no a mít èasovou nároènost u kadyho.. no a pak fce kera bude do this month importovat nahodnì projekty tdo s èetnosti jako obrácenou fci èassové nároènosti,,
+[] @ele interferometr - odposlouchávat sousedy!!
+%%%%%%%%%%%%%%%%%%%%%> tBwrite <%%%%%%%%%%%%%%%%%%%%%
+
+[] evernote screwed up permissions on ntfs drive 
+cannot access or delete solution win7:
+prop security continue - other users or groups -> add everyone - OK -> close all
+props again - security - edit - allow full controll -> skip files
+open folder -now it can be opened - files cannot be deleted but can be edited in gvim (or possibliy other editors) 
+open it in vim or something and save (in vim <ESC>  :w! ) yes for confirmation
+now it can be deleted
+
+
+%%%%%%%%%%%%%%%%%%%%%> buy <%%%%%%%%%%%%%%%%%%%%%
+[] kup krabièku na harddisk 3.5" 120GB jako záloní
+[] holící strojek
+[] kup mama dvd
+
+[] fbimu šlauch
+
+[] lampu - stolní
+[] trièko s engeneerem
+[] koupit Leatherman Squirt P4 - kombinaèky na klíèe - http://www.codinghorror.com/blog/
+[] tyèky pokoj na zavìšení -ebøíkoidní typ..
+[] hodinky!
+[] vybrat ramky!!
+[] koupit sí do pokoje - zavìšení pohledù atd
+[] kup mikrošroubováky < 1mm
+[] mp3! http://www.kasa.cz/sandisk-sansa-clip-zip-4gb-black/
+[] skateboardovy loiska
+[] klavesnici vybrat abys koneènì mohl mít noas vedle monitoru a nemìl monitor tak vysoko -> krk, oèi míò otevøenı
+[] - koupit skládací stolièku (vlak, úøady, stan)
+[] RC letadlo!
+[] rukavice na kolo s dirama prstama - psani na pc v zimì
+
+[] play saints row the third!!
+
+
+[] web-comic http://lolnein.com/2013/04/07/movieidea/
+[] chytrı ale levnı hodinky co dlouho vydrí -> bt komunikace s android telefonem
+
+[] valèa - nakreslit návod na kreslení
+
+[] s kaou dalekohled - pujèit a jit
+[] europe jinak - https://www.estiem.org/default.aspx?PageId=542
+[] matlab dva obrazky - read/educ/matlab
+
+
+%%%%%%%%%%%%%%%%%%%%%> this month <%%%%%%%%%%%%%%%%%%%%%
+
+[] nakreslit èíslo - poèet rokù
+
+%%%%%%%%%%%%%%%%%%%%%> theBrain navrhy <%%%%%%%%%%%%%%%%%%%%%
+[] monost ukládat i jako text ne jen jako html
+[] pøi spouštìní nebrat tolikrát fokus..
+[] umìt bìet v tray iconì - nesnáším dy mi zabírá místo a zároveò ho nechci vypnout bo se strašnì dlouho naèítá
+
+
+%%%%%%%%%%%%%%%%%%%%%> ele <%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%> selfdev <%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%> wwwread <%%%%%%%%%%%%%%%%%%%%%
+[] vim http://www.viemu.com/a-why-vi-vim.html
+[] zelenina - http://hobby.idnes.cz/skladovani-zeleniny-vajicka-chleb-dro-/hobby-domov.aspx?c=A131227_103346_hobby-domov_mce
+[] productive and have more done - http://www.youtube.com/watch?v=Oo8grkujGd8
+[] lucid - http://www.acld.mysteria.cz/ld.htm#3
+[] odorik - http://forum.odorik.cz/viewtopic.php?f=7&t=15
+[] google conditions - http://www.google.com/intl/cs/+/policy/pagesterm.html
+[] modely - http://www.tom59herder.cz/auta/tutorialy/elektronicky-ovladac/id:1483
+[] drupal Content Taxonomy, Hierarchival Select
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+[] handheld microwave scanner
+[] cinemabundi - filmy art
+[] key logitech .. napiš do buy -> k320 a 230
+[] podepsat brašnu do školy, taneèní boty bundu, batoh..
+[] napsat A4 nejistoty mìøení - do latexu pøepsat to co máš na papíru!!
+
+[] azbuku uèit ètením známıch textù - písnièky - kauša..
+[] darovat sperma
+[] navigace podle hvìzd - offline - applikace
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+[] #money - roztoèit normální LCD televizi a promítat toèící se obraz v opaèném smìru - vìtšízobraozvací plocha
+[] #rpi zvoneèek na gpio - dy napíšu a chcu aby si to pøeèetli :)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+2014_09_23
+[] #3d automatické namotávadlo cívek do trafa
+[] #3d roboty co byse samy tiskly
+
+[] #lipol http://hackaday.com/2014/09/21/a-li-ion-battery-charging-guide/
+[] #python #ele python debugger http://hackaday.com/2014/09/22/scripting-debug-sessions-python-for-gdb-remote-serial-protocol/
+[] #diy tram tracker real map
+http://hackaday.com/2014/09/15/leds-turn-this-paper-map-into-a-tram-tracker/
+with android app support
+[] #buy mini wifi module
+[] #diy 3d ball http://hackaday.com/2014/08/30/purely-mechanical-display-uses-804-balls-to-create-a-kinetic-display/
+
+[] #3d autolevel
+tip cleaning - lulzbot & lime
+[] #dyi #pcb uv osvitka
+http://hackaday.com/2014/08/27/make-your-own-uv-exposure-box-for-pcb-manufacture-at-home/
+
+[] #dyi #100 foosball 
+http://hackaday.com/2014/08/26/foosball-now-part-of-the-internet-of-things/
+[] #dyi #visitorcard - laser carved with leds
+http://hackaday.com/2014/08/26/laser-engraved-business-cards-with-leds/
+[] #dyi #200 homemade segway 
+http://hackaday.com/2014/08/25/impressive-homemade-segway-is-the-real-deal/
+http://blog.tkjelectronics.dk/2014/07/full-size-diy-balancing-robot/
+[] #dyi #60 ultrasonic 3d radar
+http://hackaday.com/2014/08/24/a-virtual-touchscreen-3d-ultrasonic-radar/
+[] #dyi #money #help brail reader - usb -> 3d printed
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+2014_09_24
+[] #ele open effect pedal
+http://hackaday.com/2014/09/04/extrinsic-motivation-an-open-modular-effects-pedal/
+[] #3d riggin - marionetting
+http://hackaday.com/2014/09/02/rigging-your-3d-models-in-the-real-world/
+[] #dyi handsfree recording 
+http://hackaday.com/2014/08/19/hands-free-recording-looks-silly-but-is-super-effective/
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+2014_10_01
+[] #3d wiring a 3d model http://hackaday.com/2014/09/27/wireprint-is-a-physical-print-preview-for-3d-printers/
+
+[] #dyi =c=lamp =http://hackaday.com/2014/09/24/lamp-comes-to-life-with-ultrasonic-sensors/ #name=ultrasonic light
+[] #dyi =c=feeder =n=slow food dispenser for animals =http://hackaday.com/2014/09/24/the-thurber-feeder-5000-helps-to-slow-fido-down/
+
+[] #dyi =c=art =n=dust dancer =o= make it 3d!
+=http://hackaday.com/2014/09/23/choreographed-iron-dust-dances-to-the-beat/
+
+[] #ele =c=supply =n=atx bench creation tutorial =http://jumperone.com/2011/06/atx-power-supply-tutorial/
+
+
+[] #python input inbox database ->zatím texák se správnımi (syntakticky pro pc jednoduše rozpoznatelnımi a oddìlitelnımi) itemy
+[] #python zobrazovaè pro ahk - vcucne to co vypisuje ahk jako aktivni skratky, vyplotuje keyboard se všema zkratkama -> vèetnì popisu co to dìlá..
+monost klikat myší na klavesnici na obrazovce 
+
+[] #eleparts fan tam mam v kompu ještì 6mm široky..
+[] #eleparts #cat=supply #sub=atx #name=EC300X1 #brand=EC #note=odchaziva brzy #power= 300W
+[] #eleparts #cat=supply #sub=atx #name=ATX-350PAF #brand=FSP group inc. #note=5V=21A,12V1=18,12V2=16A #power= 350W
+[] #eleparts #cat=supply #sub=atx #name=ATX12V #brand=Rexpower #note=12V=15A,5V=40A #power= 350W
+[] #eleparts =c=supply =sc=atx =n=kia 494P 6K =b=Kia =note=? =power= ?
+
+
+[] #ele =c=laser =n=laser from scrap computer parts
+=https://www.youtube.com/watch?v=3Kc4RyOMDjo
+[] #site =n= Jumper One =http://jumperone.com/list-of-all-videos-and-articles/
+
+.http://www.porn00.org/video-download-cherie-deville-dakota-skye-quality-time-720p/
+sortof http://www.revolutionporntube.com/tube2/gallery/ae28bee4/3822579/index.html
+.leg fe http://www.pornhub.com/view_video.php?viewkey=2006700463
+.fant http://www.pornhub.com/view_video.php?viewkey=33606524
+.pov s as http://www.pornhub.com/view_video.php?viewkey=715604019
+
+.nub cas http://www.pornhub.com/view_video.php?viewkey=298951422
+
+n milfs2014 http://www.pornhub.com/view_video.php?viewkey=970418426
+.li ado http://www.pornhub.com/view_video.php?viewkey=1754575165
+.li bun http://www.pornhub.com/view_video.php?viewkey=969983624
+.oil http://www.pornhub.com/view_video.php?viewkey=1941957692
+
+[] #ele =n= lipol in wireless mouse =http://jumperone.com/2011/06/convert-mouse-to-use-li-pol-batteries/
+
+[] #ele =n= portable fume extractor fan =http://jumperone.com/page/3/
+[] #buy =n= kamera s optikou na blízko - usb - viz od tìch co byli na FI na noci vìdcù 2014
+[] #ele =s= pcb =n= PCB toner transfer method =http://jumperone.com/2011/06/how-to-make-pcb-using-toner-transfer-method/
+
+[] #3d =n= 3d from 2d =http://www.zdarmainzert.cz/volny-cas/miny-navody/tvorba-3d-objektu-2d-obrazku/
+
+[] #write motorola watch with 8ball pen keyboard
+[] #www stranky s rozloením e dva sloupce, a na levym jako technicky, a na pravym moje povídky - rolovací dohromady
+-> nìktery moou byt propojene
+-> èernobílá stránka
+[] #money AUTOMATY NA 3D vìci!
+
+[] #people vladimír støíteskı - oprava automobilu a motorek
+[] #buy mikina engeneer =http://teespring.com/engineermemes#pid=212&cid=5824&sid=front
+2014_10_01
+[]3d from smoke in one direction and light in other - or water
+[] #dn dj majestic
+[]#win get acces to windows partition F
+2014_10_03
+[] #buy bang nádstavbu
+2014_10_13
+[] python - get all paths to all programs -> give possibilities to run it from
+ahk program starting frontend
+ahk -> start.py vim -> python selects the best one or default one and starts it
+2014_10_16
+[] kurzy na rektorátu - student - softskill
+[] #watch - hanební parchanti, jungo, unchained
+2014_10_21
+[] #read book python programming
+2014_10_31
+[] #play
+everybody move your feet
+passenger
+lust for love
+blink182 - going to college
+bob dylen - it' aint my babe 
+2014_11_01
+[] #watch film I.Q.
+[] #cook jirkaS's "salad"
+- smíchat: keèup, majonézu a hoøtici - trochu Worchestrové omáèky
+- ètvereèky klobásky, sıra, kukuøice, salát? :D
+2014_10_18
+[] #cook americky brambory tocotatadìlal
+- peèící papír, olej
+- nestrouhany brambory na vìtší kusy
+- koøení na am brambory - i se solí - nesolit
+- ne pøes sebe - prosypat
+- kmin a sladkou papriku jako bonus
+- do rozehøáte trouby 180-200°C
+- tak 45min
+- po 20 minutach obratit a popøípadì dokoøenit
+2014_10_18
+[] #play robbie wiliems - feel
+https://www.youtube.com/watch?v=iy4mXZN1Zzk
+
+2014_10_20
+[] tak jako ikdy u post tak to mou zkusit :D
+http://www.professional-counselling.com/faq-relationship-test.html
+2014_10_22
+[] #python - make shortcuts for books etc
+[] #python - add pyInventary as a submodule to __ESSENTIAL
+
+
+
+2014_10_02
+[] #buy kupovat profily v techniku tam maj vyøazeny - rosa
+[] #buy -kouknout do gdoc.. ramky najit poptat .. objednat
+2014_10_05
+[] zkusit kouknout na stary LCD z notesu milošovıho - do RPI?
+[] http://hyperboleandahalf.blogspot.cz/
+
+2014_11_07
+[] #www http://www.ptable.com/
+[] #www http://instagram.com/demotivacia
+[] #www fun http://www.leekspin.com/
+
+2014_11_10
+[] #3d rubikovu kostku s cuplikama z lega na stranách
+2014_11_12
+[] FLUX 3d printer + scanner + laser cutter\
+http://techcrunch.com/2014/11/11/fluxs-3d-printer-is-also-a-scanner-laser-engraver-and-more-thanks-to-a-modular-design/ 
+[] #buy jacques lemans watch
+[] zajít na fagi
+2014_11_17
+[] #watch pìjme píséò dokola
+2014_11_20
+[] #game robot arena
+
+
+
+2014_11_25
+[] bt touch kapacitní klávesnice - nafukovací jenom teòouèká nafoukneš a moeš psát :)
+2014_11_29
+2014_11_08
+[] android multiscreen
+[] cloud print - rpi
+
+[] #money anglicky v hospodì
+- 
+[] #money party kytarista
+- profily hráèù s diskuzemi hodnocením a komentáøi 
+-- zpìv kytara zábava komunikativnost opilost (overall nastavitelnı a pøednastavitelnı váhovanı)
+- profily default uivatelù, registrace za peníz?
+- první já, jirka, pár kámošù
+- novı lidi nábor i na ulici
+
+- poplatek za hodinu? nebo za veèer.. 
+- zaèít níe, monost vrácení penìz
+2014_12_03
+[] simplest electric train
+http://www.youtube.com/watch?v=J9b0J29OzAU&feature=youtu.be
+2014_12_04
+[] amelie - compt d'un autre summer
+nebudu nebudeš
+uvidíš uvidím
+prozatím
+
+a já musím jít
+
+2014_12_08
+[] best paper airplane in the world
+http://lifehacker.com/fold-a-world-record-setting-paper-airplane-in-under-10-1663880216?utm_campaign=socialflow_lifehacker_facebook&utm_source=lifehacker_facebook&utm_medium=socialflow
+
+[] #lsPeople Radek skácelík - 3d grafik tvorba
+2015_01_05
+[] geocache - use ntfs file stream trick
+http://www.howtogeek.com/howt
+
+2015_01_06
+[] vut errata - nejenom google docs.. ale stranku kde moeš postovat a šeci vidiou - uèitelé moou automaticky opravovat
+- udìlat prùzkum mezi kantory 
+- nechat se zadotovat školou
+
+2015_01_08
+[] git aliases -gc!!
+#.bashrc
+alias g="git"
+alias gh="git h"
+alias gla="git la"
+function gc { git c "$*" } # this is handy, just type 'gc this is my commitmessage' at prompt
+
+2015_01_10 
+[] 360° sfm films
+[] doctor who horrors for oculus
+
+2015_01_15
+[] art - 3d printed whistles of diff frequencies.. pneu generator and pipes - all whistlin.. or a song..
+2015_01_17
+[] byl jednou jeden pc - ALU - èlovíèek u tabule poèítá.
+[] esence vùnì knihy v ebooku
+[] dvorkam - pøimìt sociology a zkoumají vliv dìtskıch filmù na povahu národa
+[] pípací zaøízení, nikdo neví co to je - bojí se všichni
+2015_01_17
+[] panting tycoon
+[] pasivní bednièky opravit
+[] osciloskop ze staré tv
+[] kolo lutı 23-622, 700x23C
+[] 3d zuby rentgen radon transformace
+[] nájemnı hráè na kytaru
+
+
+[] ruštinu online video !!!
+[] cikánština
+[] vıvody 5V etc z elektrospotøebièù v domácnosti
+[] people zdeòa dlabaja
+Louèky 239
+[] zdroj minwa mw7H380GS
+2015_01_27
+[] haskel 
+http://learnyouahaskell.com/chapters
+2015_03_05
+[] 3d drazku na zip
+[] open shoe 3d
+2015_03_10
+[] tisk bezdrat lama tesla
+http://3dprint.com/46711/tesla-desk-lamp/
+2015_03_15
+Rozumím,
+
+Tak mì napadají:
+
+[1] rozpoznávání obrazù / textù a sledování v obraze z videa pøi sníené kvalitì 
+- napøíklad pøi pøenosu - sníené rozlišení / vzorkovací frekvence / ztráta zaostøení / optické vady èoèky / rozmazání pohybem / úplná chvilková ztráta signálu (pøedpovìï pravdìpodobného vıskytu z pøedchozího / zákrytí pøedmìtu jinım / otáèení objektu / stíny
+
+- pozdìji tøeba i stereovizní obraz (pasivní triangulace)
+
+- orientace 
+- popøípadì doplnìní hlavní støedové snímací kamery s vyšším rozlišením o další kamery s niším rozlišením - rozšíøení FOV
+- vhodné alogritmy jen jsou zároveò dost rychlé a robustní pro dostateènì plynulı odhad polohy v obraze - správná kombinace která nejlépe funguje a proè
+
+[2] nebo pøímo se zamìøit jenom na tu kameru je by fungovala mìla rozlišení jako oko - umístnit ji do gyra nebo na robotické rameno, a potom sledovat objekty nebo rozpoznávat a detekovat více objektù ve scénì ikdy by støedová kamera s vysokım rozlišením mìla pouze nízké FOV a musely by se fúzovat data z krajních kamer tak aby se rozlšíøila snímaná scéna
+
+[3] nebo nìco podobného jako tady
+Semantic retrieval
+- (VPN NEEDED) http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=4130427
+tedy framework pro zaznamenávání pohybovıch trajektorií z videa 
+
+Podle toho co se jeví jako nejvhodnìjší téma pro dizetraci. Nejvíce bych mìl zájem o 1, poté 2 a 3.
+
+Nechtìl jsem to øešit na poslendí chvíli, ale u to tak nìkdy vıjde. Jak je to tedy popøípadì se úpravou tématu? Pøedpokládám e mírná zmìna, ne kompletní pøepis?
+
+Pøeji pøíjemnı den!
+
+Daniel D.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+2015_03_16
+[] raspberry pi projects
+http://lifehacker.com/seven-ready-made-raspberry-pi-projects-you-can-install-1691368805?utm_campaign=socialflow_lifehacker_facebook&utm_source=lifehacker_facebook&utm_medium=socialflow
+
+2015_03_23
+
+[] sledovaè - voják - jeden v poli se zbraní, a všesmìrovou kamerou a senzorama.. druhej v klidu v zázemí mu radí
+[] nové ovládání strategickıch her - doteï to bylo o rychlé koordinaci myši a klávesnice
+novì na touch-inputu by mohli bıt ruènì malované runy pro kouzlení etc.. ruzne tahy a chmaty pro posouvání etc.. - uplnì jinı styl.. horší? lepší? lehèí/tìší na nauèení ovládnutí
+[] gr4viton - jakoto pøedpovídaè novıch vìcí - prostì ty vìci co tì napadnou e by mohli bıt tak napsat kdy e asi budou.. a mohl bysise stát známım :O
+[] git visualization
+2015_03_25
+[] videoklip kapely.. hrát na balkónech bytù - natáèet na quadrukoptéru.. a v prùbìhu videa budou pøeskakovat na tìch jednotlivıch balkónéch.. a chvilku budou všude a pak vizualizer.. do rytmu hudby
+
+
+2015_03_30
+[] lsBuy
+http://www.silcon.cz
+tekwej - bìí na linuxu a pry de hacknout na lepší šíøku pásma
+interactive algorithms..
+http://www.interactivepython.org/courselib/static/pythonds/index.html
+
+pøehled python knih
+http://docs.python-guide.org/en/latest/intro/learning/
+
+stáhnout kníky od O'Reily
+python in a nutshell
+
+https://bitbucket.org/gregmalcolm/python_koans
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+2015_04_11
+[] notes - oddìlávací display - staèí propojka na display a odnímatelnı panty a vyøeším problem s nedostatkem místa na stole! :)
+2015_04_13
+[] raspi weather
+http://www.instructables.com/id/Complete-DIY-Raspberry-Pi-Weather-Station-with-Sof/?ALLSTEPS
+2015_04_18
+[] motory akcelerometry na jednotlivé stupnì s definovanou polohou.. a pak dokáou zmìøit aj úhlové zrychlení po pøepoètu
+2015_05_02
+[] carpark - jezdici autobus s místama pro parkování - mnohem dùleitìjší je mít kde zaparkovat ne kde si sednout :O lol
+[] VR cube hra - podle filmu kostka
+2015_04_25
+[] vykreslovat spektrum pøi hraní hudby jakoto linku stoèenou do logaritmické spirály :O
+[] stropní obrazovky - v plechovce nano oled kery se pøichytí a po zaschnutí samy propojí komunikaèní zbìrnicí a pak kalibruješ s kamerou bo nevijou kera je kde ale strojovım uèením se to nauèí..
+2015_05_07
+[] èervy - ve 3d - s Oculusem na hlavì - 4 tlaèítka - minimální polomìr zábìru - 2 a více hráèù
+2015_05_08
+[] do hry pozadí muzika - alpha waves
+https://www.youtube.com/watch?v=WPni755-Krg
+2015_05_09
+[] jak to nové technické umìní
+- tak napsat e ze samé podstaty lidství.. tedy z toho jak vnímáme se jim to bude líbit!
+- popsat vnitøní zapojení oka a to jak reaguje na èáry - take na té nejniší úrovni s náma nìco dìlají pouze ty èáry!
+2015_05_10
+[] bohatí si budou platit za to aby je sledovali drony, pro jejich bezpeènost
+[] speedwatching.. u to zaèalo, je jenom otázkou èasu ne se filmy zaènou toèit zrychlenì bìnì.
+2015_05_11
+[] kníku ve stylu diplomky 
+- reference na odborné texty
+- zpracovaná mìøení
+- grafy vzorce etc!
+[] vyzvánìní - tlukot kocourova srdce - RedDwarf
+[] má nìkdo sociální simulace? 
+stát? facebook kdo? a proè nejsou veøejné? pak by neplatili? ala Asimov a psychohistorie
+2015_05_14
+[] zaøízení se spoustou usb2.0 portù
+pro narhávání dat na reklamní flashky!
+[] how to write FM
+http://opensource.com/business/15/5/write-better-docs
+[] telekonferenèní kvadrukoptr! - s displejem zobrazujícím oblièej..- manageøi stavby etc dohled
+2015_05_24
+[] HRA 3d kuleèník - ve futuramì - díl s leelenema rodièama rozvod 7serie 5ty dil
+4:30 minuta ve vesmirnym baru
+2015_05_26
+[] Excell 3d
+tabulky aj do 3 rozmìru.. a dalších.. mou øezat etc..
+2015_05_30
+[] televizo skop
+http://www.kyleellisevans.com/derastra
+2015_05_31
+[] pisnièku na pojmy z MSNV a fyziky
+- imitance permitivita etc...
+2015_06_02
+[] morphing sensors - detekuje pokrèení povrchu - ale málo chceto ohebnìjší vìci!!
+file:///C:/Users/gr4viton/Desktop/_ALL/TEMP/ADA482624.pdf
+2015_06_04
+[] 3d scan- pomocí látky kterou nakrèím na objekt
+- a vnímá jak je pokrèenı - model
+- existují u s tenzometrama - ovs moc tuhı
+- ale pouít antény kere bych budil rùznıma frekvencema.. a podle toho poznal..
+
+[] bipedální chùzi nauèit první na modelu ptákù - mají ní tìištì - je to lehèí
+[] raspberry pi + grafickı tablet - noèní zapisovaè - slova píšu pøez sebe a on je rozliší
+samo ukládání po 1minutì
+[] okna co se zavøou samy dy je venku vedro
+[] špunty do uší s funkcí budíku je detekuje fáze spánku a probudí a po ukonèení REM fáze
+2015_06_07
+[] generovat CGG obrazy jakoto znalostní databáze - monost automatické segmentace
+- znaèky, spztky etc
+2015_06_08
+[] watch series IMDb at least 5000 people rated best
+Mr.Robot
+The Wire
+Through the Wormhole
+Fawlty Towers!!
+2015_06_14
+[] mnohem vyšší fish dome - a nahoøe regulovana hladina vzduchu.. a dou rybky vidìt aj v jezírkách - takové sloupy s vodou
+
+2015_06_23
+[] jaké nejvìtší vlnové délky a nejmenší jsou v astronomii pouívány - detekce temné hmoty!
+
+2015_07_08
+[] wall mounted monitor
+http://workshop.lifehacker.com/this-diy-wall-mounted-swing-arm-keeps-your-tv-or-monito-1716178335?utm_campaign=socialflow_lifehacker_facebook&utm_source=lifehacker_facebook&utm_medium=socialflow
+
+2015_07_14
+[] generovat náhodné velièiny pomocí grafárny - 2 textury pøes sebe problikávají obì "náhodnì"?
+2015_09_29
+[] airbourn
+[] wilburgh smith - opeth
+[] hospoda u stromu - kolem stromu
+[] airblade - rezonanèní frekvence kapek místo stálého fuku
+[] suchı zip na koberec
+[] ball cyclotron from wimshurst generator
+https://www.youtube.com/watch?time_continue=245&v=3t7npMCxiVo
+[] home made soldering iron
+http://hackaday.com/2015/10/11/homemade-soldering-station-does-it-better/
+
