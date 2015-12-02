@@ -12,8 +12,8 @@ python.exe -c "print('\7')" :: BEEP
 
 set /a time2wait=%1	:: from first parameter
 echo %time2wait%
-if %time2wait% EQU 0 (
-	timeout 3
-) ELSE (
+if %time2wait% NEQ 0 (
 	timeout %time2wait%
+) ELSE (
+	timeout 3
 )
