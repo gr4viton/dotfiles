@@ -1,6 +1,7 @@
 #!/bin/sh
 #git config --global credential.helper 'cache --timeout=28800'
 
+cd ~/gr4log/
 git add .
 git commit -m "%date% %time% from xubuntu"
 echo $SSH_AUTH_SOCK
