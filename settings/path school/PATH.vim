@@ -1,4 +1,4 @@
-c:/MinGW/bin
+c:\MinGW\bin\
 ;C:\PROG\dev\CMake\bin
 ;C:\PROG\dev\Python34\
 ;C:\PROG\dev\Python34\Scripts
