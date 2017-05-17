@@ -136,3 +136,8 @@ alias cdpdalek='cd '$dirdalek'py/'
 alias vipdalek='cdpdalek; vim -O main.py dalek.kv'
 
 alias cdpkivent-examples='cd '$dirkivy'kivent/examples'
+
+alias big_packages="sudo dpkg-query -W --showformat='${Installed-Size}\t${Package}\n' | sort -nr | less"
+
+
+alias remove_old_kernels="sudo dpkg-query -W --showformat='${Installed-Size}\t${Package}\n' | sort -nr | less"
