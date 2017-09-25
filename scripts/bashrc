@@ -25,9 +25,8 @@ dir_here=$(dirname $0)
 loadit_script "alias/speak.sh"
 # git
 loadit_script "alias/git.sh"
-#
-#loadit_here "/alias/centroid.sh"
 loadit_script "alias/centroid.sh"
+loadit_script "alias/install.sh"
 
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
     os_name="linux"
