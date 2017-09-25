@@ -24,7 +24,14 @@ alias git_whoami="git config --list"
 alias generate_ssh='ssh-keygen'
 #https://confluence.atlassian.com/bitbucket/set-up-ssh-for-git-728138079.html
 git_generate_ssh() {
-    generate_ssh
+    if [ -f $HOME/.ssh/id_rsa.pub ]; then
+        echo $HOME/.ssh/id_rsa.pub public ssh_key already exist
+    else
+        echo Generating new ssh_key - press enter to save to default directory
+        generate_ssh
+    fi
+
+    cat $HOME/.ssh/id_rsa.pub
     echo "Now add the ssh key via web"
     echo "https://bitbucket.org/account/user/gr4viton/ssh-keys/"
 }
