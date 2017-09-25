@@ -18,6 +18,7 @@ git config --global user.email $2
 
 alias git_iam_gr4viton="git_set_global gr4viton lordmutty@gmail.com"
 alias git_iam_kiwi="git_set_global daniel.davidek daniel.davidek@kiwi.com"
+alias git_whoami="git config --list"
 
 recheckout_current_branch() {
 # if the diff is empty 
