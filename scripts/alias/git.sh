@@ -18,6 +18,16 @@ git config --global user.email $2
 
 alias git_iam_gr4viton="git_set_global gr4viton lordmutty@gmail.com"
 alias git_iam_kiwi="git_set_global daniel.davidek daniel.davidek@kiwi.com"
+alias git_whoami="git config --list"
+
+## git ssh
+alias generate_ssh='ssh-keygen'
+#https://confluence.atlassian.com/bitbucket/set-up-ssh-for-git-728138079.html
+git_generate_ssh() {
+    generate_ssh
+    echo "Now add the ssh key via web"
+    echo "https://bitbucket.org/account/user/gr4viton/ssh-keys/"
+}
 
 recheckout_current_branch() {
 # if the diff is empty 
