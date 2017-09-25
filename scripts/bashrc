@@ -1,6 +1,33 @@
 #!/bin/bash
 # .bashrc of gr4viton
 
+loadit() {
+if [ -f $1 ]; then
+    . $1
+    echo "Loaded $1"
+fi
+}
+
+dir_gr4=$HOME'/gr4log/'
+
+loadit_here() {
+    _dir_here=$(dirname $0) 
+    loadit "$_dir_here$1"
+}
+
+loadit_script() {
+    _dir=$dir_gr4'/scripts/'
+    loadit $_dir$1
+}
+# ############## LOAD ALIASES AND FUNCTION FILES ###############
+dir_here=$(dirname $0) 
+# speak synthesis
+loadit_script "alias/speak.sh"
+# git
+loadit_script "alias/git.sh"
+#
+#loadit_here "/alias/centroid.sh"
+loadit_script "alias/centroid.sh"
 
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
     os_name="linux"
@@ -86,26 +113,8 @@ extract () {
  fi
 }
 
-dir_here=$(dirname $0) 
-
-loadit() {
-if [ -f $1 ]; then
-    . $1
-    echo "Loaded $1"
-fi
-}
-
 alias vircvim='vim '$home'.vimrc' 
 alias vircbash='vim '$rcbash
-
-# ############## LOAD ALIASES AND FUNCTION FILES ###############
-# speak synthesis
-loadit "$dir_here/alias/speak.sh"
-
-# git
-loadit "$dir_here/alias/git.sh"
-#
-loadit "$dir_here/alias/centroid.sh"
 
 # logs
 alias v1='vim -O '$rcbash' '$gr4env
@@ -116,15 +125,18 @@ alias v3='vim -O '$dirgr4log'LOG/nix/logFedora.vim '$dirgr4log
 # ############## gr4log
 
 # gr4log
-dirgr4log=$home'/gr4log/'
+dirgr4log=$HOME'/gr4log/'
+dir_gr4scripts="$HOME/gr4log/scripts"
 alias gr4log='vim '$dirgr4log'gr4log.vim'
-alias gr4log-sync=$dirgr4log'gr4log_git_update.sh'
+alias gr4log_sync=$dirgr4log'gr4log_git_update.sh'
 alias cdgr4log='cd '$dirgr4log
+
+alias vigr4script='vim -O bashrc alias/git.sh alias/centroid.sh'
+alias gr4bash='cd $dir_gr4scripts && vigr4script'
 
 alias log='cdgr4log;gr4log'
 # sync all
-alias sync-all='gr4log-sync'
-
+alias sync_all='gr4log_sync'
 
 
 echo "gr4log .bashrc loaded!"
