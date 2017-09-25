@@ -136,7 +136,7 @@ alias vgrc='cd $dir_gr4scripts && vgr4'
 
 alias log='cdgr4log;gr4log'
 # sync all
-alias sync_all='gr4log_sync'
+alias syncall='gr4log_sync'
 
 
 echo "gr4log .bashrc loaded!"
