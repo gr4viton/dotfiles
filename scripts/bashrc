@@ -26,6 +26,7 @@ loadit_script "alias/git.sh"
 loadit_script "alias/centroid.sh"
 loadit_script "alias/install.sh"
 loadit_script "alias/speak.sh"
+loadit_script "alias/dev.sh"
 
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
     os_name="linux"
