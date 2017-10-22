@@ -133,6 +133,12 @@ alias log='cdgr4log;gr4log'
 alias syncall='gr4log_sync'
 
 
+dir_datagrab='/srv/centroid/datagrab/'
+alias cd_datagrab='cd '$dir_datagrab
+alias venv_datagrab='source '$dir_datagrab'/venv_data_py36/bin/activate'
+
+
+logAutomateMe=$dirgr4log'LOG/dev/logAutomateMe.vim'
 
 dirkiwilog=$dirgr4log'LOG/work/kiwi/'
 # logs
@@ -140,6 +146,6 @@ alias v1='vim -O '$rcbash' '$gr4env
 alias v2='cd '$dirgr4log';vim -O '$dirgr4log'gr4log.vim '$dirkiwilog'kiwi\ log.vim '$logAutomateMe
 alias v3='vim -O '$dirgr4log'LOG/nix/logFedora.vim '$dirgr4log
 
-
+eval $(thefuck --alias) 
 
 echo "gr4log .bashrc loaded!"
