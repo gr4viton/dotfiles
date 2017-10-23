@@ -7,7 +7,6 @@ make_python_venv () {
 
 alias venv_cv2='source /srv/cv2/venv_cv2/bin/activate'
 
-
 alias all_py='find . -type f -regextype sed -regex ".*\.py" -print0'
 
 # https://stackoverflow.com/questions/1583219/awk-sed-how-to-do-a-recursive-find-replace-of-a-string
@@ -27,3 +26,9 @@ regex_all_py () {
         esac
     done
 } 
+
+centroid_dir='/srv/centroid/'
+alias cd_centroid='cd '$centroid_dir
+
+
+# why is import cv2 functional only when venv_cv2 runned from /srv/

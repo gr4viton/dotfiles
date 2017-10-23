@@ -46,7 +46,8 @@ contrib_dir=$base_dir'/opencv_contrib'
 git clone https://github.com/Itseez/opencv.git $opencv_dir
 git clone https://github.com/Itseez/opencv_contrib.git $contrib_dir
 
-sudo apt-get -y install libjpeg-dev libtiff5-dev libjasper-dev libpng12-dev
+# sudo apt-get -y install libjpeg-dev 
+sudo apt-get -y install libtiff5-dev libjasper-dev libpng12-dev
 sudo apt-get -y install libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
 sudo apt-get -y install libxvidcore-dev libx264-dev
 sudo apt-get -y install libatlas-base-dev gfortran
