@@ -32,3 +32,6 @@ alias cd_centroid='cd '$centroid_dir
 
 
 # why is import cv2 functional only when venv_cv2 runned from /srv/
+
+
+alias mount_ntfs_kill_hibernate='sudo umount /mnt/C || sudo mount -t ntfs-3g -o remove_hiberfile /dev/nvme0n1p3 /mnt/C && echo "/mnt/C remounted Successfully as rw!!"'

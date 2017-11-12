@@ -1,0 +1,346 @@
+
+# config from [Mokry kokos](https://github.com/martin-kokos/dotfiles/blob/master/X/.Xdefaults)
+
+# mine
+URxvt.scrollBar: false
+
+# marin-kokos
+
+xterm*background: violet
+xterm*foreground: grey
+
+Xft.dpi: 276.0
+Xft.autohint: 0
+Xft.lcdfilter: lcddefault
+Xft.hintstyle: hintfull
+Xft.hinting: 1
+Xft.antialias: 1
+Xft.rgba: rgb
+
+!## XTerm
+XTerm*Background: black
+XTerm*Foreground: white
+
+!## urxvt
+
+URxvt.perl-lib: /home/x/.urxvt/ext/
+URxvt.perl-ext-common: tabbed,font-size,default,matcher
+
+URxvt.iso14755: false
+URxvt.iso14755_52: false
+
+URxvt.keysym.C-Up:     font-size:increase
+URxvt.keysym.C-Down:   font-size:decrease
+URxvt.keysym.C-S-Up:   font-size:incglobal
+URxvt.keysym.C-S-Down: font-size:decglobal
+URxvt.keysym.C-equal:  font-size:reset
+URxvt.keysym.C-slash:  font-size:show
+
+! transparency - true or false (default)
+URxvt*transparent: false
+
+! shading - 0 to 99 darkens, 101 to 200 lightens.
+!   Dont use with tintColor; just use a darker or lighter color instead.
+!URxvt*shading: 40
+
+! scrollback buffer lines - 65535 is max on most machines (64 is default)
+URxvt*saveLines: 12000
+
+! color depth for pixbuth, needed by transparency
+URxvt*depth: 32
+
+! font color (default is black)
+URxvt*foreground: White
+
+! background color (prior to tinting) (default is white)
+URxvt*background: rgba:3155/0011/2444/efff
+
+! Xft (X FreeType) with Bitstream, DejaVu, Liberation, or Terminus fonts:
+!  Fedora/debian packages: libXft/libxft2
+!  An anti-aliased font setup with Xft looks fantastic; it can be a bit choppy 
+!  on older systems. You can always turn off anti-aliasing (antialias=false) if
+!  your terminal is sluggish. Use only ONE of the Xft pairs below:
+!
+! Xft: Bitstream fonts
+!  Fedora/debian packages: bitstream-vera-sans-mono-fonts/ttf-bitstream-vera 
+
+!URxvt*font: xft:Bitstream Vera Sans Mono:pixelsize=12:antialias=true:hinting=true
+!URxvt*boldFont: xft:Bitstream Vera Sans Mono:bold:pixelsize=12:antialias=true:hinting=true
+
+!
+! Xft: DejaVu fonts
+!  Fedora/debian packages: dejavu-sans-mono-fonts/ttf-dejavu 
+URxvt*font: xft:DejaVu Sans Mono:pixelsize=12:antialias=true:hinting=true
+URxvt*boldFont: xft:DejaVu Sans Mono:bold:pixelsize=12:antialias=true:hinting=true
+
+!
+! Xft: Liberation fonts
+!  Fedora/debian packages: liberation-mono-fonts/ttf-liberation
+!URxvt*font: xft:Liberation Mono:pixelsize=13:antialias=true:hinting=true
+!URxvt*boldFont: xft:Liberation Mono:bold:pixelsize=13:antialias=true:hinting=true
+
+!
+! Xft: Terminus fonts
+!  Fedora/debian packages: terminus-fonts/xfonts-terminus
+!URxvt*font: xft:terminus:pixelsize=12
+!URxvt*boldFont: xft:terminus:bold:pixelsize=12
+
+! Traditional fonts - a more traditional font setup in lieu of xft
+!URxvt*font:-*-courier-medium-r-normal-*-14-*-*-*-*-*-iso8859-1
+!URxvt*boldFont:-*-courier-bold-r-normal-*-14-*-*-*-*-*-iso8859-1
+
+! font spacing correction
+URxvt*letterSpace: -2
+
+! Replace blue folder colors with a lighter shade for clarity. To
+!  set colored folders and files within urxvt, xterm, and aterm, add
+!  the following line to your ~/.bashrc ($HOME/.bashrc) file under
+!  the heading "# User specific aliases and functions":
+!   alias ls="ls -h --color=auto"
+
+#URxvt*color4: RoyalBlue
+#URxvt*color12: RoyalBlue
+
+! fade number of percent when focus is lost
+URxvt*fadeing: 30
+
+! scrollbar - true (default) or false
+URxvt*scrollBar: true
+
+! scrollbar position - left=false (default) or right=true
+URxvt*scrollBar_right: false
+
+! scrollbar style - rxvt (default), plain, next, or xterm
+URxvt*scrollstyle: plain
+
+! clickable URLs
+URxvt*url-launcher: /usr/bin/firefox
+URxvt*matcher.button: 1
+
+! simple tabs Shift-down, new, S-left,right, navigate
+
+! Ctr-arrows, move tabs
+
+URxvt.tabbed.tabbar-fg: 2
+URxvt.tabbed.tabbar-bg: 0
+URxvt.tabbed.tab-fg: 3
+URxvt.tabbed.tab-bg: 0
+
+
+! MINE
+! --- ~/.Xresources ------------------------------------------------------------
+! ------------------------------------------------------------------------------
+! --- generated with 4bit Terminal Color Scheme Designer -----------------------
+! ------------------------------------------------------------------------------
+! --- http://ciembor.github.com/4bit -------------------------------------------
+! ------------------------------------------------------------------------------
+
+! --- special colors ---
+
+*background: #390227
+*foreground: #d9e6f2
+
+! --- standard colors ---
+
+! black
+*color0: #000000
+
+! bright_black
+*color8: #242424
+
+! red
+*color1: #ff3c3f
+
+! bright_red
+*color9: #f9585c
+
+! green
+*color2: #1fff1c
+
+! bright_green
+*color10: #1cf918
+
+! yellow
+*color3: #8f8c1c
+
+! bright_yellow
+*color11: #b9b528
+
+! blue
+*color4: #3c3f5f
+
+! bright_blue
+*color12: #585c89
+
+! magenta
+*color5: #8c3c8f
+
+! bright_magenta
+*color13: #b558b9
+
+! cyan
+*color6: #3c8f8c
+
+! bright_cyan
+*color14: #58b9b5
+
+! white
+*color7: #e1e1e1
+
+! bright_white
+*color15: #ffffff
+
+
+! ------------------------------------------------------------------------------
+! --- end of terminal colors section -------------------------------------------
+! ------------------------------------------------------------------------------
+
+! gnome term
+! ! colors
+!! Taken from GNOME Terminal "Linux console" theme.
+*color0:  #000000
+*color8:  #555555
+*color1:  #AA0000
+*color9:  #FF5555
+*color2:  #00AA00
+*color10: #55FF55
+*color3:  #AA5500
+*color11: #FFFF55
+*color4:  #0000AA
+*color12: #5555FF
+*color5:  #AA00AA
+*color13: #FF55FF
+*color6:  #00AAAA
+*color14: #55FFFF
+*color7:  #AAAAAA
+*color15: #FFFFFF
+
+
+
+! MOKRY 
+! --- ~/.Xresources ------------------------------------------------------------
+! ! ------------------------------------------------------------------------------
+! ! --- generated with 4bit Terminal Color Scheme Designer -----------------------
+! ! ------------------------------------------------------------------------------
+! ! --- http://ciembor.github.com/4bit -------------------------------------------
+! ! ------------------------------------------------------------------------------
+!
+! ! --- special colors ---
+!
+
+ *background: #0d1926
+ *foreground: #d9e6f2
+
+!
+! ! --- standard colors ---
+!
+
+! ! black
+*color0: #000000
+
+!
+! ! bright_black
+*color8: #3f3f3f
+
+!
+! ! red
+*color1: #c64d4d
+
+!
+! ! bright_red
+*color9: #d27373
+
+!
+! ! green
+*color2: #4dc64d
+!
+
+! ! bright_green
+*color10: #73d273
+
+!
+! ! yellow
+*color3: #c6c64d
+
+!
+! ! bright_yellow
+*color11: #d2d273
+
+!
+! ! blue
+*color4: #4d4dc6
+
+!
+! ! bright_blue
+*color12: #7373d2
+
+!
+! ! magenta
+*color5: #c64dc6
+
+!
+! ! bright_magenta
+*color13: #d273d2
+
+!
+! ! cyan
+*color6: #4dc6c6
+
+!
+! ! bright_cyan
+*color14: #73d2d2
+
+!
+! ! white
+*color7: #ececec
+
+!
+! ! bright_white
+*color15: #ffffff
+
+!
+!
+! ------------------------------------------------------------------------------
+! ! --- end of terminal colors section -------------------------------------------
+! ! ------------------------------------------------------------------------------
+
+! MINE2
+! terminal.sexy
+!
+! special
+*.foreground:   #c5c8c6
+*.background:   #1d1f21
+*.cursorColor:  #c5c8c6
+
+! black
+*.color0:       #282a2e
+*.color8:       #373b41
+
+! red
+*.color1:       #cc0000
+*.color9:       #ef2929
+
+! green
+*.color2:       #4e9a06
+*.color10:      #8ae234
+
+! yellow
+*.color3:       #de935f
+*.color11:      #fce94f
+
+! blue
+*.color4:       #3465a4
+*.color12:      #729fcf
+
+! magenta
+*.color5:       #75507b
+*.color13:      #ad7fa8
+
+! cyan
+*.color6:       #06989a
+*.color14:      #34e2e2
+
+! white
+*.color7:       #d3d7cf
+*.color15:      #eeeeec
+
