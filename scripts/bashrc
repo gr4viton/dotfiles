@@ -127,7 +127,7 @@ alias gr4log='vim '$dirgr4log'gr4log.vim'
 alias gr4log_sync=$dirgr4log'gr4log_git_update.sh'
 alias cdgr4log='cd '$dirgr4log
 
-alias vgr4='vim -O bashrc alias/git.sh ~/.bashrc'
+alias vgr4='vim -O bashrc alias/dev.sh ~/.bashrc'
 alias vgrc='cd $dir_gr4scripts && vgr4'
 
 alias log='cdgr4log;gr4log'
@@ -149,6 +149,9 @@ alias v2='cd '$dirgr4log';vim -O '$dirgr4log'gr4log.vim '$dirkiwilog'kiwi\ log.v
 alias v3='vim -O '$dirgr4log'LOG/nix/logFedora.vim '$dirgr4log
 
 eval $(thefuck --alias) 
+
+alias cdC='cd /mnt/C'
+alias cdD='cd /mnt/D'
 
 
 
