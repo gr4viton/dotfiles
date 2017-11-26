@@ -53,5 +53,15 @@ git rev-parse --abbrev-ref HEAD 2>/dev/null | sed 's:.*/::'
 }
 
 
+alias git__branches_all="git branch | sed 's|* |  |' | sort"
+alias git__branches_remote="git branch -r | sed 's|origin/||' | sort"
+
+alias git_branch_only_local_without_remote="comm -23 <(git__branches_all) <(git__branches_remote)"
+#alias git_branch_only_local_without_remote="comm -23 <(git branch | sed 's|* |  |' | sort) <(git branch -r | sed 's|origin/||' | sort )"
+# not functional when the alias is made of it
+# alias git_branch_only_local_without_remote="git branch -vv | grep -v origin | awk '{print $1}'"
+
+
+
 # autocomplete
 source /usr/share/bash-completion/completions/git

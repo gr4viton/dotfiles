@@ -52,11 +52,21 @@ recheckout_current_branch() {
 
 # POSTGRES
 
+alias dbm_change_db='vim /srv/da/dbmodels/kw/automation/dbmodels/settings_local.py'
+
 alias dbm_psql='psql -h 172.17.0.2 -U postgres postgres'
 alias dbm_psql_drop='psql -h 172.17.0.2 -U postgres postgres -c "drop schema public cascade;"'
 alias dbm_psql_create='psql -h 172.17.0.2 -U postgres postgres -c "create schema public;"'
 alias dbm_psql_recreate='dbm_psql_drop; dbm_psql_create'
 
+alias dbm_alembic_upgrade_head='alembic upgrade head'
+alias dbm_test_up='time alembic upgrade head'
+alias dbm_test_down='time alembic downgrade -1'
+
+alias dbm_test_once='dbm_test_up; dbm_test_down'
+alias dbm_test_twice='dbm_test_once; dbm_test_once'
+
+alias dbm_versions_sort='ls alembic/versions/ |sort -k1.14'
 
 dbm_recheckout_master_alembic_fcn() {
     cur=`git rev-parse --abbrev-ref HEAD`
@@ -86,3 +96,11 @@ alias dbm_recheckout_master_alembic='dbm_recheckout_master_alembic_fcn'
 
 export WORKON_HOME='~/venvs/'
 source /home/dd/.local/bin/virtualenvwrapper.sh
+
+
+alias urxvt_reload='xrdb -load ~/.Xdefaults'
+
+#
+#alias docker_containers_remove_stopped="docker ps -aq --no-trunc | xargs docker rm"
+# Remove stopped containers
+# This command will not remove running containers, only an error message will be printed out for each of them.
