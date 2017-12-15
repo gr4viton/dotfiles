@@ -68,6 +68,8 @@ alias dbm_test_twice='dbm_test_once; dbm_test_once'
 
 alias dbm_versions_sort='ls alembic/versions/ |sort -k1.14'
 
+alias dbm_venv='source /srv/da/dbmodels/venv3_test/bin/activate'
+
 dbm_recheckout_master_alembic_fcn() {
     cur=`git rev-parse --abbrev-ref HEAD`
     echo Current branch = $cur           
@@ -95,12 +97,24 @@ alias dbm_recheckout_master_alembic='dbm_recheckout_master_alembic_fcn'
 
 
 export WORKON_HOME='~/venvs/'
-source /home/dd/.local/bin/virtualenvwrapper.sh
+# source /home/dd/.local/bin/virtualenvwrapper.sh
 
 
 alias urxvt_reload='xrdb -load ~/.Xdefaults'
+alias virc_urxvt='vim ~/.Xdefaults'
 
 #
-#alias docker_containers_remove_stopped="docker ps -aq --no-trunc | xargs docker rm"
+
+alias docker_space='sudo du -csh /srv/docker/'
+alias docker_containers_remove_stopped="docker ps -aq --no-trunc | xargs docker rm"
 # Remove stopped containers
 # This command will not remove running containers, only an error message will be printed out for each of them.
+
+
+
+alias logrotate_edit='vim /etc/logrotate.conf'
+alias log_varlog_space='sudo du -csh /var/log/*'
+
+# https://askubuntu.com/questions/5980/how-do-i-free-up-disk-space
+alias apt_list_biggest_packages="dpkg-query -W --showformat='\$\{Installed-Size\} \$\{Package\}\n' | sort -nr | less"
+alias apt_list_biggest_packages='dpkg-query -W --showformat="${Installed-Size} ${Package}\n" | sort -nr | less'
