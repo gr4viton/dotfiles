@@ -80,6 +80,9 @@ dbm_recheckout_master_alembic_fcn() {
         exit;
     fi
     git pull
+    
+    echo 'Using this DATABASE settings:'
+    echo $(python -c "from kw.automation.dbmodels.settings import DATABASES as DB; print(DB)")
     while true; do
         read -p "Are you sure you are not deleting PRODUCTION DB !???! " yn
         case $yn in
@@ -103,7 +106,7 @@ export WORKON_HOME='~/venvs/'
 alias urxvt_reload='xrdb -load ~/.Xdefaults'
 alias virc_urxvt='vim ~/.Xdefaults'
 
-#
+# Docker
 
 alias docker_space='sudo du -csh /srv/docker/'
 alias docker_containers_remove_stopped="docker ps -aq --no-trunc | xargs docker rm"
@@ -118,3 +121,11 @@ alias log_varlog_space='sudo du -csh /var/log/*'
 # https://askubuntu.com/questions/5980/how-do-i-free-up-disk-space
 alias apt_list_biggest_packages="dpkg-query -W --showformat='\$\{Installed-Size\} \$\{Package\}\n' | sort -nr | less"
 alias apt_list_biggest_packages='dpkg-query -W --showformat="${Installed-Size} ${Package}\n" | sort -nr | less'
+
+
+
+
+alias pip_compile='pip-compile --no-index --output-file requirements.txt requirements.in'
+alias pip_compile_test='pip-compile --no-index -r requirements.txt --output-file ./test-requirements.txt ./test-requirements.in'
+
+alias pip_compile_both='pip_compile; pip_compile_test'

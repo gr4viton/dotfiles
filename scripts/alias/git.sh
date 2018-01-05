@@ -6,6 +6,7 @@ alias gdiff='git diff --color-words'
 alias gpull_rebase='git pull --rebase origin master'
 
 alias glog='git log --stat'
+alias glogp='git log --stat --patch'
 alias gsquash2='git rebase --interactive HEAD~2'
 alias g='git'
 alias b='branch'
@@ -14,10 +15,20 @@ alias ch='checkout'
 git_set_global() {
 git config --global user.name $1
 git config --global user.email $2
+git config --list
+}
+git_set_local() {
+git config --local user.name $1
+git config --local user.email $2
+git config --list
 }
 
-alias git_iam_gr4viton="git_set_global gr4viton lordmutty@gmail.com"
-alias git_iam_kiwi="git_set_global daniel.davidek daniel.davidek@kiwi.com"
+alias git_iam_gr4viton_global="git_set_global gr4viton lordmutty@gmail.com"
+alias git_iam_gr4viton="git_set_local gr4viton lordmutty@gmail.com"
+
+alias git_iam_kiwi_global="git_set_global daniel.davidek daniel.davidek@kiwi.com"
+alias git_iam_kiwi="git_set_local daniel.davidek daniel.davidek@kiwi.com"
+
 alias git_whoami="git config --list"
 
 ## git ssh

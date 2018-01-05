@@ -179,6 +179,10 @@ gconftool-2 -s -t string /apps/gnome-terminal/profiles/Default/palette '#0000000
 
 alias psagent="ps -aux | grep 'cache\|probe\|eval' --color=always | sort - k11"
 alias psdocker="ps -aux | grep 'docker' --color=always | sort -k10"
+alias psdocker2='docker ps'
 
+dirsonginator='/srv/songinator/'
+alias cdsonginator='cd $dirsonginator'
 
 echo "gr4log .bashrc loaded!"
+
