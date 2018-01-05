@@ -7,26 +7,26 @@ function commit_it {
     commit_msg_base="$date: from $(uname -no)"
     commit_msg="$commit_msg_base\n $1"
     git commit -m "$commit_msg"
-    echo "Commited gr4log with commit message"
+    echo ">>> Commited gr4log with commit message"
     echo $commit_msg
 }
 
 home="/home/dd/"
 main_dir=$home"gr4log/"
 cd $main_dir
-echo "Saving gr4log in $main_dir"
+echo ">>> Saving gr4log in $main_dir"
 
 commit_it "start" 
 
 # COPY CONFIGS
-echo "Copying configs"
+echo ">>> Copying configs"
 dotfiles=$main_dir"dotfiles/"
 urxvt_to=$dotfiles"urxvt/.Xdefaults"
 nvim_to=$dotfiles"nvim/"
-echo "Saving urxvt conf"
+echo ">>> Saving urxvt conf"
 cp $home".Xdefaults" $urxvt_to
 
-echo "Saving nvim conf"
+echo ">>> Saving nvim conf"
 nvim_from=$home".config/nvim/"
 cp $nvim_from"init.vim" $nvim_to
 cp -r $nvim_from"colors" $nvim_to
@@ -46,5 +46,6 @@ git push origin master
 # beep
 python -c "print('\7')" 
 
+echo ">>> End of $0"
 
 #exit()
