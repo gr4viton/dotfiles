@@ -5,7 +5,7 @@ function commit_it {
     git add .
     date=$(date '+%d/%m/%Y %H:%M:%S')
     commit_msg_base="$date: from $(uname -no)"
-    commit_msg="$commit_msg_base\n $1"
+    commit_msg="$commit_msg_base $1"
     git commit -m "$commit_msg"
     echo ">>> Commited gr4log with commit message"
     echo $commit_msg
