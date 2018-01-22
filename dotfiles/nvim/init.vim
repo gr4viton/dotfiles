@@ -172,10 +172,10 @@ set fileencoding=utf-8
 " open files in vim - tabbing = http://stackoverflow.com/questions/1445992/vim-file-navigation
 :set wildmode=full
 " Window movements; I do this often enough to warrant using up M-arrows on this"
-nnoremap <M-Right> <C-W><Right>
-nnoremap <M-Left> <C-W><Left>
-nnoremap <M-Up> <C-W><Up>
-nnoremap <M-Down> <C-W><Down>
+nnoremap <A-Right> <C-W><Right>
+nnoremap <A-Left> <C-W><Left>
+nnoremap <A-Up> <C-W><Up>
+nnoremap <A-Down> <C-W><Down>
 
 " Open window below instead of above"
 nnoremap <C-W>N :let sb=&sb<BAR>set sb<BAR>new<BAR>let &sb=sb<CR>
@@ -185,18 +185,18 @@ nnoremap <C-w>v :vnew<CR>
 nnoremap <C-w>V :let spr=&spr<BAR>set nospr<BAR>vnew<BAR>let &spr=spr<CR>
 
 " I open new windows to warrant using up C-M-arrows on this"
-nmap <C-M-Up> <C-w>n
-nmap <C-M-Down> <C-w>N
-nmap <C-M-Right> <C-w>v
-nmap <C-M-Left> <C-w>V
+"nmap <M-Up> <C-w>n
+"nmap <M-Down> <C-w>N
+"nmap <M-Right> <C-w>v
+"nmap <M-Left> <C-w>V
 
 " Mappings to move lines = http://vim.wikia.com/wiki/Moving_lines_up_or_down
-nnoremap <A-J> :m .+1<CR>==
-nnoremap <A-K> :m .-2<CR>==
-inoremap <A-J> <Esc>:m .+1<CR>==gi
-inoremap <A-K> <Esc>:m .-2<CR>==gi
-vnoremap <A-J> :m '>+1<CR>gv=gv
-vnoremap <A-K> :m '<-2<CR>gv=gv
+"nnoremap <A-J> :m .+1<CR>==
+"nnoremap <A-K> :m .-2<CR>==
+"inoremap <A-J> <Esc>:m .+1<CR>==gi
+"inoremap <A-K> <Esc>:m .-2<CR>==gi
+"vnoremap <A-J> :m '>+1<CR>gv=gv
+"vnoremap <A-K> :m '<-2<CR>gv=gv
 
 " move
 nnoremap <A-k> <up>
@@ -214,9 +214,17 @@ vnoremap <A-j> <down>
 vnoremap <A-l> <right>
 vnoremap <A-h> <left>
 
+" panes goto
+nnoremap <A-K> <C-W><up>
+nnoremap <A-J> <C-W><down>
+nnoremap <A-L> <C-W><right>
+nnoremap <A-H> <C-W><left>
+
+" visual with -alt
+nnoremap <A-v> <C-v>
 
 " increment
-noremap <C-I> <C-A>
+" noremap <C-I> <C-A>
 " save and copy
 
 function! SaveStm32()
@@ -253,6 +261,7 @@ autocmd BufWritePre *.md :call <SID>StripTrailingWhitespaces()
 
 " automatically wrap gitcommit to 72 chars = coala ready
 au FileType gitcommit set tw=72
+
 
 
 call plug#begin()
@@ -326,6 +335,7 @@ set hlsearch
 
 set pastetoggle=<F2>
 
+
 ""disable visual mode with mouse
 "set mouse-=a
 
@@ -338,19 +348,34 @@ vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 let g:syntastic_python_pylint_post_args="--max-line-length=120"
 let g:syntastic_python_flake8_args='--ignore=E501,E225'
 
-set tags=/srv/da/tags/tags
 
 " noremap = nvo == normal + (visual + select) + operator pending
 " noremap! = ic == insert + command-line mode
 " alt is not functional in urxvt
 " https://unix.stackexchange.com/questions/199683/alt-mappings-for-vim-in-urxvt
+"
+" ctags for multi-file function definition search
+set tags=/srv/da/tags/tags
+" :tag <tag>
+" pattern
+" :tag /<pattern>
+noremap <A-{> :tjump /
+" preview
+" :ptag <tag>
+" open in the same
 inoremap <A-p> <C-]>
-inoremap <A-[> :tnext<Enter>
-inoremap <A-o> :tprev<Enter>
 noremap <A-p> <C-]>
+" show list of tag links if there is more than one link
+noremap <A-P> g<C-]>
+" or :tjump <tag>
+
+inoremap <A-[> :tnext<Enter>
 noremap <A-[> :tnext<Enter>
+inoremap <A-o> :tprev<Enter>
 noremap <A-o> :tprev<Enter>
-noremap <A-P> <C-t>
+
+" return to where the first tag was searched for
+noremap <A-O> <C-t>
 
 
 " SILVER RULE!
