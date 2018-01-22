@@ -27,6 +27,7 @@ loadit_script "alias/centroid.sh"
 loadit_script "alias/install.sh"
 loadit_script "alias/speak.sh"
 loadit_script "alias/dev.sh"
+loadit_script "alias/hw.sh"
 
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
     os_name="linux"
@@ -131,6 +132,7 @@ alias vgr4='vim -O bashrc alias/dev.sh ~/.bashrc'
 alias vgrc='cd $dir_gr4scripts && vgr4'
 
 alias log='cdgr4log;gr4log'
+alias log_dreamer='vim '$dirgr4log'LOG/logDreamer.vim'
 # sync all
 alias syncall='gr4log_sync'
 
