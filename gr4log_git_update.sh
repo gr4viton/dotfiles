@@ -25,7 +25,7 @@ urxvt_to=$dotfiles"urxvt/.Xdefaults"
 nvim_to=$dotfiles"nvim/"
 tmux_to=$dotfiles"tmux/"
 
-echo ">>> Saving urxvt conf"
+echo ">>> Saving tmux conf"
 cp $home".tmux.conf" $tmux_conf
 
 echo ">>> Saving urxvt conf"
