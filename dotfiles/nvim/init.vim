@@ -53,6 +53,7 @@ Plugin 'kien/ctrlp.vim'
 " GitHub
 Plugin 'tpope/vim-fugitive'
 
+
 "" ______________ mine
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -297,6 +298,8 @@ Plug 'tpope/vim-unimpaired'
 " wakatime tracker - kokos - not reliable
 " Plug 'wakatime/vim-wakatime'
 
+" ZoomWin ^W o
+"Plugin 'itspriddle/ZoomWin'
 
 call plug#end()
 
@@ -388,3 +391,7 @@ inoremap <Up>    <Nop>
 inoremap <Down>  <Nop>
 inoremap <Left>  <Nop>
 inoremap <Right> <Nop>
+
+
+"let zoom=":tabnew | :b#"
+"noremap <C-w>o zoom
