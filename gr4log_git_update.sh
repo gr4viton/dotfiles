@@ -13,7 +13,7 @@ function commit_it {
     echo $commit_msg
 }
 
-home="/home/dd/"
+home="/home/$USER/"
 main_dir=$home"gr4log/"
 cd $main_dir
 echo ">>> Saving gr4log in $main_dir"
@@ -21,22 +21,8 @@ echo ">>> Saving gr4log in $main_dir"
 commit_it "start" 
 
 # COPY CONFIGS
-echo ">>> Copying configs"
-dotfiles=$main_dir"dotfiles/"
-urxvt_to=$dotfiles"urxvt/.Xdefaults"
-nvim_to=$dotfiles"nvim/"
-tmux_to=$dotfiles"tmux/"
-
-echo ">>> Saving tmux conf"
-cp $home".tmux.conf" $tmux_to
-
-echo ">>> Saving urxvt conf"
-cp $home".Xdefaults" $urxvt_to
-
-echo ">>> Saving nvim conf"
-nvim_from=$home".config/nvim/"
-cp $nvim_from"init.vim" $nvim_to
-cp -r $nvim_from"colors" $nvim_to
+source $main_dir"dotfiles/config_update.sh"
+copy_configs
 
 ls -aR $main_dir"dotfiles"
 
