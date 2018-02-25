@@ -1,5 +1,6 @@
 #!/bin/bash
 
+set -x
 home="/home/$USER/"
 main_dir=$home"gr4log/"
 cd $main_dir
@@ -28,9 +29,10 @@ function apply_configs {
 	cp $urxvt_to $urxvt_from
 
 	echo ">>> nvim conf"
-	mkdir -p dirname $nvim_from
-	cp $nvim_to $nvim_from"init.vim" 
-	cp -r $nvim_dir_to $nvim_dir_from"colors" 
+	mkdir -p dirname $nvim_dir_from
+	cp $nvim_to $nvim_from
+
+	cp -r $nvim_dir_to* $nvim_dir_from
 }
 
 function copy_configs {
@@ -45,7 +47,7 @@ function copy_configs {
 
 	echo ">>> nvim conf"
 	nvim_from=$home".config/nvim/"
-	cp $nvim_from"init.vim" $nvim_to
+	cp $nvim_from $nvim_to
 	cp -r $nvim_dir_from"colors" $nvim_dir_to
 
 }
