@@ -1,6 +1,8 @@
 #!/bin/bash
 #git config --global credential.helper 'cache --timeout=28800'
 
+set -x
+
 function commit_it {
     git add .
     date=$(date '+%d/%m/%Y %H:%M:%S')
