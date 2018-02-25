@@ -21,14 +21,13 @@ nvim_from=$home".config/nvim/init.vim"
 function apply_configs {
 	echo ">>> Applying configs"
 
-	echo ">>> Saving tmux conf"
+	echo ">>> tmux conf"
 	cp $tmux_to $tmux_from
 
-	echo ">>> Saving urxvt conf"
-	mkdir -p dirname $urxvt_from
-	cp $urxvt_from $urxvt_to
+	echo ">>> urxvt conf"
+	cp $urxvt_to $urxvt_from
 
-	echo ">>> Saving nvim conf"
+	echo ">>> nvim conf"
 	mkdir -p dirname $nvim_from
 	cp $nvim_to $nvim_from"init.vim" 
 	cp -r $nvim_dir_to $nvim_dir_from"colors" 
@@ -38,16 +37,15 @@ function copy_configs {
 
 	echo ">>> Copying configs"
 
-	echo ">>> Saving tmux conf"
+	echo ">>> tmux conf"
 	cp $tmux_from $tmux_to
 
-	echo ">>> Saving urxvt conf"
+	echo ">>> urxvt conf"
 	cp $urxvt_from $urxvt_to
 
-	echo ">>> Saving nvim conf"
+	echo ">>> nvim conf"
 	nvim_from=$home".config/nvim/"
 	cp $nvim_from"init.vim" $nvim_to
 	cp -r $nvim_dir_from"colors" $nvim_dir_to
 
-	ls -aR $dotfiles
 }
