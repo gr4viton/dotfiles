@@ -28,6 +28,9 @@ function apply_configs {
 	echo ">>> urxvt conf"
 	cp $urxvt_to $urxvt_from
 
+    # urxvt
+    xrdb ~/.Xresources
+
 	echo ">>> nvim conf"
 	mkdir -p dirname $nvim_dir_from
 	cp $nvim_to $nvim_from
