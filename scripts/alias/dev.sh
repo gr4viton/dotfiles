@@ -108,8 +108,22 @@ alias virc_urxvt='vim ~/.Xdefaults'
 
 # Docker
 
+alias docker_stop='sudo service docker stop'
+alias docker_start='sudo service docker start; sudo docker info'
+alias docker_restart='docker_stop; docker_start'
+
+alias docker_ip='docker ps; docker inspect '
+# alias docker_ip="docker ps; docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "
+
 alias docker_space='sudo du -csh /srv/docker/'
 alias docker_containers_remove_stopped="docker ps -aq --no-trunc | xargs docker rm"
+alias docker_containers_remove_dangling="docker images -q --filter dangling=true | xargs docker rmi"
+
+alias docker_containers_remove_all="docker network prune -f;
+docker rm -f $(docker ps -a -q);
+docker rmi -f $(docker images -a -q);
+docker volume prune -f;
+"
 # Remove stopped containers
 # This command will not remove running containers, only an error message will be printed out for each of them.
 
