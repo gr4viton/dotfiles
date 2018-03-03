@@ -216,6 +216,10 @@ alias .....='..;....'
 alias vim='nvim'
 alias vim_is_clipboardable='vim --version | grep clipboard' #` gets you `-xterm_clipboard'
 
+# ele
+## log analyzers
+export SIGROK_FIRMWARE_DIR='/home/dd/DATA/dev/log_analyzer/fw'
+
 
 # computer specific 
 user=$USER
