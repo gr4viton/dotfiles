@@ -174,14 +174,14 @@ alias cdD='cd /mnt/D'
 # 
 # Alternatively copy lines below directly into your shell. 
 
-if [ $set_colors_gconftool -gt 0 ]
-then
-	gconftool-2 --set /apps/gnome-terminal/profiles/Default/use_theme_background --type bool false
-	gconftool-2 --set /apps/gnome-terminal/profiles/Default/use_theme_colors --type bool false
-	gconftool-2 -s -t string /apps/gnome-terminal/profiles/Default/background_color '#393902022727'
-	gconftool-2 -s -t string /apps/gnome-terminal/profiles/Default/foreground_color '#d9d9e6e6f2f2'
-	gconftool-2 -s -t string /apps/gnome-terminal/profiles/Default/palette '#000000000000:#bdbd4c4c4f4f:#4f4fbdbd4c4c:#bdbdbaba4c4c:#4c4c4f4fbdbd:#baba4c4cbdbd:#4c4cbdbdbaba:#e1e1e1e1e1e1:#1a1a1a1a1a1a:#e8e8bfbfc0c0:#c0c0e8e8bfbf:#e8e8e6e6bfbf:#bfbfc0c0e8e8:#e6e6bfbfe8e8:#bfbfe8e8e6e6:#ffffffffffff'
-fi
+#if [ -n $set_colors_gconftool ]
+#then
+#	gconftool-2 --set /apps/gnome-terminal/profiles/Default/use_theme_background --type bool false
+#	gconftool-2 --set /apps/gnome-terminal/profiles/Default/use_theme_colors --type bool false
+#	gconftool-2 -s -t string /apps/gnome-terminal/profiles/Default/background_color '#393902022727'
+#	gconftool-2 -s -t string /apps/gnome-terminal/profiles/Default/foreground_color '#d9d9e6e6f2f2'
+#	gconftool-2 -s -t string /apps/gnome-terminal/profiles/Default/palette '#000000000000:#bdbd4c4c4f4f:#4f4fbdbd4c4c:#bdbdbaba4c4c:#4c4c4f4fbdbd:#baba4c4cbdbd:#4c4cbdbdbaba:#e1e1e1e1e1e1:#1a1a1a1a1a1a:#e8e8bfbfc0c0:#c0c0e8e8bfbf:#e8e8e6e6bfbf:#bfbfc0c0e8e8:#e6e6bfbfe8e8:#bfbfe8e8e6e6:#ffffffffffff'
+#fi
 
 
 alias psagent="ps -aux | grep 'cache\|probe\|eval' --color=always | sort - k11"
@@ -215,6 +215,11 @@ alias .....='..;....'
 #alias vim='gvim -v'
 alias vim='nvim'
 alias vim_is_clipboardable='vim --version | grep clipboard' #` gets you `-xterm_clipboard'
+
+# ele
+## log analyzers
+export SIGROK_FIRMWARE_DIR='/home/dd/DATA/dev/log_analyzer/fw'
+
 
 
 # computer specific 
