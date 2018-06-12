@@ -30,6 +30,7 @@ loadit_script "alias/speak.sh"
 loadit_script "alias/dev.sh"
 loadit_script "alias/hw.sh"
 loadit_script "alias/connect.sh"
+loadit_script "alias/office.sh"
 
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
     os_name="linux"
@@ -185,8 +186,6 @@ alias cdD='cd /mnt/D'
 
 
 alias psagent="ps -aux | grep 'cache\|probe\|eval' --color=always | sort - k11"
-alias psdocker="ps -aux | grep 'docker' --color=always | sort -k10"
-alias psdocker2='docker ps'
 
 dirsonginator='/srv/songinator/'
 alias cdsonginator='cd $dirsonginator'
