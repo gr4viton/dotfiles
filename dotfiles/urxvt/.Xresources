@@ -71,14 +71,11 @@ URxvt.perl-lib: /home/dd/.urxvt/ext/
 !URxvt.perl-ext-common: tabbed,font-size,default,matcher,selection-to-clipboard,pasta,keyboard-select
 !URxvt.perl-ext-common: tabbed,font-size,default,matcher,pasta,keyboard-select
 !tabbeded
-URxvt.perl-ext-common: font-size,default,matcher,tabbedex,vtwheel,fullscreen
+URxvt.perl-ext-common: font-size,default,matcher,tabbedex,vtwheel,fullscreen,clipboard,selection-to-clipboard,pasta
+
 URxvt.keysym.M-u:     perl:url-select:select_next
 
 URxvt.keysym.M-Escape:perl:keyboard-select:activate
-URxvt.keysym.Control-Shift-V:     perl:pasta:paste
-! Comment this if you dont want copy when text is selected
-!URxvt.clipboard.autocopy: true
-
 !URxvt.perl-ext-common: tabbed,font-size,default
 
 URxvt.iso14755: false
@@ -173,8 +170,10 @@ URxvt*scrollstyle: plain
 !URxvt*scrollstyle: rxvt
 
 ! clickable URLs
-! #URxvt*url-launcher: /usr/bin/firefox
-URxvt*url-launcher: /usr/bin/firefox-esr
+! URxvt*url-launcher: /usr/bin/firefox
+! URxvt*url-launcher: /usr/bin/firefox-esr
+URxvt*url-launcher: /usr/bin/chromium-browser 
+
 URxvt*matcher.button: 1
 
 ! simple tabs Shift-down, new, S-left,right, navigate
@@ -215,9 +214,17 @@ URxvt*modifier: alt
 ! meta:false and modifier:alt works for vim to detect <A-x> combination
 
 ! Paste with Alt+v
-URxvt.keysym.M-v: perl:clipboard:paste
+!URxvt.keysym.Control-Shift-V:     perl:pasta:paste
+! Comment this if you dont want copy when text is selected
+!URxvt.clipboard.autocopy: true
+
+!URxvt.keysym.M-v: perl:clipboard:paste
+URxvt.keysym.Shift-Control-V: eval:paste_clipboard
+URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
+
 
 URxvt.keysym.M-n: matcher:select
+
 
 ! Make Ctrl+Tab work nicely with Vim
 !URxvt.keysym.S-Return:         \033[13;2u
