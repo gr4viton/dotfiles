@@ -30,6 +30,10 @@ loadit_script "alias/speak.sh"
 loadit_script "alias/dev.sh"
 loadit_script "alias/hw.sh"
 loadit_script "alias/connect.sh"
+loadit_script "alias/office.sh"
+
+export SHELL="/bin/bash"
+export EDITOR="/usr/bin/nvim"
 
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
     os_name="linux"
@@ -120,6 +124,10 @@ alias vircvim='vim '$home'.config/nvim/init.vim'
 
 alias vircbash='vim '$rcbash
 
+alias urxvt_reload='xrdb -load ~/.Xresources'
+alias vircurxvt='vim ~/.Xresources'
+alias virctmux='vim ~/.tmux.conf'
+
 
 # ############## gr4log
 
@@ -185,8 +193,6 @@ alias cdD='cd /mnt/D'
 
 
 alias psagent="ps -aux | grep 'cache\|probe\|eval' --color=always | sort - k11"
-alias psdocker="ps -aux | grep 'docker' --color=always | sort -k10"
-alias psdocker2='docker ps'
 
 dirsonginator='/srv/songinator/'
 alias cdsonginator='cd $dirsonginator'
@@ -231,6 +237,7 @@ rcbash_root=$home_root'.bashrc'
 
 alias src='source '$rcbash
 alias vrc='vim '$rcbash
+alias mux='tmuxinator'
 
 echo "gr4log .bashrc loaded!"
 

@@ -18,6 +18,9 @@ nvim_dir_from=$home".config/nvim/"
 nvim_to=$dotfiles"nvim/init.vim"
 nvim_from=$home".config/nvim/init.vim"
 
+mux_sys=$home".config/tmuxinator/"
+mux_my=$dotfiles"tmuxinator/"
+
 
 function apply_configs {
 	echo ">>> Applying configs"
@@ -36,6 +39,10 @@ function apply_configs {
 	cp $nvim_to $nvim_from
 
 	cp -r $nvim_dir_to* $nvim_dir_from
+
+    echo ">>> tmuxinator"
+    mkdir $mux_sys
+    cp $mux_my"*.yml" $mux_sys
 }
 
 function copy_configs {
@@ -53,4 +60,6 @@ function copy_configs {
 	cp $nvim_from $nvim_to
 	cp -r $nvim_dir_from"colors" $nvim_dir_to
 
+    echo ">>> tmuxinator"
+    cp $mux_sys"*.yml" $mux_my
 }
