@@ -76,6 +76,7 @@ alias git_branch_only_local_without_remote="comm -23 <(git__branches_all) <(git_
 # alias git_branch_only_local_without_remote="git branch -vv | grep -v origin | awk '{print $1}'"
 
 
+alias gitcal_mine='git cal --author=daniel.davidek'
 
 # autocomplete
 source /usr/share/bash-completion/completions/git
