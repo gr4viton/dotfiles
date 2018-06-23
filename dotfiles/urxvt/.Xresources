@@ -173,6 +173,7 @@ URxvt*scrollstyle: plain
 ! URxvt*url-launcher: /usr/bin/firefox
 ! URxvt*url-launcher: /usr/bin/firefox-esr
 URxvt*url-launcher: /usr/bin/chromium-browser 
+URxvt*url-select.launcher: /usr/bin/chromium-browser 
 
 URxvt*matcher.button: 1
 
