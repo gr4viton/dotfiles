@@ -23,6 +23,7 @@ loadit_script() {
 # speak synthesis
 # git
 loadit_script "ps1.sh"
+loadit_script "alias/office.sh"
 loadit_script "alias/git.sh"
 loadit_script "alias/centroid.sh"
 loadit_script "alias/install.sh"
@@ -31,7 +32,6 @@ loadit_script "alias/dev.sh"
 loadit_script "alias/esp32.sh"
 loadit_script "alias/hw.sh"
 loadit_script "alias/connect.sh"
-loadit_script "alias/office.sh"
 
 
 export SHELL="/bin/bash"
