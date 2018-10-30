@@ -28,9 +28,11 @@ loadit_script "alias/centroid.sh"
 loadit_script "alias/install.sh"
 loadit_script "alias/speak.sh"
 loadit_script "alias/dev.sh"
+loadit_script "alias/esp32.sh"
 loadit_script "alias/hw.sh"
 loadit_script "alias/connect.sh"
 loadit_script "alias/office.sh"
+
 
 export SHELL="/bin/bash"
 export EDITOR="/usr/bin/nvim"
@@ -237,7 +239,7 @@ rcbash_root=$home_root'.bashrc'
 
 alias src='source '$rcbash
 alias vrc='vim '$rcbash
-alias mux='tmuxinator'
 
 echo "gr4log .bashrc loaded!"
 
+alias better='echo "DancetteeMeritocracyMeddlesomeness"'

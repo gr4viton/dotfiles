@@ -163,3 +163,10 @@ alias pip_compile_test='pip-compile --no-index -r requirements.txt --output-file
 alias pip_compile_both='pip_compile; pip_compile_test'
 
 alias glogd="git branch --sort=-committerdate"
+alias gloghash='git log --pretty=format:"%h %s"'
+
+alias sound_restart="pulseaudio -k && sudo alsa force-reload"
+
+
+alias samsung_mount="sudo jmtpfs /media/samsungS8; ls /media/samsungS8"
+alias samsung_unmount="fusermount -u /media/myphone"

@@ -50,7 +50,8 @@ git_generate_ssh() {
     echo "https://bitbucket.org/account/user/gr4viton/ssh-keys/"
 }
 
-recheckout_current_branch() {
+
+git_recheckout_current_branch() {
 # if the diff is empty 
 # - deletes current branch, pulls origin, checkout it again
 cur=`git rev-parse --abbrev-ref HEAD`
@@ -60,6 +61,8 @@ git branch -D $cur
 git pull
 git checkout $cur
 }
+
+alias git_current_branch="git rev-parse --abbrev-ref HEAD"
 
 git_branch() {
 # returns only the last part after '/' of current branch name
@@ -77,6 +80,14 @@ alias git_branch_only_local_without_remote="comm -23 <(git__branches_all) <(git_
 
 
 alias gitcal_mine='git cal --author=daniel.davidek'
+
+
+git_rebase_interactive_till_master() {
+    current_branch=`git_current_branch`
+    git fetch
+    first_common_ancestor=`git merge-base $current_branch origin/master`
+    git rebase -i $first_common_ancestor
+}
 
 # autocomplete
 source /usr/share/bash-completion/completions/git
