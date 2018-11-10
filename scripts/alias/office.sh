@@ -120,3 +120,22 @@ countdown_test() {
     countdown_5
     echo "BOO!"
 }
+
+
+alias disk_show_space='df -h'
+alias disk_swap_show='swapon --show'
+alias disk_swap_show_ram='free -h'
+
+wifi_device='wlp2s0'
+
+alias wifi_get='ifconfig'
+alias wifi_connect_dhclient="sudo dhclient $wifi_device"
+alias wifi_selected_device="echo $wifi_device; echo 'set other wifi_device env var'"
+
+wifi_connect () {
+    echo "wifi_connect wifi_name password"
+
+    sudo iwconfig $wifi_device essid $1 key $2
+
+    wifi_connect_dhclient
+}

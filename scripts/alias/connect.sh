@@ -8,3 +8,4 @@ alias octopi_me='ssh pi@192.168.0.111'
 alias centroid_me='ssh pi@10.8.0.39'
 
 alias tapa_me='ssh gr4viton@192.168.0.118'
+alias nas_ssh='ssh gr4viton@192.168.0.118'

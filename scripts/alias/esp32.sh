@@ -20,6 +20,25 @@ esp_upyl () {
 
 export ESP_DEVICE="/dev/ttyUSB0"
 
+alias esp_read_flash_info="esptool.py -p $ESP_DEVICE flash_id"
+alias eps_read_mac="esptool.py -p $ESP_DEVICE read_mac"
+
+alias esp_connect="miniterm.py --raw $ESP_DEVICE 115200"
+# rshell?
+
+export AMPY_DELAY=1  # number of seconds before entering RAW repl
+export AMPY_PORT=$ESP_DEVICE
+
+alias esp_ls="ampy -p $ESP_DEVICE ls"
+
+alias esp_cat="ampy -p $ESP_DEVICE get "
+alias esp_put_file="ampy -p $ESP_DEVICE put "
+alias esp_mkdir="ampy -p $ESP_DEVICE mkdir "
+alias esp_rm="ampy -p $ESP_DEVICE rm "
+alias esp_rmdir="ampy -p $ESP_DEVICE rmdir "
+alias esp_run="ampy -p $ESP_DEVICE run "
+alias esp_get="ampy -p $ESP_DEVICE get "
+
 esp_erase_flash () {
     if $(ask_yes "Do you really want to erase_flash of [$ESP_DEVICE]?")
     then
@@ -30,7 +49,7 @@ esp_erase_flash () {
 }
 
 esp_flash () {
-    bin_path=$diresp32/esp32_build/esp32-20181010-v1.9.4-631-g338635ccc.bin
+    bin_path="$diresp32/esp32_build/esp32-20181010-v1.9.4-631-g338635ccc.bin"
     if $(ask_yes "Do you really want to flash [$ESP_DEVICE] with this bin [$bin_path]")
     then
         echo "Re-flash flash on [$ESP_DEVICE] with bin [$bin_path]"
@@ -38,13 +57,3 @@ esp_flash () {
         esptool.py --chip esp32 -p $ESP_DEVICE write_flash -z 0x1000 $bin_path
     fi
 }
-
-alias esp_read_flash_info="esptool.py -p $ESP_DEVICE flash_id"
-alias eps_read_mac="esptool.py -p $ESP_DEVICE read_mac"
-
-alias esp_connect="miniterm.py --raw $ESP_DEVICE 115200"
-
-alias esp_ls="ampy -p $ESP_DEVICE ls"
-
-alias esp_cat="ampy -p $ESP_DEVICE get "
-alias esp_put_file="ampy -p $ESP_DEVICE put "
