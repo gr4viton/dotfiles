@@ -48,12 +48,6 @@ alias mvc=gr4_mkdir_move
 alias rename_make_lowercase="rename 'y/A-Z/a-z/' *"
 
 
-gr4_folderize "das_film" "/media/dd/datasss/FILM/"
-gr4_folderize "nas_film" "/media/nas/video/film"
-gr4_folderize "nas_serial" "/media/nas/video/serial"
-gr4_folderize "nas_serial_man_inHighCastle" "/media/nas/video/serial/alternazi"
-gr4_folderize "xnas_stuff" "/media/nas/video/video/meme/trailery/old"
-
 
 ask_yes () {
     read -r -p "$1 = Are you sure? [y/N] " response
@@ -94,7 +88,7 @@ ask_yes_test () {
     fi
 }
 
-countdown() {
+countdown_str () {
   # countdown "00:01:00" # = hh:mm:ss
   IFS=:
   set -- $*
@@ -110,8 +104,16 @@ countdown() {
 }
 
 countdown_5 () {
-    echo "Countdown from 5 seconds:"
-    countdown "00:00:05" 2>/dev/null
+    countdown 5 2>/dev/null
+}
+
+countdown () {
+    secs=${1:-"00"}
+    mins=${2:-"00"}
+    hours=${3:-"00"}
+    chars=$(printf "%02d:%02d:%02d" $hours $mins $secs)
+    echo "Countdown from $chars"
+    countdown_str $chars 2>/dev/null
 }
 
 countdown_test() {
@@ -139,3 +141,19 @@ wifi_connect () {
 
     wifi_connect_dhclient
 }
+
+assasinate () {
+    ps -aux | grep $1 | sed 1q
+    ps_num=$(ps -aux | grep $1 | sed 1a | awk 'NR=1{print $2}')
+    echo "gonna kill process with number $ps_num"
+    countdown 3 2>/dev/null
+    
+    sudo kill -9 $ps_num
+}
+
+alias lgs='libinput-gestures-setup'
+rclgs_home='~/.config/libinput-gestures.conf'
+rclgs_main='/etc/libinput-gestures.conf'
+alias virclgs_home="vim $rclgs_home"
+alias virclgs_main="sudo vim $rclgs_main"
+alias virclgs="sudo vim -O $rclgs_home $rclgs_main"
