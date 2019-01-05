@@ -4,6 +4,8 @@
 ## configs
 alias virctmuxp="vim -O ~/.confix/tmuxp/*.yml"
 
+alias cdtmuxp="cd ~/.tmuxp/"
+
 # watch
 gr4_folderize "das_film" "/media/dd/datasss/FILM/"
 gr4_folderize "nas_film" "/media/nas/video/film"
@@ -73,7 +75,7 @@ alias vipbag='cd '$dirbagmod'; vim amadeus.py'
 alias vipamad='cdauto; vim '$dirbook$amad
 
 # kw.provider-clients
-gr4_folderize_kiwi $dirda "pc" "provider-clients" "clients" "" "" "" "kw/provider"
+gr4_folderize_kiwi $dirda "pc" "provider-clients" "client" "" "" "" "kw/provider"
 dirwsdl='/srv/da/wsdl/tport/system_v32_0'
 alias cdwsdl='cd '$dirwsdl
 

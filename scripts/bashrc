@@ -34,6 +34,8 @@ loadit_script "alias/hw.sh"
 loadit_script "alias/connect.sh"
 loadit_script "alias/dell.sh"
 loadit_script "alias/dirs.sh"
+loadit_script "alias/docker.sh"
+loadit_script "alias/kiwi.sh"
 
 
 export SHELL="/bin/bash"
@@ -72,6 +74,16 @@ if [[ "$os_name" == "linux" ]]; then
             ;;
     esac
     echo "$distribution_name"
+
+
+# make CapsLock behave like Ctrl:
+setxkbmap -option ctrl:nocaps
+
+# make short-pressed Ctrl behave like Escape:
+if [[ $(apt_installed xcape) ]]; then
+xcape -e 'Control_L=Escape'
+fi
+
 fi 
 
 
@@ -124,9 +136,9 @@ extract () {
 }
 
 alias vircvim_old='vim '$home'.vimrc' 
-alias vircvim='vim '$home'.config/nvim/init.vim' 
+alias vircvim='vim ~/.config/nvim/init.vim' 
 
-alias vircbash='vim '$rcbash
+alias vircbash="vim $rcbash"
 
 alias urxvt_reload='xrdb -load ~/.Xresources'
 alias vircurxvt='vim ~/.Xresources'
@@ -142,7 +154,7 @@ alias gr4log='vim '$dirgr4log'gr4log.vim'
 alias gr4log_sync=$dirgr4log'gr4log_git_update.sh'
 alias cdgr4log='cd '$dirgr4log
 
-alias vgr4='vim -O bashrc alias/dev.sh ~/.bashrc'
+alias vgr4='vim -O bashrc alias/install.sh ~/.bashrc'
 alias vgrc='cd $dir_gr4scripts && vgr4'
 
 alias log='cdgr4log;gr4log'
@@ -164,7 +176,9 @@ alias v1='vim -O '$rcbash' '$gr4env
 alias v2='cd '$dirgr4log';vim -O '$dirgr4log'gr4log.vim '$dirkiwilog'kiwi\ log.vim '$logAutomateMe
 alias v3='vim -O '$dirgr4log'LOG/nix/logFedora.vim '$dirgr4log
 
-eval $(thefuck --alias) 
+if [[ $(apt_installed thefuck) ]]; then
+    eval $(thefuck --alias) 
+fi
 
 alias cdC='cd /mnt/C'
 alias cdD='cd /mnt/D'

@@ -51,7 +51,7 @@ git_generate_ssh() {
 }
 
 
-git_recheckout_current_branch() {
+git_delete_and_recheckout_current_branch() {
 # if the diff is empty 
 # - deletes current branch, pulls origin, checkout it again
 cur=`git rev-parse --abbrev-ref HEAD`
@@ -90,4 +90,36 @@ git_rebase_interactive_till_master() {
 }
 
 # autocomplete
-source /usr/share/bash-completion/completions/git
+git_autocomplete_rc="/usr/share/bash-completion/completions/git"
+if [[ -f $git_autocomplete_rc ]]; then 
+source $git_autocomplete_rc
+fi
+
+
+# search in commits
+
+git_search_in_all_commits_current_branch () {
+git log -S $1 --source
+}
+git_search_in_all_commits_current_branch_patch () {
+git log -S $1 --source --patch
+}
+git_search_in_all_commits_all_branches () {
+git log -S $1 --source --all 
+}
+git_search_in_all_commits_all_branches_patch () {
+git log -S $1 --source --patch -all
+}
+
+git_regex_in_all_commits_current_branch () {
+git log -G $1 --source
+}
+git_regex_in_all_commits_current_branch_patch () {
+git log -G $1 --source --patch
+}
+git_regex_in_all_commits_all_branches () {
+git log -G $1 --source --all --patch
+}
+git_regex_in_all_commits_all_branches_patch () {
+git log -G $1 --source --all --patch
+}

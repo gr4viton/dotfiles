@@ -2,7 +2,7 @@ alias load_usb_to_uart_cp210x_modules='sudo modprobe usbserial # load this kerne
 
 
 alias audio_restart='pulseaudio -k && sudo alsa force-reload'
-
+alias audio_restore_better='alsactl restore'
 
 # Post-install
 # These commands should be run after the first boot.
@@ -16,3 +16,18 @@ alias graphics_intel='sudo prime-select intel'
 # Nvidia:
 alias graphics_nvidia='sudo prime-select nvidia'
 
+
+# setup synclient touchpad
+# doc = ftp://www.x.org/pub/X11R7.5/doc/man/man4/synaptics.4.html
+if [[ $(apt_installed synclient) ]]; then
+synclient "TapButton3"=2
+synclient "PalmDetect"=1
+synclient "LockedDrags"=1
+## circ scrolling
+
+synclient "CircularScrolling"=1
+synclient "CircScrollTrigger"=4
+fi
+
+
+alias bluetooth_restart="sudo /etc/init.d/bluetooth restart"

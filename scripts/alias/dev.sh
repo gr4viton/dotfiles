@@ -106,47 +106,6 @@ export WORKON_HOME='~/venvs/'
 
 
 
-# Docker
-docker_get_container_id() {
-    image_name=$1
-    docker ps | grep $image_name | awk '{print $1}'
-}
-
-# alias docker_attach_bag="docker attach `docker_get_container_id autobaggage_app`"
-# fucking apostrophes :I
-docker_attach_bag() { docker attach $(docker ps | grep dev_app | awk '{print $1}'); }
-docker_inspect_bag() { docker inspect $(docker ps | grep dev_app | awk '{print $1}'); }
-docker_inspect_bag_ip() { docker inspect $(docker ps | grep dev_app | awk '{print $1}') | grep -i ip; }
-docker_attach_bag_old() { docker attach $(docker ps | grep autobaggage_app | awk '{print $1}'); }
-docker_inspect_bag_old() { docker inspect $(docker ps | grep autobaggage_app | awk '{print $1}'); }
-
-alias psdocker="ps -aux | grep 'docker' --color=always | sort -k10"
-alias psdocker2='docker ps'
-
-alias _docker_stop='sudo service docker stop'
-alias docker_stop='echo "After pwd input the docker will stop - may take dozen seconds or so... WAIT!"; _docker_stop'
-alias docker_start='sudo service docker start; sudo docker info'
-alias docker_restart='docker_stop; docker_start'
-
-alias docker_ip='docker ps; docker inspect '
-# alias docker_ip="docker ps; docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "
-
-alias docker_space='sudo du -csh /srv/docker/'
-alias docker_containers_remove_stopped="docker ps -aq --no-trunc | xargs docker rm"
-alias docker_containers_remove_dangling="docker images -q --filter dangling=true | xargs docker rmi"
-
-_docker_containers_remove_all() {
-    docker network prune -f;
-    docker rm -f $(docker ps -a -q);
-    docker rmi -f $(docker images -a -q);
-    docker volume prune -f;
-}
-
-# Remove stopped containers
-# This command will not remove running containers, only an error message will be printed out for each of them.
-
-
-
 alias logrotate_edit='vim /etc/logrotate.conf'
 alias log_varlog_space='sudo du -csh /var/log/*'
 
@@ -162,11 +121,17 @@ alias pip_compile_test='pip-compile --no-index -r requirements.txt --output-file
 
 alias pip_compile_both='pip_compile; pip_compile_test'
 
+# git
 alias glogd="git branch --sort=-committerdate"
 alias gloghash='git log --pretty=format:"%h %s"'
 
+
+# sound
 alias sound_restart="pulseaudio -k && sudo alsa force-reload"
 
 
 alias samsung_mount="sudo jmtpfs /media/samsungS8; ls /media/samsungS8"
 alias samsung_unmount="fusermount -u /media/myphone"
+
+
+alias pyc_remove_recursively='find . -name "*.pyc" -exec rm -f {} \;'

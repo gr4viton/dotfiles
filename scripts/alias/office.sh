@@ -1,5 +1,7 @@
 #!/bin/bash
 
+alias llpy="ll | grep '.*py$'"
+
 alias vimo='vim -O'
 
 # alias mux='tmuxinator'
@@ -157,3 +159,26 @@ rclgs_main='/etc/libinput-gestures.conf'
 alias virclgs_home="vim $rclgs_home"
 alias virclgs_main="sudo vim $rclgs_main"
 alias virclgs="sudo vim -O $rclgs_home $rclgs_main"
+
+alias set_term_termx="export TERM=xterm"
+alias set_term_urxvt="export TERM=rxvt-unicode-256color"
+
+apt_installed () {
+    apt list --installed 2>/dev/null | grep $1
+}
+
+alias syslog="sudo tail -f /var/log/syslog"
+
+# dotglob - set = the * does not omit "." prefixed files
+alias set_dotglob="shopt -s dotglob"
+alias unset_dotglob="shopt -u dotglob"
+
+
+alias black120="black -l 120"
+alias black120_str="black -l 120 -S"
+
+alias blak="black120"
+alias blaks="black120_str"
+
+
+alias x_gparted_fix="xhost +SI:localuser:root"
