@@ -1,0 +1,27 @@
+---
+- hosts: localhost
+  # vars:
+  #   http_port: 80
+  #   max_clients: 200
+  # remote_user: root
+  tasks:
+  - name: Install some stuff
+    apt: 
+      name: "{{ packages }}"
+    vars:
+      packages:
+        - neovim
+        - tmux
+        - htop
+        - chromium-browser
+        - git
+        - docker
+        - rxvt-unicode
+        # - insomnia
+        # - postman 
+        # - pycharm
+        - autokey-gtk
+        # - compiz
+        # - steam
+        - nfs-kernel-server  # nas_mount
+        # sudo mkdir -p /media/nas/video
