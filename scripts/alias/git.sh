@@ -8,7 +8,11 @@ alias gpull_rebase='git pull --rebase origin master'
 alias glog='git log --stat'
 alias glog_oneline='git log --pretty=oneline'
 alias glogp='git log --stat --patch'
-alias gls='git ls-files'
+alias glogfiles='git ls-files'
+
+# git
+alias glogd="git branch --sort=-committerdate"
+alias gloghash='git log --pretty=format:"%h %s"'
 
 alias gsquash2='git rebase --interactive HEAD~2'
 alias g='git'

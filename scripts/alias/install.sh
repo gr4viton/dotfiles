@@ -40,12 +40,16 @@ esac
 install_it () {
     sudo apt install $@
 }
+alias inst='install_it'
+inst_npm () {
+    sudo npm i $@ -g
+}
 
 setup_gnome () {
     echo ">>> setup gnome"
     echo "> show calendar weekdays"
     gsettings set org.gnome.desktop.calendar show-weekdate true
-sudo apt install gnome-tweak-tool
+inst gnome-tweak-tool
 }
 
 backup_all_root () {
@@ -63,15 +67,15 @@ EOF
 install_all () {
 
     echo "install ansible"
-    install_it ansible
+    inst ansible
 
     progs=$(cat << EOF
 insomnia pycharm
 EOF
 )
 echo ">>> DEV"
-install_it neovim tmux htop chromium-browser
-install_it git make
+inst neovim tmux htop chromium-browser
+inst git make
 
 echo $(cat << EOF
 >>> docker-ce
@@ -84,7 +88,7 @@ download containerd.io, docker-ce-cli, docker-ce
 # so i have /srv/docker as a storage now
 $ sudo ln -s /srv/docker/ /var/lib/docker 
 
-$ install_it /srv/_all/DATA/deb/docker/*
+$ inst /srv/_all/DATA/deb/docker/*
 or this
 $ curl -fsSL https://get.docker.com -o get-docker.sh
 $ sudo sh get-docker.sh
@@ -110,12 +114,12 @@ sudo curl -L https://github.com/docker/compose/releases/download/1.23.2/docker-c
 sudo chmod +x /usr/local/bin/docker-compose
 docker-compose --version
 
-install_it tldr
+inst tldr
 
-install_it autokey-gtk
+inst autokey-gtk
 
 echo ">>> compiz"
-install_it compiz compiz-plugins compiz-plugins-default compizconfig-settings-manager
+inst compiz compiz-plugins compiz-plugins-default compizconfig-settings-manager
 
 echo $(cat << EOF 
 on init ubuntu 18.04
@@ -132,17 +136,17 @@ run cairo-dock as an app, because if you'd boot into the cairo-dock option at th
 EOF
 )
 
-install_it silversearcher-ag 
+inst silversearcher-ag 
 
-install_it rxvt-unicode
+inst rxvt-unicode
 echo "In your home there must be .Xresources or .Xdefaults for settings"
 ls ~ | grep .Xresources
 ls ~ | grep .Xdefaults
 
-# install_it $progs
+# inst $progs
 # sudo ansible-playbook ~/gr4log/scripts/playbook.yml
 
-install_it steam
+inst steam
     
 pips=$(cat << EOF
 attrs pipenv
@@ -151,7 +155,7 @@ EOF
 
 
 
-# install_it snapd
+# inst snapd
 # sudo snap install slack --classic
 echo "install slack from https://slack.com/downloads/linux"
 
@@ -178,6 +182,14 @@ sudo apt-get install openfortivpn network-manager-fortisslvpn-gnome
 sudo mkdir /var/lib/NetworkManager-fortisslvpn/
 sudo chown dd:dd /var/lib/NetworkManager-fortisslvpn/
 
+echo ">>> office"
+inst mc
+
+inst curlftpfs  # ftp filesystem
+
+echo ">>> syntax checkers"  # not coala - coala is docker
+inst flake8
+inst libxml2-utils  # xmllint
 
 echo ">>> nvidia drivers"
 # sudo add-apt-repository ppa:graphics-drivers/ppa
@@ -188,7 +200,7 @@ sudo ubuntu-drivers autoinstall
 echo ">>> sound"
 sudo apt-add-repository ppa:yktooo/ppa
 
-sudo apt update && sudo apt install indicator-sound-switcher
+sudo apt update && inst indicator-sound-switcher
 
 echo ">>> insomnia"
 
@@ -201,11 +213,11 @@ wget --quiet -O - https://insomnia.rest/keys/debian-public.key.asc \
 
 # Refresh repository sources and install Insomnia
 sudo apt-get update
-sudo apt-get install insomnia
+inst insomnia
 
 
-sudo apt install gimp
-sudo apt install blender
+inst gimp
+inst blender
 
 echo ">>> keybase"
 curl -O https://prerelease.keybase.io/keybase_amd64.deb
@@ -216,12 +228,20 @@ sudo dpkg -i keybase_amd64.deb
 sudo apt-get install -f
 run_keybase
 
-sudo apt install kazam
+inst kazam
 
 ## snaps
 echo "# SNAPS"
 echo ">>> spotify"
 sudo snap install spotify
+
+
+## npm packages
+echo "# npm pcakages"
+inst npm
+echo ">>> documentation"
+inst_npm docsify-cli
+# npm i docsify-cli -g
 
 setup_gnome
 }

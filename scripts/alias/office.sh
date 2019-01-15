@@ -1,5 +1,7 @@
 #!/bin/bash
 
+
+
 alias llpy="ll | grep '.*py$'"
 
 alias vimo='vim -O'
@@ -28,6 +30,14 @@ viagp() {
 }
 
 gr4_folderize() {
+    # creates aliases and variables for a folder
+    #
+    # $1 = abbreviation used for folder aliases
+    # $2 = folder path
+    #
+    # gr4_folderize "esp32" "/srv/dd/esp32"
+    # creates aliases `cdesp32`, `lsesp32` and `diresp32` env
+
     # ${param:?word} writes word to stdout when param is unset or null
     local abbrev="${1:?No abbreviation alias.}"
     local folder="${2:?No directory to folderize.}"
@@ -182,3 +192,6 @@ alias blaks="black120_str"
 
 
 alias x_gparted_fix="xhost +SI:localuser:root"
+
+alias kill_firefox="sudo pkill firefox"
+alias kill_chrome="sudo pkill chromium-browser"
