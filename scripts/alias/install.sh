@@ -1,6 +1,8 @@
 #!/bin/sh
 # instal multitude of apps
 
+loadit_script "alias/install/screensaver.sh"
+
 install_kivy() {
     echo "from https://github.com/eabps/Kivy-Environment"
 
@@ -44,6 +46,28 @@ alias inst='install_it'
 inst_npm () {
     sudo npm i $@ -g
 }
+
+inst_add_repo () {
+  # args are apt repo names without "ppa:" prefix
+  # runs apt-get update if any new ppa added
+  some_added=0
+  echo ">>> Adding multiple ppa"
+  for i in "$@"; do
+    grep -h "^deb.*$i" /etc/apt/sources.list.d/* > /dev/null 2>&1
+    if [ $? -ne 0 ]
+    then
+      echo "> Adding ppa:$i"
+      sudo add-apt-repository -y ppa:$i
+      some_added=1
+    else
+      echo "> ppa:$i already exists"
+    fi
+  done
+  if [[ "$some_added" = "1" ]]; then
+      sudo apt-get update
+  fi
+}
+
 
 setup_gnome () {
     echo ">>> setup gnome"
@@ -164,10 +188,9 @@ echo $(cat << EOF
 from confluence comment from baptiste.darthenay@kiwi.com here:
 https://confluence.kiwi.com/display/ICT/VPN+Setup+how-to?utm_source=grossmann+VPN&utm_campaign=ae6369c106-EMAIL_CAMPAIGN_2018_09_24_07_21_COPY_02&utm_medium=email&utm_term=0_4321084e62-ae6369c106-66087249
 
-
-
 EOF
 )
+
 
 sudo apt-get install openfortivpn network-manager-fortisslvpn-gnome
 
@@ -182,10 +205,13 @@ sudo apt-get install openfortivpn network-manager-fortisslvpn-gnome
 sudo mkdir /var/lib/NetworkManager-fortisslvpn/
 sudo chown dd:dd /var/lib/NetworkManager-fortisslvpn/
 
+echo ">>> dev"
+
 echo ">>> office"
 inst mc
 
 inst curlftpfs  # ftp filesystem
+inst_screensaver
 
 echo ">>> syntax checkers"  # not coala - coala is docker
 inst flake8
@@ -201,6 +227,7 @@ echo ">>> sound"
 sudo apt-add-repository ppa:yktooo/ppa
 
 sudo apt update && inst indicator-sound-switcher
+
 
 echo ">>> insomnia"
 
@@ -230,6 +257,9 @@ run_keybase
 
 inst kazam
 
+# desktop manager installer
+inst taskel 
+
 ## snaps
 echo "# SNAPS"
 echo ">>> spotify"
@@ -244,4 +274,13 @@ inst_npm docsify-cli
 # npm i docsify-cli -g
 
 setup_gnome
+setup_ssh
+
+}
+
+
+setup_ssh () {
+    echo ">>> add ServerAliveInterval 10 into /etc/ssh/ssh_config"
+    echo '    ServerAliveInterval 10' >> /etc/ssh/ssh_config
+    # keeps the connection open on unstable hosts (devserver and ams)
 }

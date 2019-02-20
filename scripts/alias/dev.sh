@@ -131,3 +131,26 @@ alias samsung_unmount="fusermount -u /media/myphone"
 
 
 alias pyc_remove_recursively='sudo find . -name "*.pyc" -exec rm -f {} \;'
+
+function pudb_connect () { 
+    port="${1-6900}"
+
+    telnet 127.0.0.1 $port
+}
+
+pudb_loop () {
+    _seconds=2
+    while true;
+    do 
+        term_clear
+        dat=$(date +'%Y-%m-%d_%H:%M:%S')
+        echo ">>> Trying to connect to remote pudb every $_seconds seconds [$dat]"
+        pudb_connect
+        last=$!
+        echo "last output = $last"
+        if [[ "$last" == "0" ]]; then
+            break
+        fi
+        sleep $_seconds
+    done
+}

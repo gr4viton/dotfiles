@@ -4,7 +4,11 @@
 
 alias llpy="ll | grep '.*py$'"
 
-alias vimo='vim -O'
+alias vim="nvim"
+vimo () {
+    vim -O $@
+}
+# alias vimo='vim -O'
 
 # alias mux='tmuxinator'
 alias mux='tmuxp'
@@ -195,3 +199,8 @@ alias x_gparted_fix="xhost +SI:localuser:root"
 
 alias kill_firefox="sudo pkill firefox"
 alias kill_chrome="sudo pkill chromium-browser"
+
+function term_clear() { printf "\033c" ; }
+
+
+alias vircpudb="vim ~/.config/pudb/pudb.cfg"

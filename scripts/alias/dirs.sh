@@ -44,6 +44,7 @@ gr4_folderize_kiwi () {
         gr4_folderize $abbrev"each" "$repo_path_kw/$folder_each"
         gr4_folderize $abbrev"ama" "$repo_path_kw/$folder_each/amadeus"
         gr4_folderize $abbrev"tra" "$repo_path_kw/$folder_each/travelport"
+        gr4_folderize $abbrev"sab" "$repo_path_kw/$folder_each/sabre"
     fi
 
     if [[ -n "$folder_test" ]]; then
@@ -68,14 +69,23 @@ gr4_folderize_kiwi () {
 
 }
 
+# kw.gds-viewer
+gr4_folderize_kiwi $dirda "gv" "gds-viewer" "" "" "docker-compose.yml" ""
+
 # kw.autobaggage
 gr4_folderize_kiwi $dirda "bag" "autobaggage" "modules" "tests/unit" "docker-compose.yml" "docker-compose.dev.yml"
 dirbag_log=$dirbag'logs/data/'
+
+gr4_folderize "baggds" "${dirbagkw}/modules/gds"
+gr4_folderize "baglogfreeze" "${dirbag}/logs/freeze"
+
 alias vipbag='cd '$dirbagmod'; vim amadeus.py'
 alias vipamad='cdauto; vim '$dirbook$amad
 
 # kw.provider-clients
 gr4_folderize_kiwi $dirda "pc" "provider-clients" "client" "" "" "" "kw/provider"
+gr4_folderize "pcgds" "${dirpckw}/client/gds"
+
 dirwsdl='/srv/da/wsdl/tport/system_v32_0'
 alias cdwsdl='cd '$dirwsdl
 

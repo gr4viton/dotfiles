@@ -89,7 +89,7 @@ fi
 
 
 # prompt line
-BRANCH="\$(git_branch)"
+BRANCH="\$(git_branch_cutted)"
 
 export PS1="${BLUE}${BRANCH}${END} ${GREEN}\u ${YELLOW}\W ${DOLLAR}${END} "
 

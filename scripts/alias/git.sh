@@ -69,8 +69,12 @@ git checkout $cur
 alias git_current_branch="git rev-parse --abbrev-ref HEAD"
 
 git_branch() {
+git rev-parse --abbrev-ref HEAD 2>/dev/null
+}
+
+git_branch_cutted() {
 # returns only the last part after '/' of current branch name
-git rev-parse --abbrev-ref HEAD 2>/dev/null | sed 's:.*/::'
+git_branch | sed 's:.*/::'
 }
 
 

@@ -47,7 +47,47 @@ bag_tmux () {
 
     make tmux-start
 }
+alias bag_build="make build-dev"
+alias bag_run="make run-dev-tmux"
 alias vibag="cdpcama; ..; vimo travelport/api.py $dirbagtra/base.py $dirbagtra/step.py $dirbagtra/../baggage_model.py"
+
+bag_frozen_open () {
+    bag_frozen_run_command "vimo" "Do_you_want_to_open_the_displayed_files?" "" $@
+}
+
+bag_frozen_mv () {
+    bag_frozen_run_command "rm" "Do_you_want_to_remove_the_displayed_files?" "" $@
+}
+
+bag_frozen_mv () {
+    mv_dir=${@:$#} # last parameter 
+    other=${*%${!#}} # all parameters except the last
+    bag_frozen_run_command "mv" "Do_you_want_to_move_the_displayed_files?" $mv_dir $other
+}
+
+bag_frozen_run_command () {
+    local the_command="${1:?Command to run over the filtered files}"
+    local the_question="${2:?Question to ask before the command is ran}"
+    local the_command_suffix="${3}"
+    # only from current directory (ls -A1)
+    # files=$(ls -A1 | egrep "${@:3}")
+    if [[ $the_command = "rm" ]]; then
+        files=$(ls -A1 | egrep "${@:4}")
+    else
+        files=$(ls -A1 | egrep "${@:4}" | tr '\n' ' ')
+    fi
+    if [[ -z "$files" ]]; then
+        echo ">>> No files matches your regex"
+    else
+        echo $files | tr ' ' '\n'
+        if $(ask_yes ">>> $the_question")
+        then
+            echo ">>> Running the following command"
+            echo "$the_command ${files} ${the_command_suffix}"
+            $the_command ${files} $the_command_suffix
+        fi
+    fi
+}
 
 
 alias vpn_connect_openfortivpn="sudo openfortivpn -v"
@@ -236,3 +276,11 @@ warning; ssh -t $ams_login "for n in {1..12}; do echo \"Logging into $dev_name s
 alias dev11="kw_open_devserver $dev_format 11 '10.2.42.150'"
 
 fi
+
+# sabre
+
+sabre_create_token () {
+    client_id="${1:?Client id starting V1}"
+    client_secret="${1:?Client id}"
+    echo -n `echo -n $client_id | base64`:`echo -n $client_secret | base64` |base64
+}
