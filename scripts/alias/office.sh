@@ -4,10 +4,11 @@
 
 alias llpy="ll | grep '.*py$'"
 
-alias vim="nvim"
 vimo () {
-    vim -O $@
+    nvim -O $@
 }
+
+alias vim="nvim -O"
 # alias vimo='vim -O'
 
 # alias mux='tmuxinator'
@@ -21,7 +22,7 @@ muxe() {
 alias agp='ag --py '
 # find all non-get dicts value accesses via str key (=dict_['something'])
 
-agp_dict() { 
+agp_dict() {
     agp "\[['|\"][^,]*?['|\"]\]";
 }
 
@@ -40,13 +41,16 @@ gr4_folderize() {
     # $2 = folder path
     #
     # gr4_folderize "esp32" "/srv/dd/esp32"
-    # creates aliases `cdesp32`, `lsesp32` and `diresp32` env
+    # creates:
+    # - aliases: `cdesp32`, `lsesp32`
+    # - envars: `diresp32`, `desp32`
 
     # ${param:?word} writes word to stdout when param is unset or null
     local abbrev="${1:?No abbreviation alias.}"
     local folder="${2:?No directory to folderize.}"
 
     export dir${abbrev}="$folder"
+    export d${abbrev}="$folder"
     which > /dev/null 2>&1 cd${abbrev} || alias cd${abbrev}="cd $folder"
     which > /dev/null 2>&1 ls${abbrev} || alias lll${abbrev}o="lla $folder"
 }
@@ -163,7 +167,7 @@ assasinate () {
     ps_num=$(ps -aux | grep $1 | sed 1a | awk 'NR=1{print $2}')
     echo "gonna kill process with number $ps_num"
     countdown 3 2>/dev/null
-    
+
     sudo kill -9 $ps_num
 }
 
@@ -174,7 +178,8 @@ alias virclgs_home="vim $rclgs_home"
 alias virclgs_main="sudo vim $rclgs_main"
 alias virclgs="sudo vim -O $rclgs_home $rclgs_main"
 
-alias set_term_termx="export TERM=xterm"
+alias set_term_xterm="export TERM=xterm"
+alias set_term_xterm256color="export TERM=xterm-256color"
 alias set_term_urxvt="export TERM=rxvt-unicode-256color"
 
 apt_installed () {

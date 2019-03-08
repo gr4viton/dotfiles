@@ -32,7 +32,7 @@ sudo ./install
 }
 
 installit() {
-case $1 in 
+case $1 in
         "popcorn")
             install_popcorn
             ;;
@@ -110,7 +110,7 @@ download containerd.io, docker-ce-cli, docker-ce
 
 # if you want to store containers elswhere you can create symlink
 # so i have /srv/docker as a storage now
-$ sudo ln -s /srv/docker/ /var/lib/docker 
+$ sudo ln -s /srv/docker/ /var/lib/docker
 
 $ inst /srv/_all/DATA/deb/docker/*
 or this
@@ -145,7 +145,7 @@ inst autokey-gtk
 echo ">>> compiz"
 inst compiz compiz-plugins compiz-plugins-default compizconfig-settings-manager
 
-echo $(cat << EOF 
+echo $(cat << EOF
 on init ubuntu 18.04
 * install nvidia drivers, reboot, install compiz, reboot, install unity, reboot, install cairo-dock, reboot : works, can log into the cairo-dock (gnome) desktop environment"
 echo "https://askubuntu.com/questions/1065866/ubuntu-18-04-compiz-cairo-dock-hard-to-install-harder-to-keep-in-working-or"
@@ -160,7 +160,7 @@ run cairo-dock as an app, because if you'd boot into the cairo-dock option at th
 EOF
 )
 
-inst silversearcher-ag 
+inst silversearcher-ag
 
 inst rxvt-unicode
 echo "In your home there must be .Xresources or .Xdefaults for settings"
@@ -171,7 +171,7 @@ ls ~ | grep .Xdefaults
 # sudo ansible-playbook ~/gr4log/scripts/playbook.yml
 
 inst steam
-    
+
 pips=$(cat << EOF
 attrs pipenv
 EOF
@@ -184,7 +184,7 @@ EOF
 echo "install slack from https://slack.com/downloads/linux"
 
 echo "VPN kiwi"
-echo $(cat << EOF 
+echo $(cat << EOF
 from confluence comment from baptiste.darthenay@kiwi.com here:
 https://confluence.kiwi.com/display/ICT/VPN+Setup+how-to?utm_source=grossmann+VPN&utm_campaign=ae6369c106-EMAIL_CAMPAIGN_2018_09_24_07_21_COPY_02&utm_medium=email&utm_term=0_4321084e62-ae6369c106-66087249
 
@@ -258,7 +258,7 @@ run_keybase
 inst kazam
 
 # desktop manager installer
-inst taskel 
+inst taskel
 
 ## snaps
 echo "# SNAPS"
@@ -266,18 +266,31 @@ echo ">>> spotify"
 sudo snap install spotify
 
 
-## npm packages
-echo "# npm pcakages"
-inst npm
-echo ">>> documentation"
-inst_npm docsify-cli
-# npm i docsify-cli -g
-
 setup_gnome
 setup_ssh
 
 }
 
+inst_npm_packages () {
+    echo "# npm pcakages"
+    inst_npm swagger-cli  # swag_validate
+
+    inst npm
+    echo ">>> documentation"
+    inst_npm docsify-cli
+    # npm i docsify-cli -g
+}
+
+install_arx_liberatis () {
+    echo ">>> arx liberatis"
+    # from http://wiki.arx-libertatis.org/Linux_packages#Debian
+    cd /tmp
+    wget http://launchpadlibrarian.net/161405671/libglew1.10_1.10.0-3_amd64.deb
+    sudo dpkg -i libglew1.10_1.10.0-3_amd64.deb
+
+    wget https://download.opensuse.org/repositories/home:/dscharrer/Debian_8.0/amd64/arx-libertatis_1.1.2-0.1_amd64.deb -O arx_fatalis.deb
+    sudo apt install ./arx_fatalis.deb
+}
 
 setup_ssh () {
     echo ">>> add ServerAliveInterval 10 into /etc/ssh/ssh_config"

@@ -11,7 +11,7 @@ alias all_py='find . -type f -regextype sed -regex ".*\.py" -print0'
 
 # https://stackoverflow.com/questions/1583219/awk-sed-how-to-do-a-recursive-find-replace-of-a-string
 regex_all_py () {
-    echo "Do you want to execute this regex:" 
+    echo "Do you want to execute this regex:"
     echo $1
     echo "On all the *.py files in this directory and subdirectories?:"
     all_py
@@ -25,7 +25,7 @@ regex_all_py () {
             No ) exit;;
         esac
     done
-} 
+}
 
 centroid_dir='/srv/centroid/'
 alias cd_centroid='cd '$centroid_dir
@@ -43,7 +43,7 @@ alias mount_D_ro='sudo mount -o ro /dev/nvme0n1p9 /mnt/D'
 
 recheckout_current_branch() {
     cur=`git rev-parse --abbrev-ref HEAD`
-    echo Current branch = $cur           
+    echo Current branch = $cur
     git checkout master
     git branch -D $cur
     git pull
@@ -74,7 +74,7 @@ alias dbm_venv='source /srv/da/dbmodels/venv3_test/bin/activate'
 
 dbm_recheckout_master_alembic_fcn() {
     cur=`git rev-parse --abbrev-ref HEAD`
-    echo Current branch = $cur           
+    echo Current branch = $cur
     git checkout master
     cur_master=`git rev-parse --abbrev-ref HEAD`
     if [ cur_master -ne "master" ]; then
@@ -82,7 +82,7 @@ dbm_recheckout_master_alembic_fcn() {
         exit;
     fi
     git pull
-    
+
     echo 'Using this DATABASE settings:'
     echo $(python -c "from kw.automation.dbmodels.settings import DATABASES as DB; print(DB)")
     while true; do
@@ -93,7 +93,7 @@ dbm_recheckout_master_alembic_fcn() {
             * ) echo "Please answer yes or no.";;
         esac
     done
-    
+
     alembic upgrade head
     git checkout $cur
 }
@@ -132,7 +132,7 @@ alias samsung_unmount="fusermount -u /media/myphone"
 
 alias pyc_remove_recursively='sudo find . -name "*.pyc" -exec rm -f {} \;'
 
-function pudb_connect () { 
+function pudb_connect () {
     port="${1-6900}"
 
     telnet 127.0.0.1 $port
@@ -141,7 +141,7 @@ function pudb_connect () {
 pudb_loop () {
     _seconds=2
     while true;
-    do 
+    do
         term_clear
         dat=$(date +'%Y-%m-%d_%H:%M:%S')
         echo ">>> Trying to connect to remote pudb every $_seconds seconds [$dat]"
@@ -153,4 +153,9 @@ pudb_loop () {
         fi
         sleep $_seconds
     done
+}
+
+swag_validate () {
+    swag_file="${1?swagger file}"
+    swagger-cli validate $swag_file
 }

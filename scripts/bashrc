@@ -258,3 +258,5 @@ alias vrc='vim '$rcbash
 echo "gr4log .bashrc loaded!"
 
 alias better='echo "DancetteeMeritocracyMeddlesomeness"'
+
+export PYTHONDONTWRITEBYTECODE=1  # do not write pyc files when running python

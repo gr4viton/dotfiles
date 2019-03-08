@@ -23,10 +23,10 @@ gr4_folderize_kiwi () {
     local repo_base="${1:?No all repos base folder!}"
     local abbrev="${2:?No abbreviation base alias.}"
     local repo_name="${3:?No base directory to folderize.}"
-    
+
     local repo_path="$repo_base/$repo_name"
 
-    local folder_each="${4}" # provider each directory to folderize 
+    local folder_each="${4}" # provider each directory to folderize
     local folder_test="${5}"
     local docker_file_path="${6}"
     local docker_file_path_dev="${7}"
@@ -85,9 +85,15 @@ alias vipamad='cdauto; vim '$dirbook$amad
 # kw.provider-clients
 gr4_folderize_kiwi $dirda "pc" "provider-clients" "client" "" "" "" "kw/provider"
 gr4_folderize "pcgds" "${dirpckw}/client/gds"
+gr4_folderize "pcpro" "${dirpckw}/proton"
 
 dirwsdl='/srv/da/wsdl/tport/system_v32_0'
 alias cdwsdl='cd '$dirwsdl
+
+# kw.black-box
+gr4_folderize_kiwi $dirda "bb" "black-box" "" "" "" "" "kw/black_box"
+# gr4_folderize "bb" "${dirbb}/proton"
+
 
 # kw.dbmodels
 gr4_folderize_kiwi $dirda "dbmodels" "dbmodels"

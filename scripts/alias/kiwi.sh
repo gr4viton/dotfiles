@@ -2,6 +2,16 @@ alias do_login="docker login $KIWI_PYPI_REGISTRY_LOGIN"
 
 # alias bag_copy_test_env_from_keybase="cp /run/user/1000/keybase/kbfs/team/kiwi_autobaggage/* /srv/da/autobaggage/"
 
+
+# black box
+
+alias bb_build="docker-compose -f docker-compose.dev.yml build"
+alias bb_up="docker-compose -f docker-compose.dev.yml up"
+alias bb_up_build="bb_build; bb_up"
+alias bb_swag="swag_validate $dirbbkw/swagger/black_box.yaml"
+
+# bag
+
 bag_update_dev_from_keybase () {
 
     cd /srv/da/abag_dev
@@ -60,7 +70,7 @@ bag_frozen_mv () {
 }
 
 bag_frozen_mv () {
-    mv_dir=${@:$#} # last parameter 
+    mv_dir=${@:$#} # last parameter
     other=${*%${!#}} # all parameters except the last
     bag_frozen_run_command "mv" "Do_you_want_to_move_the_displayed_files?" $mv_dir $other
 }
@@ -283,4 +293,20 @@ sabre_create_token () {
     client_id="${1:?Client id starting V1}"
     client_secret="${1:?Client id}"
     echo -n `echo -n $client_id | base64`:`echo -n $client_secret | base64` |base64
+}
+
+kw_rogue_info () {
+    echo "$(cat <<EOF
+Inside the pipenv shell
+pip install -r reqs/base.txt  # installs rogue dependecies
+pip install -e .  # installs rogue from source as local package via setup.py
+
+source .env  # source the precreated .env file
+cd /srv/rogue/examples
+
+# check you are on dev-ethernet / vpn - otherwise the vault is unaccessible
+python get_exact_provider.py  # run the rogue
+# should give you the output of provider data
+EOF
+    )"
 }
