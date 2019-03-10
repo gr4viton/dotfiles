@@ -1,0 +1,28 @@
+session_name: bb
+
+start_directory: "${dirbb}"
+
+shell_command_before: "cdbbkw; set_term_xterm256color"
+
+startup_window: edit
+
+windows:
+      # layout: main-vertical
+      #shell_command_before:
+      #- src
+  - window_name: do
+    layout: main-horizontal
+    panes:
+      - cdbb; bb_up_build
+  - window_name: edit
+    layout: main-horizontal
+    panes:
+      - vimo sabre/core.py swagger/black_box.yaml
+  - window_name: ag
+    layout: main-horizontal
+    panes:
+      - agp TODO -A1
+  - window_name: git
+    layout: main-horizontal
+    panes:
+      - glog

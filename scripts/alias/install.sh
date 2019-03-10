@@ -300,3 +300,9 @@ setup_ssh () {
     echo '    ServerAliveInterval 10' >> /etc/ssh/ssh_config
     # keeps the connection open on unstable hosts (devserver and ams)
 }
+
+
+gr4_copy_configs () {
+    source $dirgr4log/dotfiles/config_update.sh
+    copy_configs
+}

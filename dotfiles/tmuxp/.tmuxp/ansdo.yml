@@ -1,0 +1,9 @@
+session_name: ans_do
+start_directory: /srv/da/ancillary_servants/kw/ancillary_servants/
+
+windows:
+  - window_name: docker
+    layout: main-horizontal
+    panes:
+    - do_run ans
+    # - vim dev/docker-compose-dev.yml

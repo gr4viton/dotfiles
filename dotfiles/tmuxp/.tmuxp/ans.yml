@@ -1,0 +1,74 @@
+# /home/dd/.config/tmuxinator/anc.yml
+
+session_name: ans
+#start_directory: $diransprov
+#start_directory: /srv/da/ancillary_servants/kw/ancillary_servants/
+#
+start_directory: "${dirpcama}"
+
+shell_command_before: "cdpcama"
+#root: <%= ENV["dirans"] =%>
+# root
+
+# Optional tmux socket
+# socket_name: foo
+
+# Runs before everything. Use it to start daemons etc.
+# pre: sudo /etc/rc.d/mysqld start
+
+# Project hooks
+# Runs on project start, always
+# on_project_start: src
+# Run on project start, the first time
+# on_project_first_start: command
+# Run on project start, after the first time
+# on_project_restart: command
+# Run on project exit ( detaching from tmux session )
+# on_project_exit: command
+# Run on project stop
+# on_project_stop: command
+
+# Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
+# pre_window: rbenv shell 2.0.0-p247
+
+# Pass command line options to tmux. Useful for specifying a different tmux.conf.
+# tmux_options: -f ~/.tmux.mac.conf
+
+# Change the command to call tmux.  This can be used by derivatives/wrappers like byobu.
+# tmux_command: byobu
+
+# Specifies (by name or index) which window will be selected on project startup. If not set, the first window is used.
+#startup_window: ae
+
+# Specifies (by index) which pane of the specified window will be selected on project startup. If not set, the first pane is used.
+# startup_pane: 1
+
+# Controls whether the tmux session should be attached to automatically. Defaults to true.
+# attach: false
+
+# Runs after everything. Use it to attach to tmux with custom options etc.
+# post: tmux -CC attach -t monitor
+
+windows:
+      # layout: main-vertical
+      #shell_command_before:
+      #- src
+  - window_name: edit
+    layout: main-horizontal
+    panes:
+      - vimo $diransama"/base.py" flow/service/order.py step/base.py step/pnr/retrieve/step.py
+        #- echo $dirans
+        #- window_name: docker
+        #layout: main-horizontal
+        #panes:
+        #- do_run ans
+          # - vim dev/docker-compose-dev.yml
+  - window_name: ag
+    layout: main-horizontal
+    panes:
+        #- ag amadeus
+      - agp TODO -A1
+  - window_name: git
+    layout: main-horizontal
+    panes:
+      - TERM=xterm; glog

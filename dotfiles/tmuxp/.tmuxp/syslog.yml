@@ -1,0 +1,16 @@
+session_name: syslog
+
+start_directory: "~"
+
+shell_command_before: "set_term_xterm256color"
+
+startup_window: edit
+
+windows:
+  - window_name: usb
+    # layout: main-horizontal
+    panes:
+      - syslog
+      - xinput
+      - lsusb
+      - cat /proc/bus/input/devices | vim

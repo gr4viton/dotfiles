@@ -1,0 +1,35 @@
+session_name: sabre
+
+start_directory: "${dirpcsab}"
+
+shell_command_before: "cdpcsab; set_term_xterm256color"
+
+startup_window: edit
+
+windows:
+      # layout: main-vertical
+      #shell_command_before:
+      #- src
+  - window_name: py
+    layout: main-horizontal
+    panes:
+      - set_term_xterm256color; pipenv shell
+  - window_name: edit
+    layout: main-horizontal
+    panes:
+      - vimo api.py test.py step/base.py
+        #- echo $dirans
+        #- window_name: docker
+        #layout: main-horizontal
+        #panes:
+        #- do_run ans
+          # - vim dev/docker-compose-dev.yml
+  - window_name: ag
+    layout: main-horizontal
+    panes:
+        #- ag amadeus
+      - agp TODO -A1
+  - window_name: git
+    layout: main-horizontal
+    panes:
+      - glog
