@@ -14,7 +14,7 @@ alias tapa_me='ssh gr4viton@192.168.0.118'
 alias nas_ssh='ssh gr4viton@192.168.0.118'
 
 # rpi3b+ retropie
-alias retropie_me='ssh pi@192.168.0.163'
+alias retropie_me='ssh pi@192.168.0.105'
 # 164 = old rpi1
 # 163 = rpi3b+
 

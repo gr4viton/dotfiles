@@ -1,8 +1,6 @@
 #!/bin/bash
 #git config --global credential.helper 'cache --timeout=28800'
 
-set -x
-
 function commit_it {
     git add .
     date=$(date '+%d/%m/%Y %H:%M:%S')
@@ -13,32 +11,38 @@ function commit_it {
     echo $commit_msg
 }
 
-home="/home/$USER/"
-main_dir=$home"gr4log/"
-cd $main_dir
-echo ">>> Saving gr4log in $main_dir"
+gr4log_git_update () {
+    set -x
 
-commit_it "start" 
+    home="/home/$USER/"
+    main_dir=$home"gr4log/"
+    cd $main_dir
+    echo ">>> Saving gr4log in $main_dir"
 
-# COPY CONFIGS
-source $main_dir"dotfiles/config_update.sh"
-copy_configs
+    commit_it "start"
 
-ls -aR $main_dir"dotfiles"
+    # COPY CONFIGS
+    source $main_dir"dotfiles/config_update.sh"
+    copy_configs
 
-commit_it "after config copy"
+    ls -aR $main_dir"dotfiles"
 
-# AFTER PULL
-echo $SSH_AUTH_SOCK
-git pull -v --no-rebase --progress "origin"
+    commit_it "after config copy"
 
-commit_it "after git pull"
+    # AFTER PULL
+    echo $SSH_AUTH_SOCK
+    git pull -v --no-rebase --progress "origin"
 
-git push origin master
+    commit_it "after git pull"
 
-# beep
-python -c "print('\7')" 
+    git push origin master
 
-echo ">>> End of $0"
+    # beep
+    python -c "print('\7')"
 
-#exit()
+    echo ">>> End of $0"
+
+    #exit()
+}
+
+gr4log_git_update

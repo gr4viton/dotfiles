@@ -3,12 +3,35 @@ alias do_login="docker login $KIWI_PYPI_REGISTRY_LOGIN"
 # alias bag_copy_test_env_from_keybase="cp /run/user/1000/keybase/kbfs/team/kiwi_autobaggage/* /srv/da/autobaggage/"
 
 
+pip_bump_reqs () {
+    path="${1?path to requirements file without suffix}"
+    out="${path}.txt"
+    in="${path}.in"
+    pip-compile --output-file $out $in
+
+    sed -i '/^--index-url/d' $out # remove the --index-url line = contains the password
+}
+
+
+pc_reqs_bump () {
+    pip_bump_reqs "requirements"
+    pip_bump_reqs "test-requirements"
+}
+
 # black box
 
 alias bb_build="docker-compose -f docker-compose.dev.yml build"
 alias bb_up="docker-compose -f docker-compose.dev.yml up"
 alias bb_up_build="bb_build; bb_up"
-alias bb_swag="swag_validate $dirbbkw/swagger/black_box.yaml"
+
+bb_reqs_bump () {
+    pip_bump_reqs "requirements/base"
+    pip_bump_reqs "requirements/test"
+}
+
+bb_swag () {
+    swag_validate $dirbbkw/swagger/black_box.yaml
+}
 
 # bag
 

@@ -8,8 +8,11 @@ vimo () {
     nvim -O $@
 }
 
-alias vim="nvim -O"
+vim () {
+    nvim -O $@
+}
 # alias vimo='vim -O'
+alias vim_is_clipboardable='vim --version | grep clipboard' #` gets you `-xterm_clipboard'
 
 # alias mux='tmuxinator'
 alias mux='tmuxp'

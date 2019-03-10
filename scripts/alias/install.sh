@@ -207,6 +207,9 @@ sudo chown dd:dd /var/lib/NetworkManager-fortisslvpn/
 
 echo ">>> dev"
 
+echo "> pip tools"
+sudo pip install pip-tools
+
 echo ">>> office"
 inst mc
 

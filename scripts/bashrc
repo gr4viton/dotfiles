@@ -141,10 +141,6 @@ alias vircvim='vim ~/.config/nvim/init.vim'
 
 alias vircbash="vim $rcbash"
 
-alias urxvt_reload='xrdb -load ~/.Xresources'
-alias vircurxvt='vim ~/.Xresources'
-alias virctmux='vim ~/.tmux.conf'
-
 
 # ############## gr4log
 
@@ -235,14 +231,9 @@ alias ...='..;..'
 alias ....='..;...'
 alias .....='..;....'
 
-#alias vim='gvim -v'
-alias vim='nvim'
-alias vim_is_clipboardable='vim --version | grep clipboard' #` gets you `-xterm_clipboard'
-
 # ele
 ## log analyzers
 export SIGROK_FIRMWARE_DIR='/home/dd/DATA/dev/log_analyzer/fw'
-
 
 
 # computer specific 
