@@ -1,0 +1,87 @@
+[Toplevel top]
+orientation=top
+expand=true
+size=24
+
+[Object briskmenu]
+locked=true
+position=0
+panel-right-stick=false
+toplevel-id=top
+applet-iid=BriskMenuFactory::BriskMenu
+object-type=applet
+
+[Object launcher]
+locked=true
+position=10
+launcher-location=/usr/share/applications/firefox.desktop
+panel-right-stick=false
+toplevel-id=top
+object-type=launcher
+menu-path=applications:/
+
+[Object notificationarea]
+locked=false
+position=726
+panel-right-stick=true
+toplevel-id=top
+applet-iid=NotificationAreaAppletFactory::NotificationArea
+object-type=applet
+
+[Object indicatorappletcomplete]
+locked=false
+position=456
+panel-right-stick=true
+toplevel-id=top
+applet-iid=IndicatorAppletCompleteFactory::IndicatorAppletComplete
+object-type=applet
+
+[Object clockapplet]
+locked=false
+position=663
+panel-right-stick=true
+toplevel-id=top
+applet-iid=ClockAppletFactory::ClockApplet
+object-type=applet
+
+[Object windowbuttonsapplet]
+locked=false
+position=773
+panel-right-stick=true
+toplevel-id=top
+applet-iid=WindowButtonsAppletFactory::WindowButtonsApplet
+object-type=applet
+
+[Object windowmenuapplet]
+locked=false
+position=797
+panel-right-stick=true
+toplevel-id=top
+applet-iid=WindowMenuAppletFactory::WindowMenuApplet
+object-type=applet
+
+[Object windowmenuapplet]
+locked=false
+position=126
+panel-right-stick=false
+toplevel-id=top
+applet-iid=WnckletFactory::WindowMenuApplet
+object-type=applet
+
+[Object windowlistapplet]
+locked=false
+position=142
+panel-right-stick=false
+toplevel-id=top
+applet-iid=WnckletFactory::WindowListApplet
+object-type=applet
+
+[Object launcher]
+locked=false
+position=102
+launcher-location=/usr/share/applications/chromium-browser.desktop
+panel-right-stick=false
+toplevel-id=top
+object-type=launcher
+menu-path=applications:/
+

@@ -30,6 +30,40 @@ autokey_sys="${home}.config/autokey/data/"
 autokey_my="${dotfiles}/autokey_data/"
 
 
+config_updater () {
+    update_option="${1?save/load}"
+    dir_option="${2?files/dir}"
+    my="${3?folder to save to}"
+    sys="${@:4}"
+    echo ">>> [$update_option][$dir_option] configs:"
+    echo "> to my=$my"
+    echo "> from sys:"
+    echo "$sys"
+    echo ">>>"
+    if [[ "$update_option" = "save" ]]; then
+        if [[ "$dir_option" = "dir" ]]; then
+            cp $sys $my
+        elif [[ "$dir_option" = "files" ]]; then
+            mkdir $my
+            cp $sys $my
+        fi
+    fi
+}
+
+
+gr4cfg_mate_panel () {
+    sys="/usr/share/mate-panel/layouts/gr4viton*"
+    myy="${dotfiles}mate_panel_layouts/"
+    config_updater $1 "files" $myy $sys
+}
+
+gr4cfg_autokey () {
+    sys=$autokey_sys
+    myy=$autokey_my
+    config_updater $1 "dir" $myy $sys
+}
+
+
 apply_configs () {
 	echo ">>> Applying configs"
 
@@ -64,6 +98,7 @@ apply_configs () {
 copy_configs () {
 
 	echo ">>> Copying configs"
+    opt="save"
 
 	echo ">>> tmux conf"
 	cp $tmux_from $tmux_to
@@ -87,8 +122,14 @@ copy_configs () {
     cp $muxp_sys $muxp_my
 
     echo ">>> autokey"
-    mkdir $autokey_my
+    # gr4cfg_autokey $opt
+	mkdir $autokey_my
     cp $autokey_sys $autokey_my
 
-    ls -aR $main_dir"dotfiles"
+
+    echo ">>> mate_panel"
+    gr4cfg_mate_panel $opt
+
+    echo ">>> all dotfiles"
+    ls -a $main_dir"dotfiles"
 }
