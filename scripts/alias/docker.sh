@@ -6,12 +6,25 @@
 # you have two options to change it
 # - create symlink from /var/lib/docker
 #    - i used it: /var/lib/docker is a symlink to /srv/docker
-# - edit /etc/default/docker (debian path) 
+# - edit /etc/default/docker (debian path)
 
 docker_get_container_id() {
     image_name=$1
     docker ps | grep $image_name | awk '{print $1}'
 }
+
+docker_bash_in () {
+    image_name=$1
+    container_id=$(docker_get_container_id $1)
+    docker exec -it $container_id /bin/sh ${@:2}
+}
+
+docker_attach () {
+    image_name=$1
+    container_id=$(docker_get_container_id $1)
+    docker attach $container_id ${@:2}
+}
+
 
 # alias docker_attach_bag="docker attach `docker_get_container_id autobaggage_app`"
 # fucking apostrophes :I

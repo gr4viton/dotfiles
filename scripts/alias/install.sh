@@ -248,6 +248,7 @@ inst insomnia
 
 inst gimp
 inst blender
+inst xchat
 
 echo ">>> keybase"
 curl -O https://prerelease.keybase.io/keybase_amd64.deb
