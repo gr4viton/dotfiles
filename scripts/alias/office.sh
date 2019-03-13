@@ -212,3 +212,16 @@ function term_clear() { printf "\033c" ; }
 
 
 alias vircpudb="vim ~/.config/pudb/pudb.cfg"
+
+
+# gr4log
+viaggr4 () {
+    viag $@ $dirgr4log
+}
+
+vigralias () {
+    viag $@ $dirgr4log/alias
+}
+vigrlog () {
+    viag $@ $dirgr4log/log
+}
