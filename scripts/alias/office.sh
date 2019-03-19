@@ -4,13 +4,26 @@
 
 alias llpy="ll | grep '.*py$'"
 
-vimo () {
+vimopen () {
     nvim -O $@
+}
+
+vimo () {
+    if [ "$#" -lt 10 ]; then
+        vimopen $@
+    else
+        if $(ask_yes "$# files to be open, continue?"); then
+            vimopen $@
+        else
+            echo "skipped opening of $# files"
+        fi
+    fi
 }
 
 vim () {
     nvim -O $@
 }
+
 # alias vimo='vim -O'
 alias vim_is_clipboardable='vim --version | grep clipboard' #` gets you `-xterm_clipboard'
 
@@ -35,6 +48,12 @@ viag() {
 
 viagp() {
     vimo $(agp -l $@)
+}
+
+viag_cd () {
+    dir=$1
+    cd $dir
+    viag ${@:2} $dir
 }
 
 gr4_folderize() {
@@ -215,13 +234,13 @@ alias vircpudb="vim ~/.config/pudb/pudb.cfg"
 
 
 # gr4log
-viaggr4 () {
-    viag $@ $dirgr4log
+vigr () {
+    viag_cd $dirgr4log $@
 }
 
 vigralias () {
-    viag $@ $dirgr4log/alias
+    viag_cd $dirgr4log/scripts/alias $@
 }
 vigrlog () {
-    viag $@ $dirgr4log/log
+    viag_cd $dirgr4log/log $@
 }

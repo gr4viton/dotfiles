@@ -14,7 +14,19 @@ alias glogfiles='git ls-files'
 alias glogd="git branch --sort=-committerdate"
 alias gloghash='git log --pretty=format:"%h %s"'
 
-alias gsquash2='git rebase --interactive HEAD~2'
+alias gir="git rebase"
+
+giri () {  # git rebase
+    git rebase --interactive HEAD~$1
+}
+
+gir_conflict_files () {
+    git diff --name-only --diff-filter=U
+}
+vigit_rebase_conflict () {
+    vimo $(gir_conflict_files)
+}
+
 alias g='git'
 alias b='branch'
 alias ch='checkout'
@@ -56,7 +68,7 @@ git_generate_ssh() {
 
 
 git_delete_and_recheckout_current_branch() {
-# if the diff is empty 
+# if the diff is empty
 # - deletes current branch, pulls origin, checkout it again
 cur=`git rev-parse --abbrev-ref HEAD`
 echo Current branch = $cur
@@ -99,7 +111,7 @@ git_rebase_interactive_till_master() {
 
 # autocomplete
 git_autocomplete_rc="/usr/share/bash-completion/completions/git"
-if [[ -f $git_autocomplete_rc ]]; then 
+if [[ -f $git_autocomplete_rc ]]; then
 source $git_autocomplete_rc
 fi
 
@@ -113,7 +125,7 @@ git_search_in_all_commits_current_branch_patch () {
 git log -S $1 --source --patch
 }
 git_search_in_all_commits_all_branches () {
-git log -S $1 --source --all 
+git log -S $1 --source --all
 }
 git_search_in_all_commits_all_branches_patch () {
 git log -S $1 --source --patch -all

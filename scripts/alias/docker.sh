@@ -16,7 +16,11 @@ docker_get_container_id() {
 docker_bash_in () {
     image_name=$1
     container_id=$(docker_get_container_id $1)
-    docker exec -it $container_id /bin/sh ${@:2}
+    docker exec -it ${@:2} $container_id /bin/sh
+}
+
+docker_bash_in_root () {
+    docker_bash_in $1 -u root ${@:2}
 }
 
 docker_attach () {
