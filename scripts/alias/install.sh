@@ -100,6 +100,8 @@ EOF
 echo ">>> DEV"
 inst neovim tmux htop chromium-browser
 inst git make
+inst exuberant-ctags  # vim ctags
+
 
 echo $(cat << EOF
 >>> docker-ce
@@ -306,4 +308,29 @@ setup_ssh () {
 gr4_copy_configs () {
     source $dirgr4log/dotfiles/config_update.sh
     copy_configs
+}
+
+inst_py_dependencies () {
+    echo ">>> pycurl dependencies"
+    inst libcurl4-openssl-dev libssl-dev
+}
+
+
+inst_cron_vim () {
+
+    echo "Plz add the following lines to crontab -e"
+    echo "10 * * * * ctags -R -o /srv/da/tags/tags /srv/da/ --options=/home/dd/.ctags"
+}
+inst_dev () {
+    inst_dev_tools_bash
+}
+
+inst_dev_tools_bash () {
+    inst_jqyq
+}
+
+inst_jqyq () {
+    echo ">>> installing json and yaml parsing scripts usable from bash (jq, yq)"
+    inst jq
+    sudo pip install yq
 }

@@ -13,9 +13,16 @@ docker_get_container_id() {
     docker ps | grep $image_name | awk '{print $1}'
 }
 
+docker_get_container_name() {
+    image_name=$1
+    docker ps | grep $image_name | awk '{print $2}'
+}
+
 docker_bash_in () {
     image_name=$1
     container_id=$(docker_get_container_id $1)
+    container_name=$(docker_get_container_name $1)
+    echo ">>> execing in docker $container_name -id = $container_id"
     docker exec -it ${@:2} $container_id /bin/sh
 }
 

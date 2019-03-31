@@ -102,6 +102,10 @@ alias cdwsdl='cd '$dirwsdl
 gr4_folderize_kiwi $dirda "bb" "black-box" "" "" "" "" "kw/black_box"
 # gr4_folderize "bb" "${dirbb}/proton"
 
+# kw.cronos
+gr4_folderize_kiwi $dirda "cron" "cronos" "" "" "" "" "kw/cronos"
+# gr4_folderize "bb" "${dirbb}/proton"
+
 
 # kw.dbmodels
 gr4_folderize_kiwi $dirda "dbmodels" "dbmodels"

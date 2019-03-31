@@ -1,6 +1,14 @@
 #!/bin/bash
 
 
+to_base64 () {
+    echo "$1" | base64
+}
+
+from_base64 () {
+    echo "$1" | base64 -d
+}
+
 
 alias llpy="ll | grep '.*py$'"
 
@@ -243,4 +251,10 @@ vigralias () {
 }
 vigrlog () {
     viag_cd $dirgr4log/log $@
+}
+
+
+yqy () {
+  # yaml output
+  yq -y $@
 }

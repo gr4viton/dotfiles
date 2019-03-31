@@ -7,7 +7,7 @@ pip_bump_reqs () {
     path="${1?path to requirements file without suffix}"
     out="${path}.txt"
     in="${path}.in"
-    pip-compile --output-file $out $in
+    pip-compile --output-file $out $in ${@:2}
 
     sed -i '/^--index-url/d' $out # remove the --index-url line = contains the password
 }
@@ -20,9 +20,47 @@ pc_reqs_bump () {
 
 # black box
 
-alias bb_build="docker-compose -f docker-compose.dev.yml build"
-alias bb_up="docker-compose -f docker-compose.dev.yml up"
-alias bb_up_build="bb_build; bb_up"
+do_build () {
+    docker-compose -f $1 build
+}
+
+do_up () {
+    docker-compose -f $1 up
+}
+
+
+# __bb_up () {
+#     category=$1
+
+# python - <<EOF
+# import argparse
+# dc_files = dict(
+#     dev='docker-compose.dev.yml',
+#     pudb='dev/docker-compose.pudb.yml',
+# )
+# parser = sysargparse.ArgumentParser
+# parser.add_argument("category", type=str)
+# args = parser.parse_args()
+# key = args.category
+# return dc_files[key]
+# EOF
+# $1
+# }
+
+bb_dcf_dev='docker-compose.dev.yml'
+bb_dcf_pudb='docker-compose.pudb.yml'
+
+bb_do_dev_build () { do_build $bb_dcf_dev ; }
+bb_do_dev_up () { do_up $bb_dcf_dev ; }
+bb_do_pudb_build () { do_build $bb_dcf_pudb ; }
+bb_do_pudb_up () { do_up $bb_dcf_pudb ; }
+
+alias bb_build="bb_do_pudb_build"
+alias bb_up="bb_do_pudb_up"
+bb_up_sh () {
+    dc_option='shell' bb_up
+}
+
 
 bb_reqs_bump () {
     pip_bump_reqs "requirements/base"
@@ -31,6 +69,14 @@ bb_reqs_bump () {
 
 bb_swag () {
     swag_validate $dirbbkw/swagger/black_box.yaml
+}
+
+bb_bash_in () {
+    docker_bash_in black-box_app
+}
+
+bb_bash_in_root () {
+    docker_bash_in_root black-box_app
 }
 
 # bag

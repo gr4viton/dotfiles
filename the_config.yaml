@@ -1,0 +1,25 @@
+connect:
+  ssh:
+    dalek:
+      user: "pi"
+      ip: "192.168.0.198"
+      base_path: "/home/pi/"
+    octopi:
+      user: "pi"
+      ip: "192.168.0.111" # was 199
+      base_path: "/home/pi/"
+    centroid:
+      user: "pi"
+      ip: "10.8.0.39"
+      base_path: "/home/pi/"
+    tapa:
+      user: "gr4viton"
+      ip: "192.168.0.118"
+    retro:
+      user: "pi"
+      ip: "192.168.0.105"
+      base_path: "/home/pi/"
+      folderizer: "/home/pi/.config/folderizer.yaml"
+
+# 164 = old rpi1
+# 163 = rpi3b+
