@@ -3,10 +3,14 @@
 
 loadit_script "alias/install/screensaver.sh"
 
-install_kivy() {
-    echo "from https://github.com/eabps/Kivy-Environment"
+inst_kivy_apk () {
 
-    sudo apt-get install -y python-pip python3-pip build-essential git python python3 python-dev python3-dev libsdl2-dev  libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev zlib1g-dev ffmpeg
+    inst python-pip python3-pip build-essential git python python3 python-dev python3-dev libsdl2-dev  libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev zlib1g-dev ffmpeg gstreamer-1.0
+}
+
+inst_kivy_whole () {
+    echo "from https://github.com/eabps/Kivy-Environment"
+	inst_kivy_apk
 
     sudo pip install pipenv
     pipenv --three
@@ -334,3 +338,5 @@ inst_jqyq () {
     inst jq
     sudo pip install yq
 }
+
+

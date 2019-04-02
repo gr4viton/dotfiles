@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 to_base64 () {
     echo "$1" | base64
 }
@@ -10,8 +9,18 @@ from_base64 () {
 }
 
 
+# LL
 alias llpy="ll | grep '.*py$'"
 
+# AG = ag-silversearcher
+alias agp='ag --py '
+# find all non-get dicts value accesses via str key (=dict_['something'])
+
+agp_dict() {
+    agp "\[['|\"][^,]*?['|\"]\]";
+}
+
+# VIM
 vimopen () {
     nvim -O $@
 }
@@ -33,22 +42,8 @@ vim () {
 }
 
 # alias vimo='vim -O'
+
 alias vim_is_clipboardable='vim --version | grep clipboard' #` gets you `-xterm_clipboard'
-
-# alias mux='tmuxinator'
-alias mux='tmuxp'
-alias muxl='tmuxp load'
-muxe() {
-    vim ~/.tmuxp/$1.yml
-}
-
-# ag-silversearcher
-alias agp='ag --py '
-# find all non-get dicts value accesses via str key (=dict_['something'])
-
-agp_dict() {
-    agp "\[['|\"][^,]*?['|\"]\]";
-}
 
 viag() {
     vimo $(ag -l $@)
@@ -63,6 +58,7 @@ viag_cd () {
     cd $dir
     viag ${@:2} $dir
 }
+# FOLDERIZE
 
 gr4_folderize() {
     # creates aliases and variables for a folder
@@ -85,6 +81,7 @@ gr4_folderize() {
     which > /dev/null 2>&1 ls${abbrev} || alias lll${abbrev}o="lla $folder"
 }
 
+# MV = move
 
 gr4_mkdir_move() {
     local what="${1:?No files.}"
@@ -97,7 +94,7 @@ alias mvc=gr4_mkdir_move
 
 alias rename_make_lowercase="rename 'y/A-Z/a-z/' *"
 
-
+# ASK
 
 ask_yes () {
     read -r -p "$1 = Are you sure? [y/N] " response
@@ -148,11 +145,10 @@ countdown_str () {
     sleep 1 &
     printf "\r%02d:%02d:%02d" $((secs/3600)) $(( (secs/60)%60)) $((secs%60))
     secs=$(( $secs - 1 ))
-    wait
+    w  ait
   done
   echo
 }
-
 countdown_5 () {
     countdown 5 2>/dev/null
 }
@@ -173,10 +169,13 @@ countdown_test() {
     echo "BOO!"
 }
 
+# DISK
 
 alias disk_show_space='df -h'
 alias disk_swap_show='swapon --show'
 alias disk_swap_show_ram='free -h'
+
+# WIFI
 
 wifi_device='wlp2s0'
 
@@ -192,6 +191,8 @@ wifi_connect () {
     wifi_connect_dhclient
 }
 
+# KILL
+
 assasinate () {
     ps -aux | grep $1 | sed 1q
     ps_num=$(ps -aux | grep $1 | sed 1a | awk 'NR=1{print $2}')
@@ -201,6 +202,12 @@ assasinate () {
     sudo kill -9 $ps_num
 }
 
+alias kill_firefox="sudo pkill firefox"
+alias kill_chrome="sudo pkill chromium-browser"
+
+# LIBINPUT-GESTURES
+
+
 alias lgs='libinput-gestures-setup'
 rclgs_home='~/.config/libinput-gestures.conf'
 rclgs_main='/etc/libinput-gestures.conf'
@@ -208,9 +215,16 @@ alias virclgs_home="vim $rclgs_home"
 alias virclgs_main="sudo vim $rclgs_main"
 alias virclgs="sudo vim -O $rclgs_home $rclgs_main"
 
-alias set_term_xterm="export TERM=xterm"
-alias set_term_xterm256color="export TERM=xterm-256color"
-alias set_term_urxvt="export TERM=rxvt-unicode-256color"
+# TERMINAL SETTINGS
+
+set_term_xterm(){ export TERM="xterm" ; }
+set_term_xterm256color(){ export TERM="xterm-256color" ; }
+set_term_urxvt(){ export TERM="rxvt-unicode-256color" ; }
+alias term_is_color="set_term_xterm256color"
+
+term_clear() { printf "\033c" ; }
+
+# APK
 
 apt_installed () {
     apt list --installed 2>/dev/null | grep $1
@@ -222,6 +236,7 @@ alias syslog="sudo tail -f /var/log/syslog"
 alias set_dotglob="shopt -s dotglob"
 alias unset_dotglob="shopt -u dotglob"
 
+# BLACK
 
 alias black120="black -l 120"
 alias black120_str="black -l 120 -S"
@@ -229,19 +244,12 @@ alias black120_str="black -l 120 -S"
 alias blak="black120"
 alias blaks="black120_str"
 
-
 alias x_gparted_fix="xhost +SI:localuser:root"
-
-alias kill_firefox="sudo pkill firefox"
-alias kill_chrome="sudo pkill chromium-browser"
-
-function term_clear() { printf "\033c" ; }
-
 
 alias vircpudb="vim ~/.config/pudb/pudb.cfg"
 
-
 # gr4log
+
 vigr () {
     viag_cd $dirgr4log $@
 }
@@ -253,8 +261,49 @@ vigrlog () {
     viag_cd $dirgr4log/log $@
 }
 
+# yq
 
 yqy () {
   # yaml output
   yq -y $@
+}
+
+# PIP env vars
+
+env_clean_pip () {
+	unset PYPI_PASSWORD
+	unset PIP_INDEX_URL
+	unset PIP_EXTRA_INDEX_URL
+	unset PYPI_USERNAME
+}
+
+
+# TMUX, tmuxinator, tmuxp
+
+# alias mux='tmuxinator'
+alias mux='tmuxp'
+alias muxl='tmuxp load'
+muxe() {
+    vim ~/.tmuxp/$1.yml
+}
+
+muxa() {
+    nam=${1:?Tmux session name}
+    session_names=$(tmux ls -F "#S")
+    match=$(echo $session_names | grep $nam)
+    if [[ -z "$match" ]]; then
+        echo -n "no match for session name $nam in session_names: ["
+        echo $session_names | tr -d "\n"
+        echo "]"
+        if $(ask_yes "Do you want to create new session [$nam]?"); then
+            muxn $nam
+        fi
+    else
+        tmux a -t $match
+    fi
+}
+
+muxn() {
+    nam=${1:?Tmux session name}
+    tmux new -s $nam
 }

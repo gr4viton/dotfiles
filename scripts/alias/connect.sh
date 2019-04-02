@@ -86,9 +86,9 @@ folderize_from_file () {
 		local_abs_path=${base_path}${remote_path}
 
 		remote_abbrev=$(_yq '.abbrev')
-		local_abbrev=$(ssh_local_abbrev $key $remote_abbrev)
-		echo "> folderizing${c_green} $local_abbrev ${c_end}= $local_abs_path"
-		gr4_folderize $local_abbrev $local_abs_path
+		local_abbrev=$(ssh_local_abbrev ${key} ${remote_abbrev})
+		echo "> folderizing${c_green} ${local_abbrev} ${c_end}= ${local_abs_path}"
+		gr4_folderize ${local_abbrev} ${local_abs_path}
 	done
 	cd $backup_pwd
 }
@@ -101,7 +101,10 @@ sshfs_mount () {
         sudo mkdir $mnt_path
     fi
     echo ">>> mounting remote filesystem $user_ip via sshfs to $mnt_path"
-    sudo sshfs -o allow_other,default_permissions,IdentityFile=~/.ssh/id_rsa $user_ip:/ $mnt_path || return
+	sshfs_options="-o allow_other,default_permissions,IdentityFile=~/.ssh/id_rsa"
+	sshfs_options="reconnect,ServerAliveInterval=15,ServerAliveCountMax=3,allow_other,default_permissions,IdentityFile=~/.ssh/id_rsa"
+
+    sudo sshfs -o $sshfs_options $user_ip:/ $mnt_path || return
 
 	sshfs_post_mount $key
 }
