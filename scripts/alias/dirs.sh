@@ -77,8 +77,10 @@ gr4_folderize_kiwi () {
 
 }
 
+# kw.gds-observer
+gr4_folderize_kiwi $dirda "go" "gds-observer" "" "" "docker-compose.yml" "" "kw/gds_observer"
 # kw.gds-viewer
-gr4_folderize_kiwi $dirda "gv" "gds-viewer" "" "" "docker-compose.yml" ""
+gr4_folderize_kiwi $dirda "gv" "gds-viewer" "" "" "docker-compose.yml" "" "kw/gds_viever"
 
 # kw.autobaggage
 gr4_folderize_kiwi $dirda "bag" "autobaggage" "modules" "tests/unit" "docker-compose.yml" "docker-compose.dev.yml"
@@ -105,6 +107,9 @@ gr4_folderize_kiwi $dirda "bb" "black-box" "" "" "" "" "kw/black_box"
 # kw.cronos
 gr4_folderize_kiwi $dirda "cron" "cronos" "" "" "" "" "kw/cronos"
 # gr4_folderize "bb" "${dirbb}/proton"
+
+# kw.cronos
+gr4_folderize_kiwi $dirda "conf" "configuru" "" "" "" "" "kw/configuru"
 
 
 # kw.dbmodels
@@ -141,4 +146,4 @@ dircc=$da_dir'conveyor-client/'
 alias cdcc='cd $dircc'
 
 
-
+gr4_folderize "roms_local" "/media/dd/datasss/GAMESY/roms/"

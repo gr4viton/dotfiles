@@ -41,6 +41,18 @@ vim () {
     nvim -O $@
 }
 
+vis () {
+    # load vim Session file
+    nvim -S $@
+}
+viss () {
+    vis Session.vim
+}
+
+vimdiff_color () {
+    vim -d $1 $2 +"windo set wrap"
+}
+
 # alias vimo='vim -O'
 
 alias vim_is_clipboardable='vim --version | grep clipboard' #` gets you `-xterm_clipboard'
@@ -202,8 +214,15 @@ assasinate () {
     sudo kill -9 $ps_num
 }
 
-alias kill_firefox="sudo pkill firefox"
-alias kill_chrome="sudo pkill chromium-browser"
+killit () {
+    sudo pkill $@
+}
+alias kfire="killit firefox"
+alias kchrome="killit chromium-browser"
+alias kvlc="killit vlc"
+alias kpycharm="killit pycharm"
+alias kblender="killit blender"
+alias kunity="killit unity"
 
 # LIBINPUT-GESTURES
 
@@ -276,6 +295,7 @@ env_clean_pip () {
 	unset PIP_EXTRA_INDEX_URL
 	unset PYPI_USERNAME
 }
+alias unset_pip_extras="env_clean_pip"
 
 
 # TMUX, tmuxinator, tmuxp
@@ -283,11 +303,29 @@ env_clean_pip () {
 # alias mux='tmuxinator'
 alias mux='tmuxp'
 alias muxl='tmuxp load'
+
+dirtmuxp="/home/dd/.tmuxp/"
 muxe() {
-    vim ~/.tmuxp/$1.yml
+    paths=""
+    for name in "$@"; do
+        paths=$paths"$dirtmuxp/$name.yml "
+    done
+    # vim $dirtmuxp/$1.yml
+    vimo $paths
 }
 
-muxa() {
+muxe_all() {
+    cd $dirtmuxp
+    vim *.yml
+}
+
+muxecd() {
+    cd $dirtmuxp
+    muxe $1
+}
+
+
+mux_create() {
     nam=${1:?Tmux session name}
     session_names=$(tmux ls -F "#S")
     match=$(echo $session_names | grep $nam)
@@ -296,14 +334,39 @@ muxa() {
         echo $session_names | tr -d "\n"
         echo "]"
         if $(ask_yes "Do you want to create new session [$nam]?"); then
-            muxn $nam
+            mux_new_session $nam
         fi
     else
         tmux a -t $match
     fi
 }
 
-muxn() {
+mux_new_session() {
     nam=${1:?Tmux session name}
     tmux new -s $nam
 }
+
+muxl_base () {
+    # commands to be ran as starting command of every mux
+    term_is_color;
+}
+
+muxl_base_da () {
+    muxl_base
+}
+
+muxl_base_dd () {
+    muxl_base
+    unset_pip_env
+    gitlab_iam_gr4viton
+}
+
+
+eval $(thefuck --alias)
+
+difff () {
+    diff -u $@ | ydiff -s
+}
+
+alias xclip_pipe='xargs echo -n | xclip -selection clipboard'
+alias tmux_check_xclip="tmux -Ltest list-keys | grep copy-pipe"

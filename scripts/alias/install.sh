@@ -44,12 +44,19 @@ esac
 }
 
 install_it () {
+    echo "> apt installing $@"
     sudo apt install $@
 }
 alias inst='install_it'
+
 inst_npm () {
     sudo npm i $@ -g
 }
+instsnap () {
+    echo "> snap installing $@"
+    sudo snap install $@
+}
+
 
 inst_add_repo () {
   # args are apt repo names without "ppa:" prefix
@@ -103,6 +110,7 @@ EOF
 )
 echo ">>> DEV"
 inst neovim tmux htop chromium-browser
+inst xclip  # for system buffer tmux copy
 inst git make
 inst exuberant-ctags  # vim ctags
 
@@ -253,7 +261,6 @@ inst insomnia
 
 
 inst gimp
-inst blender
 inst xchat
 
 echo ">>> keybase"
@@ -317,6 +324,8 @@ gr4_copy_configs () {
 inst_py_dependencies () {
     echo ">>> pycurl dependencies"
     inst libcurl4-openssl-dev libssl-dev
+    echo ">>> psycopg2 dependencies"
+    inst postgresql libpq-dev postgresql-client postgresql-client-common
 }
 
 
@@ -327,6 +336,7 @@ inst_cron_vim () {
 }
 inst_dev () {
     inst_dev_tools_bash
+    instsnap pycharm-professional --classic
 }
 
 inst_dev_tools_bash () {
@@ -339,4 +349,18 @@ inst_jqyq () {
     sudo pip install yq
 }
 
+inst_fuck () {
+    sudo pip3 install thefuck
+}
 
+inst_blender () {
+    echo "Used info from: https://vitux.com/how-to-install-blender-3d-on-ubuntu/"
+    echo installing from Thomas Schiex PPA repository
+	inst_add_repo thomas-schiex/blender
+	inst blender
+}
+
+inst_ydiff () {
+    # usage `diff -u a b | ydiff -`
+    python3 -m pip install --user ydiff
+}

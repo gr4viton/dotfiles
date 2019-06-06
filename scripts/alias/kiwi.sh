@@ -7,7 +7,7 @@ pip_bump_reqs () {
     path="${1?path to requirements file without suffix}"
     out="${path}.txt"
     in="${path}.in"
-    pip-compile --output-file $out $in ${@:2}
+    pip-compile ${@:2} --output-file $out $in
 
     sed -i '/^--index-url/d' $out # remove the --index-url line = contains the password
 }
@@ -24,8 +24,18 @@ do_build () {
     docker-compose -f $1 build
 }
 
+do_ext_build () {
+    extension=${1:?extension with a dot, eg. .yaml or .dev.yaml}
+    do_build "docker-compose${extension}"
+}
+
 do_up () {
     docker-compose -f $1 up
+}
+
+do_ext_up () {
+    extension=${1:?extension with a dot, eg. .yaml or .dev.yaml}
+    do_up "docker-compose${extension}"
 }
 
 
@@ -55,8 +65,21 @@ bb_do_dev_up () { do_up $bb_dcf_dev ; }
 bb_do_pudb_build () { do_build $bb_dcf_pudb ; }
 bb_do_pudb_up () { do_up $bb_dcf_pudb ; }
 
-alias bb_build="bb_do_pudb_build"
-alias bb_up="bb_do_pudb_up"
+do_pudb_yml_build () { do_ext_build ".pudb.yml" ; }
+do_pudb_yml_up () { do_ext_up ".pudb.yml" ; }
+
+do_dev_yml_build () { do_ext_build ".dev.yml" ; }
+do_dev_yml_up () { do_ext_up ".dev.yml" ; }
+
+do_pudb_yaml_build () { do_ext_build ".pudb.yaml" ; }
+do_pudb_yaml_up () { do_ext_up ".pudb.yaml" ; }
+
+do_dev_yaml_build () { do_ext_build ".dev.yaml" ; }
+do_dev_yaml_up () { do_ext_up ".dev.yaml" ; }
+
+alias bb_build="do_pudb_yaml_build"
+alias bb_up="do_pudb_yaml_up"
+
 bb_up_sh () {
     dc_option='shell' bb_up
 }
@@ -130,24 +153,70 @@ alias bag_build="make build-dev"
 alias bag_run="make run-dev-tmux"
 alias vibag="cdpcama; ..; vimo travelport/api.py $dirbagtra/base.py $dirbagtra/step.py $dirbagtra/../baggage_model.py"
 
-bag_frozen_open () {
-    bag_frozen_run_command "vimo" "Do_you_want_to_open_the_displayed_files?" "" $@
+bag_frozen_show () {
+    # opens egrep filtered files in vim
+    # run like
+    # bag_frozen_show <egrep_regex>
+    # eg.
+    # bag_frozen_show "service.*order.*res"
+
+    bag_frozen_run_command "ls" "Do_you_want_to_ls_the_displayed_files?" "" $@
 }
 
-bag_frozen_mv () {
+bag_frozen_open () {
+    # opens egrep filtered files in vim
+    # run like
+    # bag_frozen_open <egrep_regex>
+    # eg.
+    # bag_frozen_open "service.*order.*res"
+
+    bag_frozen_run_command "vimo" "Do_you_want_to_open_the_displayed_files in vim?" "" $@
+}
+
+bag_frozen_rm () {
+    # removes egrep filtered files
+    # run like
+    # bag_frozen_rm <egrep_regex>
+    # eg.
+    # bag_frozen_rm "service.*order.*res"
+
     bag_frozen_run_command "rm" "Do_you_want_to_remove_the_displayed_files?" "" $@
 }
 
 bag_frozen_mv () {
+    # moves egrep filtered files to the folder specified as the last argument
+    # run like
+    # bag_frozen_mv <egrep_regex> <dir_to_move_files_to>
+    # eg.
+    # bag_frozen_mv "service.*order.*res" "/tmp/output/files/"
+
     mv_dir=${@:$#} # last parameter
     other=${*%${!#}} # all parameters except the last
-    bag_frozen_run_command "mv" "Do_you_want_to_move_the_displayed_files?" $mv_dir $other
+    bag_frozen_run_command "mv" "Do_you_want_to_move_the_displayed_files to $mv_dir?" $mv_dir $other
+}
+
+bag_frozen_cp () {
+    # copies egrep filtered files to the folder specified as the last argument
+    # run like
+    # bag_frozen_mv <egrep_regex> <dir_to_move_files_to>
+    # eg.
+    # bag_frozen_mv "service.*order.*res" "/tmp/output/files/"
+
+    cp_dir=${@:$#} # last parameter
+    other=${*%${!#}} # all parameters except the last
+    bag_frozen_run_command "cp" "Do_you_want_to_copy_the_displayed_files to $cp_dir?" $cp_dir $other
 }
 
 bag_frozen_run_command () {
+    # run command over egrep filtered files
+    # run like
+    # bag_frozen_run_command "mv" "question" "where_to_move" "service.*order.*res"
+
     local the_command="${1:?Command to run over the filtered files}"
     local the_question="${2:?Question to ask before the command is ran}"
     local the_command_suffix="${3}"
+    # rest from arg 4  is passed to the egrep
+
     # only from current directory (ls -A1)
     # files=$(ls -A1 | egrep "${@:3}")
     if [[ $the_command = "rm" ]]; then

@@ -159,3 +159,7 @@ swag_validate () {
     swag_file="${1?swagger file}"
     swagger-cli validate $swag_file
 }
+
+py () {
+    ipython $@
+}

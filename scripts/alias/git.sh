@@ -14,7 +14,15 @@ alias glogfiles='git ls-files'
 alias glogd="git branch --sort=-committerdate"
 alias gloghash='git log --pretty=format:"%h %s"'
 
+ggdog () { git log --all --decorate --oneline --graph; }
+ggraph () { git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all; }
+ggraph2 () { git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all; }
+
+
+
+
 alias gir="git rebase"
+
 
 giri () {  # git rebase
     git rebase --interactive HEAD~$1
@@ -23,8 +31,11 @@ giri () {  # git rebase
 gir_conflict_files () {
     git diff --name-only --diff-filter=U
 }
-vigit_rebase_conflict () {
+vigit_rebase_conflict2 () {
     vimo $(gir_conflict_files)
+}
+vigit_rebase_conflict () {
+    vimo $(git diff --name-only | uniq)
 }
 
 alias g='git'

@@ -31,3 +31,8 @@ fi
 
 
 alias bluetooth_restart="sudo /etc/init.d/bluetooth restart"
+
+
+unity () {
+    /usr/bin/unity3d -force-glcore -noUpm
+}

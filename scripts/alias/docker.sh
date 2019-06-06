@@ -69,3 +69,50 @@ _docker_containers_remove_all() {
 
 # Remove stopped containers
 # This command will not remove running containers, only an error message will be printed out for each of them.
+
+do_compose_yml_regex () {
+    txt="${1:?text in docker-compose file}"
+    path="${2:-$PWD}"
+    fnames=$(ag -g "/docker-compose$txt\.ya?ml$" $path)  # with dir selection ($path) echoes full paths
+    for f in $fnames; do
+        echo $f
+        break
+    done
+}
+do_regex_from_category () {
+    category="${1?category, eg:dev, pudb, prod}"
+    # if (( $category="dev" )); then
+}
+
+do_regex_dev=".*dev"
+do_regex_pudb=".*pudb"
+do_regex_dev_local=".*dev.*local"
+do_regex_prod="((?!dev))"
+do_compose_yml_dev () { do_compose_yml_ $do_regex_dev $@; }
+do_compose_yml_pudb () { do_compose_yml_ $do_regex_pudb $@; }
+do_compose_yml_dev_local () { do_compose_yml_ $do_regex_dev_local $@; }
+do_compose_yml_prod () { do_compose_yml_ $do_regex_prod $@; }  # negative lookahead = does not contain dev
+
+do_compose_yml_all () {
+    echo $(do_compose_yml_dev $@)
+    echo $(do_compose_yml_pudb $@)
+    echo $(do_compose_yml_dev_local $@)
+    echo $(do_compose_yml_prod $@)
+}
+
+vido_compose_yml_all () {
+    vimo $(do_compose_yml_all $@)
+}
+
+do_build_ () {
+    txt="${1:?text in docker-compose file}"
+    do_build do_compose_yml_ $1 $@
+}
+
+do_up () {
+    txt="${1:?text in docker-compose file}"
+    do_up do_compose_yml_ $1 $@
+}
+
+do_dev_build () { do_build_ $do_regex_dev; }
+do_dev_build () { do_build_ $do_regex_dev; }
