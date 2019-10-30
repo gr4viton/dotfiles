@@ -10,6 +10,8 @@ pip_bump_reqs () {
     pip-compile ${@:2} --output-file $out $in
 
     sed -i '/^--index-url/d' $out # remove the --index-url line = contains the password
+    sed -i 's/pip-compile .*--index-url=.* --output/pip-compile --output/' $out
+    sed -i 's/pip-compile .*--extra-index-url=.* --output/pip-compile --output/' $out
 }
 
 
@@ -20,18 +22,11 @@ pc_reqs_bump () {
 
 # black box
 
-do_build () {
-    docker-compose -f $1 build
-}
-
 do_ext_build () {
     extension=${1:?extension with a dot, eg. .yaml or .dev.yaml}
     do_build "docker-compose${extension}"
 }
 
-do_up () {
-    docker-compose -f $1 up
-}
 
 do_ext_up () {
     extension=${1:?extension with a dot, eg. .yaml or .dev.yaml}
@@ -78,7 +73,10 @@ do_dev_yaml_build () { do_ext_build ".dev.yaml" ; }
 do_dev_yaml_up () { do_ext_up ".dev.yaml" ; }
 
 alias bb_build="do_pudb_yaml_build"
-alias bb_up="do_pudb_yaml_up"
+alias bb_up="do_cat_up pudb"
+# unalias bb_up
+
+# bb_up () { do_cat_up pudb; }
 
 bb_up_sh () {
     dc_option='shell' bb_up
@@ -153,64 +151,64 @@ alias bag_build="make build-dev"
 alias bag_run="make run-dev-tmux"
 alias vibag="cdpcama; ..; vimo travelport/api.py $dirbagtra/base.py $dirbagtra/step.py $dirbagtra/../baggage_model.py"
 
-bag_frozen_show () {
+step_frozen_show () {
     # opens egrep filtered files in vim
     # run like
-    # bag_frozen_show <egrep_regex>
+    # step_frozen_show <egrep_regex>
     # eg.
-    # bag_frozen_show "service.*order.*res"
+    # step_frozen_show "service.*order.*res"
 
-    bag_frozen_run_command "ls" "Do_you_want_to_ls_the_displayed_files?" "" $@
+    step_frozen_run_command "ls" "Do_you_want_to_ls_the_displayed_files?" "" $@
 }
 
-bag_frozen_open () {
+step_frozen_open () {
     # opens egrep filtered files in vim
     # run like
-    # bag_frozen_open <egrep_regex>
+    # step_frozen_open <egrep_regex>
     # eg.
-    # bag_frozen_open "service.*order.*res"
+    # step_frozen_open "service.*order.*res"
 
-    bag_frozen_run_command "vimo" "Do_you_want_to_open_the_displayed_files in vim?" "" $@
+    step_frozen_run_command "vimo" "Do_you_want_to_open_the_displayed_files in vim?" "" $@
 }
 
-bag_frozen_rm () {
+step_frozen_rm () {
     # removes egrep filtered files
     # run like
-    # bag_frozen_rm <egrep_regex>
+    # step_frozen_rm <egrep_regex>
     # eg.
-    # bag_frozen_rm "service.*order.*res"
+    # step_frozen_rm "service.*order.*res"
 
-    bag_frozen_run_command "rm" "Do_you_want_to_remove_the_displayed_files?" "" $@
+    step_frozen_run_command "rm" "Do_you_want_to_remove_the_displayed_files?" "" $@
 }
 
-bag_frozen_mv () {
+step_frozen_mv () {
     # moves egrep filtered files to the folder specified as the last argument
     # run like
-    # bag_frozen_mv <egrep_regex> <dir_to_move_files_to>
+    # step_frozen_mv <egrep_regex> <dir_to_move_files_to>
     # eg.
-    # bag_frozen_mv "service.*order.*res" "/tmp/output/files/"
+    # step_frozen_mv "service.*order.*res" "/tmp/output/files/"
 
     mv_dir=${@:$#} # last parameter
     other=${*%${!#}} # all parameters except the last
-    bag_frozen_run_command "mv" "Do_you_want_to_move_the_displayed_files to $mv_dir?" $mv_dir $other
+    step_frozen_run_command "mv" "Do_you_want_to_move_the_displayed_files to $mv_dir?" $mv_dir $other
 }
 
-bag_frozen_cp () {
+step_frozen_cp () {
     # copies egrep filtered files to the folder specified as the last argument
     # run like
-    # bag_frozen_mv <egrep_regex> <dir_to_move_files_to>
+    # step_frozen_mv <egrep_regex> <dir_to_move_files_to>
     # eg.
-    # bag_frozen_mv "service.*order.*res" "/tmp/output/files/"
+    # step_frozen_mv "service.*order.*res" "/tmp/output/files/"
 
     cp_dir=${@:$#} # last parameter
     other=${*%${!#}} # all parameters except the last
-    bag_frozen_run_command "cp" "Do_you_want_to_copy_the_displayed_files to $cp_dir?" $cp_dir $other
+    step_frozen_run_command "cp" "Do_you_want_to_copy_the_displayed_files to $cp_dir?" $cp_dir $other
 }
 
-bag_frozen_run_command () {
+step_frozen_run_command () {
     # run command over egrep filtered files
     # run like
-    # bag_frozen_run_command "mv" "question" "where_to_move" "service.*order.*res"
+    # step_frozen_run_command "mv" "question" "where_to_move" "service.*order.*res"
 
     local the_command="${1:?Command to run over the filtered files}"
     local the_question="${2:?Question to ask before the command is ran}"
@@ -396,7 +394,8 @@ alias devserver1='warning; ssh -t '$ams_login' "for n in {1..12}; do echo \"Logg
 
         #ams_cmd='"for n in {1..12}; do echo \"Logging into '$dev_name' server! - '$dev_ip'\"; done; ssh unseen@'$dev_ip' -t bash"'
 
-        ams_dev_ip=10.2.42.156
+        # ams_dev_ip=10.2.42.156
+        ams_dev_ip=10.2.42.207
         ams_dev_call $ams_dev_ip "bash"
     }
 
@@ -411,17 +410,19 @@ alias devserver1='warning; ssh -t '$ams_login' "for n in {1..12}; do echo \"Logg
     alias ams_dev_11="kw_open_devserver $dev_format 11 '10.2.42.156'"
 
 
-_kw_open_devserver() {
+    _kw_open_devserver() {
 
-dev_format=$1
-dev_num=$2
-dev_ip=$3
-dev_name=$dev_format$dev_num
-warning; ssh -t $ams_login "for n in {1..12}; do echo \"Logging into $dev_name server! - '$dev_ip\"; done; ssh unseen@$dev_ip -t \"LANG=en_US.utf8 bash -c \"tmux a -t DD || tmux new DD\"\" "
+        dev_format=$1
+        dev_num=$2
+        dev_ip=$3
+        dev_name=$dev_format$dev_num
+        warning; ssh -t $ams_login "for n in {1..12}; do echo \"Logging into $dev_name server! - '$dev_ip\"; done; ssh unseen@$dev_ip -t \"LANG=en_US.utf8 bash -c \"tmux a -t DD || tmux new DD\"\" "
 
-}
+    }
 
-alias dev11="kw_open_devserver $dev_format 11 '10.2.42.150'"
+    alias dev11="kw_open_devserver $dev_format 11 '10.2.42.150'"
+    dev5_ip="10.2.42.207"
+    alias dev5="kw_open_devserver $dev_format 11 $dev5_ip"
 
 fi
 
@@ -448,3 +449,4 @@ python get_exact_provider.py  # run the rogue
 EOF
     )"
 }
+

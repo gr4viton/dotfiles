@@ -3,8 +3,8 @@
 shin_ip[dalek]="pi@192.168.0.198"
 shin_ip[octopi]="pi@192.168.0.111" # was 199
 shin_ip[centroid]="pi@10.8.0.39"
-shin_ip[tapa]="gr4viton@192.168.0.118"
 shin_ip[retropie]="pi@192.168.0.105"
+shin_ip[tapa]="gr4viton@192.168.0.118"
 # 164 = old rpi1
 # 163 = rpi3b+
 
@@ -145,3 +145,38 @@ mount_ftp () {
 gr4_folderize endora_gr4viton "/media/ftp/gr4viton.cz/"
 
 alias mount_ftp_endora_gr4viton="mount_ftp sasanka.endora.cz $direndora_gr4viton gr4viton"
+
+
+
+# nas
+nas_rsync_cp() {
+    # copy to nas via rsync
+    # example:
+    # nas_rsync_cp -zz "booo/*" /volume1/video/
+    # if you use wildcards, enquote the argument (like in the example
+
+    # -a = take folder - use the / at the end
+    # -n = dry run
+    # nas_rsync_cp_precompress -an zz/ /volume1/video/
+
+
+    last=${@:$#} # last parameter
+    other=${*%${!#}} # all parameters except the last
+    in=$other
+    out=$last
+
+    set -x
+    rsync -v --info=progress2 $in gr4viton@192.168.0.118:$out --rsync-path=/opt/bin/rsync
+    set +x
+}
+
+nas_rsync_cp_zip_it () {
+    nas_rsync_cp -C "$@"
+}
+
+nas_rsync_cp_precompress () {
+    # precompress sent data, but decompress on reciever
+    nas_rsync_cp -zz "$@"
+}
+
+

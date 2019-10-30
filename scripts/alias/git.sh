@@ -1,9 +1,19 @@
 #!/bin/bash
 # git
 alias git_initial_setup='git config --global pull.rebase true; git config --global alias.pushf "push --force-with-lease"'
-alias pushf='git push --force-with-lease'
-alias gdiff='git diff --color-words'
-alias gpull_rebase='git pull --rebase origin master'
+# alias gdiff='git diff --color-words'
+
+gpl () {
+    git pull --rebase origin master
+}
+alias gpull_rebase='gpl'
+gpf () {
+    git push --force-with-lease
+}
+gd () {
+    git diff --color-words
+}
+alias pushf='gpf'
 
 alias glog='git log --stat'
 alias glog_oneline='git log --pretty=oneline'
@@ -12,14 +22,14 @@ alias glogfiles='git ls-files'
 
 # git
 alias glogd="git branch --sort=-committerdate"
+gbr_delete_merged () {
+    git checkout master && git branch -d $(git branch --merged | tr '*' ' ' | tr 'master' ' ')
+}
 alias gloghash='git log --pretty=format:"%h %s"'
 
-ggdog () { git log --all --decorate --oneline --graph; }
-ggraph () { git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all; }
-ggraph2 () { git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all; }
-
-
-
+glogdog () { git log --all --decorate --oneline --graph; }
+gloggraph () { git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all; }
+gloggraph_2line () { git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all; }
 
 alias gir="git rebase"
 

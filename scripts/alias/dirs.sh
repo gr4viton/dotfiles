@@ -120,9 +120,13 @@ alias venv_dbmodels='cd_dbmodels; source venv3/bin/activate'
 gr4_folderize "aut" "$dirda/automation"
 # gr4_folderize "anskw" "$dirbag/kw/autobaggage"
 gr4_folderize "autbook" "$diraut/booking"
+gr4_folderize "autair" "$diraut/booking/airlines"
 gr4_folderize "autobs" "$dirautbook/gds_observer"
 gr4_folderize "autque" "$dirautobs/queues_observer"
 gr4_folderize "antage" "$dirautobs/agent_performance"
+
+autama="$dirautair/amadeus_partner.py"
+auttra="$dirautair/travelport_partner.py"
 
 alias psagent="ps -aux | grep 'cache\|probe\|eval' --color=always | sort - k11"
 

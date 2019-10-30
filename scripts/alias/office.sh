@@ -12,6 +12,19 @@ from_base64 () {
 # LL
 alias llpy="ll | grep '.*py$'"
 
+alias disc_usage="du"
+
+disc_usage_summarize () {
+    # use `du -sh out/*` to get sizes of folders
+    du -sh
+}
+
+lsd () {
+    path="${1:-*}"
+    du -sh $path
+}
+alias lls="lsd"
+
 # AG = ag-silversearcher
 alias agp='ag --py '
 # find all non-get dicts value accesses via str key (=dict_['something'])
@@ -58,11 +71,11 @@ vimdiff_color () {
 alias vim_is_clipboardable='vim --version | grep clipboard' #` gets you `-xterm_clipboard'
 
 viag() {
-    vimo $(ag -l $@)
+    vimo $(ag -l "$@")
 }
 
 viagp() {
-    vimo $(agp -l $@)
+    vimo $(agp -l "$@")
 }
 
 viag_cd () {
@@ -70,6 +83,13 @@ viag_cd () {
     cd $dir
     viag ${@:2} $dir
 }
+
+viag_gitlabci_in_subfolders () {
+    # have to have "/.git/" line in ~/.agignore
+    REGEX="${1?regex for files}"
+    viag $REGEX --hidden -G ".*/.*gitlab-ci.y.*ml" -l
+}
+
 # FOLDERIZE
 
 gr4_folderize() {
@@ -224,6 +244,22 @@ alias kpycharm="killit pycharm"
 alias kblender="killit blender"
 alias kunity="killit unity"
 
+
+kswap () {
+    swapoff -a
+}
+kswap_restart () {
+    swapoff -a
+    swapon -a
+}
+
+kall () {
+    kfire
+    kvlc
+    kpycharm
+    kchrome
+}
+
 # LIBINPUT-GESTURES
 
 
@@ -250,6 +286,7 @@ apt_installed () {
 }
 
 alias syslog="sudo tail -f /var/log/syslog"
+alias visyslog="sudo vim /var/log/syslog"
 
 # dotglob - set = the * does not omit "." prefixed files
 alias set_dotglob="shopt -s dotglob"
@@ -370,3 +407,50 @@ difff () {
 
 alias xclip_pipe='xargs echo -n | xclip -selection clipboard'
 alias tmux_check_xclip="tmux -Ltest list-keys | grep copy-pipe"
+
+vi_compose () {
+    vim /usr/share/X11/locale/en_US.UTF-8/Compose
+}
+
+# /opt/displaylink
+# displaylink driver dock-in station - supsend setup
+
+
+
+swap_info () {
+    swapon
+    cat /proc/sys/vm/swappiness
+}
+swap_set_swappiness () {
+    swp=$1
+    swap_info
+    sudo sysctl vm.swappiness=$swp
+    swap_info
+}
+
+swap_remove_swapfile () {
+    sudo swapoff -v /swapfile
+    sudo rm /swapfile
+}
+
+swap_add_swapfile () {
+    # 4G = 4GB
+    sudo fallocate -l 4G /swapfile
+    sudo chmod 600 /swapfile
+    sudo mkswap /swapfile
+    sudo swapon /swapfile
+
+    echo "also add to /etc/fstab"
+    echo "/swapfile swap swap defaults 0 0"
+    echo "> your /etc/fstab:"
+    cat /etc/fstab
+}
+
+
+vigrub () {
+    sudo vim /etc/default/grub
+}
+
+envg () {
+    env | grep $@
+}

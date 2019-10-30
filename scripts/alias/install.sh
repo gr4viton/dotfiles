@@ -364,3 +364,9 @@ inst_ydiff () {
     # usage `diff -u a b | ydiff -`
     python3 -m pip install --user ydiff
 }
+
+
+inst_qutebrowser () {
+    inst qutebrowser
+}
+

@@ -8,6 +8,17 @@
 #    - i used it: /var/lib/docker is a symlink to /srv/docker
 # - edit /etc/default/docker (debian path)
 
+do_build () {
+    set -x
+    docker-compose -f $1 build
+    set +x
+}
+do_up () {
+    set -x
+    docker-compose -f $1 up
+    set +x
+}
+
 docker_get_container_id() {
     image_name=$1
     docker ps | grep $image_name | awk '{print $1}'
@@ -70,8 +81,8 @@ _docker_containers_remove_all() {
 # Remove stopped containers
 # This command will not remove running containers, only an error message will be printed out for each of them.
 
-do_compose_yml_regex () {
-    txt="${1:?text in docker-compose file}"
+do_compose_yml_from_regex () {
+    txt="${1:?regex in docker-compose file}"
     path="${2:-$PWD}"
     fnames=$(ag -g "/docker-compose$txt\.ya?ml$" $path)  # with dir selection ($path) echoes full paths
     for f in $fnames; do
@@ -79,19 +90,36 @@ do_compose_yml_regex () {
         break
     done
 }
-do_regex_from_category () {
-    category="${1?category, eg:dev, pudb, prod}"
-    # if (( $category="dev" )); then
-}
+
 
 do_regex_dev=".*dev"
 do_regex_pudb=".*pudb"
+do_regex_local=".*local"
+do_regex_local_dev=".*local.*dev"
 do_regex_dev_local=".*dev.*local"
-do_regex_prod="((?!dev))"
-do_compose_yml_dev () { do_compose_yml_ $do_regex_dev $@; }
-do_compose_yml_pudb () { do_compose_yml_ $do_regex_pudb $@; }
-do_compose_yml_dev_local () { do_compose_yml_ $do_regex_dev_local $@; }
-do_compose_yml_prod () { do_compose_yml_ $do_regex_prod $@; }  # negative lookahead = does not contain dev
+do_regex_prod="((?!dev))"  # negative lookahead = does not contain dev
+
+do_regex_from_category () {
+    category="${1?category: dev, pudb, prod, dev_local}"
+    if [[ $category == "dev" ]]; then
+        echo $do_regex_dev
+    elif [[ $category == "pudb" ]]; then
+        echo $do_regex_pudb
+    elif [[ $category == "dev_local" ]]; then
+        echo $do_regex_dev_local
+    elif [[ $category == "local_dev" ]]; then
+        echo $do_regex_local_dev
+    elif [[ $category == "local" ]]; then
+        echo $do_regex_local
+    elif [[ $category == "prod" ]]; then
+        echo $do_regex_prod
+    fi
+}
+
+# do_compose_yml_dev () { do_compose_yml_from_regex $do_regex_dev $@; }
+# do_compose_yml_pudb () { do_compose_yml_from_regex $do_regex_pudb $@; }
+# do_compose_yml_dev_local () { do_compose_yml_from_regex $do_regex_dev_local $@; }
+# do_compose_yml_prod () { do_compose_yml_from_regex $do_regex_prod $@; }
 
 do_compose_yml_all () {
     echo $(do_compose_yml_dev $@)
@@ -100,19 +128,66 @@ do_compose_yml_all () {
     echo $(do_compose_yml_prod $@)
 }
 
+do_cat_compose () {
+    category="${1?category: dev, pudb, prod, dev_local}"
+    regex=$(do_regex_from_category $category)
+    file=$(do_compose_yml_from_regex $regex ${@:2})
+    echo $file
+}
+vido_cat_compose () {
+    file=$(do_cat_compose $@)
+    vim $file
+}
+
 vido_compose_yml_all () {
     vimo $(do_compose_yml_all $@)
 }
 
-do_build_ () {
-    txt="${1:?text in docker-compose file}"
-    do_build do_compose_yml_ $1 $@
+# do_build__from_regex () {
+#     txt="${1:?regex in docker-compose file}"
+#     file=$(do_compose_yml_from_regex $1 $@)
+#     do_build $file
+# }
+
+# do_build_cat () {
+#     category="${1?category: dev, pudb, prod, dev_local}"
+#     regex=$(do_regex_from_category $category)
+#     do_build__from_regex $regex ${@:2}
+# }
+
+# do_up__from_regex () {
+#     txt="${1:?regex in docker-compose file}"
+#     file=$(do_compose_yml_from_regex $1 $@)
+#     echo $file
+#     do_up $file
+# }
+
+do_cat_up () {
+    category="${1?category: dev, pudb, prod, dev_local}"
+    echo "category: \"$category\""
+    regex=$(do_regex_from_category $category)
+    echo "category inner regex: \"$regex\""
+    file=$(do_compose_yml_from_regex $regex)
+    echo "file selected: \"$file\""
+    do_up $file ${@:2}
 }
 
-do_up () {
-    txt="${1:?text in docker-compose file}"
-    do_up do_compose_yml_ $1 $@
+do_cat_up_sh () {
+    dc_option=shell do_cat_up $@
 }
 
-do_dev_build () { do_build_ $do_regex_dev; }
-do_dev_build () { do_build_ $do_regex_dev; }
+do_cat_build () {
+    category="${1?category: dev, pudb, prod, dev_local}"
+    echo "category: \"$category\""
+    regex=$(do_regex_from_category $category)
+    echo "category inner regex: \"$regex\""
+    file=$(do_compose_yml_from_regex $regex)
+    echo "file selected: \"$file\""
+    do_build $file ${@:2}
+}
+
+do_redis_flush () {
+    image_name=$1
+    container_id=$(docker_get_container_id $1)
+    docker exec -it $container_id redis-cli FLUSHALL
+}

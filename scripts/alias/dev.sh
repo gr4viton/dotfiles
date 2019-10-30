@@ -160,6 +160,12 @@ swag_validate () {
     swagger-cli validate $swag_file
 }
 
-py () {
-    ipython $@
+alias py="ipython"
+alias ppy="python"
+alias py3="ipython3"
+alias ppy3="python3"
+
+
+redis_flushall () {
+    redis-cli FLUSHALL
 }
