@@ -454,3 +454,11 @@ vigrub () {
 envg () {
     env | grep $@
 }
+
+
+
+# game
+# wine https://help.ubuntu.com/community/Wine
+wow () {
+    wine /fun/game/wow/wow434/Wow.exe
+}
