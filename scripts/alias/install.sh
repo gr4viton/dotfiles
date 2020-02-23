@@ -7,12 +7,16 @@ inst_kivy_apk () {
 
     inst python-pip python3-pip build-essential git python python3 python-dev python3-dev libsdl2-dev  libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev zlib1g-dev ffmpeg gstreamer-1.0
 }
+inst_pipenv () {
+    pip install pipenv
+    # run via `python -m pipenv`
+}
 
 inst_kivy_whole () {
     echo "from https://github.com/eabps/Kivy-Environment"
 	inst_kivy_apk
 
-    sudo pip install pipenv
+    inst_pipenv
     pipenv --three
     pipenv install Cython==0.25
     pipenv install kivy
@@ -96,6 +100,30 @@ echo $(cat << EOF
 
 EOF
 )
+
+}
+
+inst_neovim () {
+  inst neovim
+  echo ">>> neovim-pluginstaller"
+  curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  pip3 install --user neovim
+
+  echo "vim, :PlugInstall now"
+  # install coc
+  inst nodejs npm
+  # copyy @ coc
+  inst xsel
+}
+
+inst_tmux () {
+    inst tmux
+inst xclip  # for system buffer tmux copy
+# tmux plugins
+mkdir -p ~/.tmux/plugins/tpm
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+inst urlview  # quick url open
 }
 
 # install ALLLAALALALALALALLAL
@@ -108,9 +136,11 @@ install_all () {
 insomnia pycharm
 EOF
 )
+
 echo ">>> DEV"
-inst neovim tmux htop chromium-browser
-inst xclip  # for system buffer tmux copy
+inst  htop chromium-browser
+inst_neovim
+
 inst git make
 inst exuberant-ctags  # vim ctags
 
@@ -124,7 +154,19 @@ download containerd.io, docker-ce-cli, docker-ce
 
 # if you want to store containers elswhere you can create symlink
 # so i have /srv/docker as a storage now
+$ sudo mkdir /var/lib/docker
 $ sudo ln -s /srv/docker/ /var/lib/docker
+$ sudo dockerd # manual docker deamon start
+# sudo systemctl start docker ###???
+
+
+# THIS
+wget "https://download.docker.com/linux/ubuntu/dists/disco/pool/stable/amd64/containerd.io_1.2.6-3_amd64.deb"
+wget "https://download.docker.com/linux/ubuntu/dists/disco/pool/stable/amd64/docker-ce-cli_19.03.3~3-0~ubuntu-disco_amd64.deb"
+wget "https://download.docker.com/linux/ubuntu/dists/disco/pool/stable/amd64/docker-ce_19.03.3~3-0~ubuntu-disco_amd64.deb"
+sudo dpkg -i "containerd.io_1.2.6-3_amd64.deb"
+sudo dpkg -i "docker-ce-cli_19.03.3~3-0~ubuntu-disco_amd64.deb"
+sudo dpkg -i "docker-ce_19.03.3~3-0~ubuntu-disco_amd64.deb"
 
 $ inst /srv/_all/DATA/deb/docker/*
 or this
@@ -156,8 +198,8 @@ inst tldr
 
 inst autokey-gtk
 
-echo ">>> compiz"
-inst compiz compiz-plugins compiz-plugins-default compizconfig-settings-manager
+#echo ">>> compiz"
+# inst compiz compiz-plugins compiz-plugins-default compizconfig-settings-manager
 
 echo $(cat << EOF
 on init ubuntu 18.04
@@ -191,8 +233,6 @@ attrs pipenv
 EOF
 )
 
-
-
 # inst snapd
 # sudo snap install slack --classic
 echo "install slack from https://slack.com/downloads/linux"
@@ -204,7 +244,6 @@ https://confluence.kiwi.com/display/ICT/VPN+Setup+how-to?utm_source=grossmann+VP
 
 EOF
 )
-
 
 sudo apt-get install openfortivpn network-manager-fortisslvpn-gnome
 
@@ -220,9 +259,9 @@ sudo mkdir /var/lib/NetworkManager-fortisslvpn/
 sudo chown dd:dd /var/lib/NetworkManager-fortisslvpn/
 
 echo ">>> dev"
+inst_dev
 
-echo "> pip tools"
-sudo pip install pip-tools
+inst_pip_tools
 
 echo ">>> office"
 inst mc
@@ -233,18 +272,18 @@ inst_screensaver
 echo ">>> syntax checkers"  # not coala - coala is docker
 inst flake8
 inst libxml2-utils  # xmllint
+inst black
 
-echo ">>> nvidia drivers"
+# not on new latitude5401
+#echo ">>> nvidia drivers"
 # sudo add-apt-repository ppa:graphics-drivers/ppa
 # sudo apt-get update
-ubuntu-drivers devices
-sudo ubuntu-drivers autoinstall
+#ubuntu-drivers devices
+#sudo ubuntu-drivers autoinstall
 
 echo ">>> sound"
 sudo apt-add-repository ppa:yktooo/ppa
-
 sudo apt update && inst indicator-sound-switcher
-
 
 echo ">>> insomnia"
 
@@ -263,19 +302,13 @@ inst insomnia
 inst gimp
 inst xchat
 
-echo ">>> keybase"
-curl -O https://prerelease.keybase.io/keybase_amd64.deb
-# if you see an error about missing `libappindicator1`
-# from the next command, you can ignore it, as the
-# subsequent command corrects it
-sudo dpkg -i keybase_amd64.deb
-sudo apt-get install -f
-run_keybase
-
 inst kazam
 
 # desktop manager installer
-inst taskel
+echo ">>> taskel skipped"
+# inst taskel
+
+inst_nas
 
 ## snaps
 echo "# SNAPS"
@@ -286,6 +319,26 @@ sudo snap install spotify
 setup_gnome
 setup_ssh
 
+}
+
+inst_nas () {
+
+echo ">>> nas software"
+echo "> https://vitux.com/install-nfs-server-and-client-on-ubuntu/"
+inst nfs-common
+sudo mkdir -p /media/nas/video
+}
+
+inst_keybase () {
+echo ">>> keybase"
+inst curl
+curl -O https://prerelease.keybase.io/keybase_amd64.deb
+# if you see an error about missing `libappindicator1`
+# from the next command, you can ignore it, as the
+# subsequent command corrects it
+sudo dpkg -i keybase_amd64.deb
+sudo apt-get install -f
+run_keybase
 }
 
 inst_npm_packages () {
@@ -311,7 +364,7 @@ install_arx_liberatis () {
 
 setup_ssh () {
     echo ">>> add ServerAliveInterval 10 into /etc/ssh/ssh_config"
-    echo '    ServerAliveInterval 10' >> /etc/ssh/ssh_config
+    sudo echo '    ServerAliveInterval 10' >> /etc/ssh/ssh_config
     # keeps the connection open on unstable hosts (devserver and ams)
 }
 
@@ -329,15 +382,46 @@ inst_py_dependencies () {
 }
 
 
-inst_cron_vim () {
-
-    echo "Plz add the following lines to crontab -e"
-    echo "10 * * * * ctags -R -o /srv/da/tags/tags /srv/da/ --options=/home/dd/.ctags"
+inst_ctags_cron_vim () {
+    mkdir -p /srv/da/tags/
+    # the config file has to have suffix (eg .txt) otherwise it generates error
+    ctags_config_file="/home/dd/.config/.ctags.txt"
+    scan_folder="/srv/da/"
+    tags_storage="/srv/da/tags/tags"
+    echo "Plz add the following line to \`crontab -e\`"
+    echo "10 * * * * ctags -R -o $tags_storage $scan_folder --options=$ctags_config_file"
+    echo ""
+    echo "10 * * * * = each 10 minutes generates tags"
+    echo "ctags -R -o <tags_storage> <scan_folder> --options=<ctags_config_file>"
+    echo ""
+    echo "Plz add the following line to your \`.vimrc\` config file"
+    echo "tags=$ctags_config_file"
 }
-inst_dev () {
-    inst_dev_tools_bash
+
+inst_pycharm () {
     instsnap pycharm-professional --classic
 }
+
+inst_dev () {
+    inst_dev_tools_bash
+    inst_pycharm
+inst python-pip python3-pip
+inst ipython ipython3
+inst pipenv
+
+inst_pip_tools
+
+inst mosh  # mobile shell - nice https://mosh.org/#techinfo
+
+}
+
+inst_pip_tools () {
+    echo "> pip tools + dependencies (ubuntu)"
+    inst libcurl4-openssl-dev libssl-dev
+    pip install pip-tools  # pip-compile etc
+}
+
+
 
 inst_dev_tools_bash () {
     inst_jqyq
@@ -370,3 +454,35 @@ inst_qutebrowser () {
     inst qutebrowser
 }
 
+
+
+apt_repos_cd () {
+cd /etc/apt/
+}
+
+apt_repos_edit () {
+sudo vim /etc/apt/sources.list
+}
+
+dirfusuma="~/.config/fusuma"
+
+inst_touchpad () {
+	echo ">>> instal fusuma multitouch-gestures"
+	echo "https://github.com/iberianpig/fusuma/blob/master/README.md"
+	set +x
+	sudo gpasswd -a $USER input
+	# xdotool -for sending shortcuts
+	inst libinput-tools ruby xdotool
+	sudo gem install fusuma
+
+	# Touchpad not working in GNOME
+	# Ensure the touchpad events are being sent to the GNOME desktop by running the following command:
+	gsettings set org.gnome.desktop.peripherals.touchpad send-events enabled
+    mkdir -p $dirfusuma        # create config directory
+    echo "$dirfusuma/config.yml" # edit config file.
+
+}
+
+uninst_displaylink_driver () {
+    sudo displaylink-installer uninstall
+}

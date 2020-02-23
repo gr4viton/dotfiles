@@ -29,8 +29,22 @@
 
 dirnas="/media/nas/"
 dirnasvideo=$dirnas"video/"
-alias nas_mount="sudo /sbin/mount.nfs 192.168.0.118:/volume1/video $dirnasvideo"
-alias nas_umount="sudo /sbin/mount.nfs 192.168.0.118:/volume1/video $dirnasvideo"
+nas_mount () {
+    # needed inst nfs-common
+    local=$dirnasvideo
+    sudo /sbin/mount.nfs 192.168.0.118:/volume1/video $local
+echo ">>> $local"
+    ll $local
+}
+
+nas_umount () { 
+    local=$dirnasvideo
+# sudo /sbin/mount.nfs 192.168.0.118:/volume1/video $local
+sudo umount $local
+echo ">>> $local"
+    ll $local
+}
+
 alias cdnas="cd $dirnas"
 alias cdnasvid="cd $dirnasvideo"
 # not this

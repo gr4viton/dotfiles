@@ -46,6 +46,7 @@ loadit_script "alias/dell.sh"
 loadit_script "alias/dirs.sh"
 loadit_script "alias/docker.sh"
 loadit_script "alias/kiwi.sh"
+loadit_script "alias/config.sh"
 
 
 export SHELL="/bin/bash"

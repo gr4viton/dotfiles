@@ -2,7 +2,7 @@
 inst_screensaver () {
 
 echo ">>> screensaver"
-inst xscreensaver-data-extra xscreensaver-gl-extra
+inst xscreensaver xscreensaver-data-extra xscreensaver-gl-extra xscreensaver-screensaver-bsod
 echo ">>> electricsheep via https://ubuntuforums.org/showthread.php?t=355607"
 # electricsheep
 inst_add_repo ichthyo/zeug

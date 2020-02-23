@@ -3,8 +3,8 @@
 shin_ip[dalek]="pi@192.168.0.198"
 shin_ip[octopi]="pi@192.168.0.111" # was 199
 shin_ip[centroid]="pi@10.8.0.39"
-shin_ip[tapa]="gr4viton@192.168.0.118"
 shin_ip[retropie]="pi@192.168.0.105"
+shin_ip[tapa]="gr4viton@192.168.0.118"
 # 164 = old rpi1
 # 163 = rpi3b+
 
@@ -17,8 +17,11 @@ from_get () {
 }
 
 shin () {
+	conf_shin_file="~/.config/shin.rc"
+glom $conf_shin_file $key
     key=${1:?key shin_ip dict}
     user_ip=${shin_ip[$key]}
+    glom
     echo ">>> connecting via ssh to $user_ip"
     ssh $user_ip
 }
@@ -29,8 +32,23 @@ alias dalek_me="shin dalek"
 alias octopi_me="shin octopi"
 alias centroid_me="shin centroid"
 alias tapa_me="shin tapa"
-alias nas_ssh="shin tapa"
-alias retropie_me="shin retropie"
+# alias nas_ssh="shin tapa"
+ssh_nas () {
+	ssh gr4viton@192.168.0.118
+}
+ssh_rpi () {
+	ssh pi@192.168.0.110
+	# ssh pi@192.168.0.105
+}
+
+ssh_s8 () {
+    ssh 192.168.0.108 -p 8022
+}
+
+mosh_rpi () {
+	mosh pi@192.168.0.105
+}
+# alias retropie_me="shin retropie"
 
 
 # sshfs
@@ -147,9 +165,51 @@ gr4_folderize endora_gr4viton "/media/ftp/gr4viton.cz/"
 alias mount_ftp_endora_gr4viton="mount_ftp sasanka.endora.cz $direndora_gr4viton gr4viton"
 
 
+_basic_rsync_kwargs="-v --info=progress2 --ignore-existing --safe-links"
+
+echi () {
+    echo ""
+    echo "$@"
+    echo "arg1=$1"
+    echo "arg2=$2"
+    echo "arg3=$3"
+}
+
+rsync_which_echi_works () {
+    # input 3 args with spaces like
+    # rsync_which_echi_works "asdh asd" "sbasd as das" "as das d"
+    # the echi should output only first 2 args
+
+    # other="${@:1:$#-1}"  # bashizm
+    # in=$other
+
+    echo "in='$in'"
+    echo $in
+    echi "$in"
+    echi "$@"
+    echi ${@:1:$#-1}
+    echi "${@:1:$#-1}"
+    echi ${*%${!#}}
+    echi "${*%${!#}}"
+    echi $other
+    echi "$other"
+    echo "out='$out'"
+}
+
+rsync_to_s8 () {
+    d_prefix="/data/data/com.termux/files/home/"
+    d_all="storage/shared/_ALL/"
+    # "view/zz"
+    out=${d_prefix}${d_all}${last}
+
+    # last=${@:$#} # last parameter
+    last="${!#}"   # last param
+    # other=${*%${!#}} # all parameters except the last - works without bash
+    rsync $_basic_rsync_kwargs "${@:1:$#-1}" 192.168.0.108:$out -e 'ssh -p 8022' --rsync-path=/data/data/com.termux/files/usr/bin/rsync
+}
 
 # nas
-nas_rsync_cp() {
+rsync_to_nas() {
 __usage="
 Usage: $(basename $0) [OPTIONS]
 
@@ -173,18 +233,46 @@ else
     out=$last
 
     set -x
-    rsync -v --info=progress2 $in gr4viton@192.168.0.118:$out --rsync-path=/opt/bin/rsync
+    rsync $_basic_rsync_kwargs $in gr4viton@192.168.0.118:$out --rsync-path=/opt/bin/rsync
     set +x
 fi
 }
 
-nas_rsync_cp_zip_it () {
+rsync_to_nas_zip_it () {
     nas_rsync_cp -C "$@"
 }
 
-nas_rsync_cp_precompress () {
+rsync_to_nas_precompress () {
     # precompress sent data, but decompress on reciever
     nas_rsync_cp -zz "$@"
 }
 
 alias rsync_progress="rsync -a --info=progress2"
+
+
+rsync_to_l5401 () {
+    last=${@:$#} # last parameter
+    other=${*%${!#}} # all parameters except the last
+    in=$other
+    out=$last
+
+    address="dd@192.168.0.110"
+    # address='dd@[fe80::65bd:f19:c882:8b95%enx00e04c41b085]'
+    # rsync -a --safe-links --info=progress2 $in dd@192.168.0.110:$out # --rsync-path=/opt/bin/rsync
+    # rsync -va --ignore-existing --safe-links --info=progress2 -6  $in 'dd@[fe80::65bd:f19:c882:8b95%enx00e04c41b085]':$out # --rsync-path=/opt/bin/rsync
+    set -x
+    rsync -a $_basic_rsync_kwargs $in $address:$out # --rsync-path=/opt/bin/rsync
+    set +x
+
+ # ip -o link show  # to get the interface suffix after % = enx... = ethernet port
+# ls /sys/class/net
+
+# stop putting usb - eth device - to sleep
+# https://askubuntu.com/questions/185274/how-can-i-disable-usb-autosuspend-for-a-specific-device
+# inst tlp
+# sudo vim /etc/default/tlp  # USB_BLACKLIST < usb id from lsusb
+}
+
+ssh_l5401 () {
+    ssh -6 dd@fe80::65bd:f19:c882:8b95%enx00e04c41b085
+}

@@ -4,16 +4,27 @@ alias do_login="docker login $KIWI_PYPI_REGISTRY_LOGIN"
 
 
 pip_bump_reqs () {
+    which pip-compile
     path="${1?path to requirements file without suffix}"
     out="${path}.txt"
     in="${path}.in"
-    pip-compile ${@:2} --output-file $out $in
+    pip-compile -v ${@:2} --output-file $out $in
 
     sed -i '/^--index-url/d' $out # remove the --index-url line = contains the password
     sed -i 's/pip-compile .*--index-url=.* --output/pip-compile --output/' $out
     sed -i 's/pip-compile .*--extra-index-url=.* --output/pip-compile --output/' $out
 }
 
+pip_bump_reqs_kiwi () {
+    URL=$PIP_EXTRA
+    pip_bump_reqs $@ --extra-index_url $URL
+}
+
+dir_pip_conf="$HOME/.config/pip/pip.conf"
+
+pip_conf_virc () {
+    vim $dir_pip_conf
+}
 
 pc_reqs_bump () {
     pip_bump_reqs "requirements"
@@ -84,21 +95,31 @@ bb_up_sh () {
 
 
 bb_reqs_bump () {
+    set -x
     pip_bump_reqs "requirements/base"
     pip_bump_reqs "requirements/test"
+    set +x
 }
 
 bb_swag () {
     swag_validate $dirbbkw/swagger/black_box.yaml
 }
 
-bb_bash_in () {
-    docker_bash_in black-box_app
+bb_run () {
+    do_run black-box_app "$@"
 }
 
-bb_bash_in_root () {
-    docker_bash_in_root black-box_app
+bb_run_sh () {
+    do_run black-box_app /bin/sh "$@"
 }
+
+bb_run_test () {
+    bb_run python test.py
+}
+
+# bb_run_root () {
+#     do_run_root black-box_app $@
+# }
 
 # bag
 

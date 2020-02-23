@@ -116,6 +116,9 @@ alias apt_list_biggest_packages='dpkg-query -W --showformat="${Installed-Size} $
 
 
 
+
+alias pipenv="python3 -m pipenv"
+
 alias pip_compile='pip-compile --no-index --output-file requirements.txt requirements.in'
 alias pip_compile_test='pip-compile --no-index -r requirements.txt --output-file ./test-requirements.txt ./test-requirements.in'
 

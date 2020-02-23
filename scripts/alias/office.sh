@@ -35,7 +35,7 @@ agp_dict() {
 
 # VIM
 vimopen () {
-    nvim -O $@
+    nvim -O "$@"
 }
 
 vimo () {
@@ -51,13 +51,14 @@ vimo () {
 }
 
 vim () {
-    nvim -O $@
+    nvim -O "$@"
 }
 
 vis () {
     # load vim Session file
-    nvim -S $@
+    nvim -S "$@"
 }
+
 viss () {
     vis Session.vim
 }
@@ -212,16 +213,65 @@ alias disk_swap_show_ram='free -h'
 wifi_device='wlp2s0'
 
 alias wifi_get='ifconfig'
-alias wifi_connect_dhclient="sudo dhclient $wifi_device"
-alias wifi_selected_device="echo $wifi_device; echo 'set other wifi_device env var'"
+alias wifi_iw_connect_dhclient="sudo dhclient $wifi_device"
+alias wifi_iw_selected_device="echo $wifi_device; echo 'set other wifi_device env var'"
 
-wifi_connect () {
+wifi_connect_iwconfig () {
     echo "wifi_connect wifi_name password"
 
     sudo iwconfig $wifi_device essid $1 key $2
 
     wifi_connect_dhclient
 }
+
+wifi_devices () {
+    nmcli d wifi
+}
+wifi_devices_all () {
+    nmcli d
+}
+wifi_list () {
+    nmcli d wifi list
+}
+
+wifi_tunr_on () {
+    nmcli r wifi on
+}
+wifi_tunr_off () {
+    nmcli r wifi off
+}
+
+wifi_connect () {
+    # https://docs.ubuntu.com/core/en/stacks/network/network-manager/docs/configure-wifi-connections
+    # hidden:
+    # nmcli c add type wifi con-name <name> ifname wlan0 ssid <ssid>
+    # nmcli c modify <name> wifi-sec.key-mgmt wpa-psk wifi-sec.psk <password>
+    # normal:
+    # nmcli d wifi connect my_wifi password <password>
+    wifi_name="${1:?wifi name}"
+    password="${2:?wifi password}"
+    wifi_device="${3:-}"
+    wifi_device_option=""
+
+    if [[ ! -z "$wifi_device" ]]; then
+        wifi_device_option="ifname $wifi_device"
+    fi
+    nmcli d wifi connect $wifi_name password $password $wifi_device_option
+}
+
+wifi_connect_via_dongle () {
+    wifi_name="${1:?wifi name}"
+    password="${2:?wifi password}"
+    wifi_device="wlx74da387faa12"
+    wifi_connect $wifi_name $password $wifi_device
+}
+
+esp_wifi_connect () {
+    pwd=$1
+    wifi_name="esp8"
+    wifi_connect_via_dongle $wifi_name $pwd
+}
+
 
 # KILL
 
@@ -237,6 +287,7 @@ assasinate () {
 killit () {
     sudo pkill $@
 }
+alias kdota="killit dota2"
 alias kfire="killit firefox"
 alias kchrome="killit chromium-browser"
 alias kvlc="killit vlc"
@@ -285,7 +336,7 @@ apt_installed () {
     apt list --installed 2>/dev/null | grep $1
 }
 
-alias syslog="sudo tail -f /var/log/syslog"
+alias syslog="sudo tail -n 1000 -f /var/log/syslog"
 alias visyslog="sudo vim /var/log/syslog"
 
 # dotglob - set = the * does not omit "." prefixed files
@@ -297,8 +348,12 @@ alias unset_dotglob="shopt -u dotglob"
 alias black120="black -l 120"
 alias black120_str="black -l 120 -S"
 
-alias blak="black120"
-alias blaks="black120_str"
+alias blacks="black120_str"
+
+alias prc="pre-commit"
+alias prca="prc run -a"
+alias prcinstall="prc install"
+
 
 alias x_gparted_fix="xhost +SI:localuser:root"
 
@@ -461,4 +516,39 @@ envg () {
 # wine https://help.ubuntu.com/community/Wine
 wow () {
     wine /fun/game/wow/wow434/Wow.exe
+}
+
+_tmux_conf="/home/$USER/.tmux.conf"
+tmux_src () {
+    tmux source $_tmux_conf
+}
+tmux_vrc () {
+    vim $_tmux_conf
+}
+vitmux () {
+    vim $_tmux_conf
+}
+
+
+dirydlb="$HOME/DATA/DNz/batch.txt"
+alias ydl="youtube-dl"
+ydlb () {
+    youtube-dl -a $dirydlb
+}
+alias cdydlb="cd $HOME/DATA/DNz/"
+alias viydlb="vim $dirydlb $dirydlb.old"
+
+calc(){ awk "BEGIN { print "$*" }"; }
+
+count_of_lines () {
+     ag  -l | xargs wc -l | grep total | sed 's/ total//' | sed 's/ //'
+}
+count_of_words () {
+     ag  -l | xargs wc -w | grep total | sed 's/ total//' | sed 's/ //'
+}
+count_of_words_per_line () {
+   a=count_of_words
+   b=count_of_lines
+   calc $a/$b
+
 }

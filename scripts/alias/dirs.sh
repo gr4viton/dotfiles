@@ -108,8 +108,11 @@ gr4_folderize_kiwi $dirda "bb" "black-box" "" "" "" "" "kw/black_box"
 gr4_folderize_kiwi $dirda "cron" "cronos" "" "" "" "" "kw/cronos"
 # gr4_folderize "bb" "${dirbb}/proton"
 
-# kw.cronos
+# kw.configuru
 gr4_folderize_kiwi $dirda "conf" "configuru" "" "" "" "" "kw/configuru"
+
+# kw.autobooking - backbone
+gr4_folderize_kiwi $dirda "back" "backbone" "" "" "" "" "kw/autobooking"
 
 
 # kw.dbmodels
@@ -151,3 +154,9 @@ alias cdcc='cd $dircc'
 
 
 gr4_folderize "roms_local" "/media/dd/datasss/GAMESY/roms/"
+
+gr4_folderize "bkp" "/srv/_all/"
+gr4_folderize "bkp_dd" "/srv/_all/home/dd/"
+gr4_folderize "bkp_ddused" "/srv/_all/home/dd/used"
+
+alias cd_wl="cd /home/dd/DATA/game/wild_life/2019.12.05_Shipping_Build_3/WindowsNoEditor"

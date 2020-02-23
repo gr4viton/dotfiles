@@ -29,17 +29,25 @@ docker_get_container_name() {
     docker ps | grep $image_name | awk '{print $2}'
 }
 
-docker_bash_in () {
+do_run () {
     image_name=$1
     container_id=$(docker_get_container_id $1)
     container_name=$(docker_get_container_name $1)
+    docker ps
     echo ">>> execing in docker $container_name -id = $container_id"
-    docker exec -it ${@:2} $container_id /bin/sh
+    set -x
+    # docker exec -it ${@:3} $container_id "$command"
+    docker exec -it  $container_id ${@:2}
+    set +x
 }
 
-docker_bash_in_root () {
-    docker_bash_in $1 -u root ${@:2}
+do_run_sh () {
+    do_run $1 /bin/sh
 }
+
+# do_run_root () {
+#     docker_bash_in $1 "" -u root ${@:2}
+# }
 
 docker_attach () {
     image_name=$1
@@ -190,4 +198,14 @@ do_redis_flush () {
     image_name=$1
     container_id=$(docker_get_container_id $1)
     docker exec -it $container_id redis-cli FLUSHALL
+}
+
+
+docker_fix_on_install () {
+	# on new ubuntu install
+	# https://stackoverflow.com/questions/37227349/unable-to-start-docker-service-in-ubuntu-16-04/37640824
+sudo systemctl unmask docker.service
+sudo systemctl unmask docker.socket
+sudo systemctl start docker.service
+sudo systemctl status docker
 }
