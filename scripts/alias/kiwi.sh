@@ -1,23 +1,91 @@
 alias do_login="docker login $KIWI_PYPI_REGISTRY_LOGIN"
 
-# alias bag_copy_test_env_from_keybase="cp /run/user/1000/keybase/kbfs/team/kiwi_autobaggage/* /srv/da/autobaggage/"
+# alias bag_copy_test_env_from_keybase="cp /run/user/1000/keybase/kbfs/team/kiwi_autobaggage/* /srv/kw/autobaggage/"
 
-
-pip_bump_reqs () {
-    which pip-compile
+pip_compile_reqs () {
     path="${1?path to requirements file without suffix}"
     out="${path}.txt"
     in="${path}.in"
-    pip-compile -v ${@:2} --output-file $out $in
 
-    sed -i '/^--index-url/d' $out # remove the --index-url line = contains the password
-    sed -i 's/pip-compile .*--index-url=.* --output/pip-compile --output/' $out
-    sed -i 's/pip-compile .*--extra-index-url=.* --output/pip-compile --output/' $out
+    pypi_username=$2
+    pypi_password=$3
+
+    pypi_username_redacted="<pypi_username>"
+    pypi_password_redacted="<pypi_password>"
+
+    extra_index_url_arg=""
+
+    if [[ ! -z "$pypi_username" ]]; then
+        # get extra-index-url line from requirements in file
+        extra_index_url_from_in=$(cat $in | grep "extra-index-url")
+        extra_index_url_arg=$(
+            echo $extra_index_url_from_in | sed "s|//|//${pypi_username}:${pypi_password}@|"
+        )
+        extra_index_url_arg_safe=$(
+            echo $extra_index_url_from_in | sed "s|//|//${pypi_username_redacted}:${pypi_password_redacted}@|"
+        )
+    fi
+
+    echo "> running"
+    echo "pipenv run pip-compile --output-file $out $in $extra_index_url_arg_safe"
+    # pipenv run pip-compile --output-file $out $in $extra_index_url_arg
+
+    # redact the pypi username and password
+    sed -i "s|${pypi_username}|${pypi_username_redacted}|" $out
+    sed -i "s|${pypi_password}|${pypi_password_redacted}|" $out
+    sed -i "s|$extra_index_url_arg_safe||" $out
+
+    echo ">>> calling git diff to see what new packages were compiled"
+    git diff -- $out
+    echo "!!! check that you are not gonna push your pypi_password to git !!!"
+}
+
+pip_bump_reqs () {
+
+echo <<EOF
+running:
+$ pip_bump_reqs $@
+
+Usage:
+  python 3 with requirements/base.in + requirements/test.in
+  $ pip_bump_reqs --three requirements/base requirements/test
+
+  python 2.7 with requirements.in
+  $ pip_bump_reqs 2.7 requirements
+
+EOF
+    python_version_pipenv="$1"
+    shift  # in $@ are now all but the $1 arguments
+    # all other arguments are used as requirement_files - passed without suffixes
+
+    if [ -f .env ]; then
+        echo "> loading PYPI variables from '.env' file"
+        export $(cat .env | grep 'PYPI' | grep -v '#' | awk '/=/ {print $1}')
+    fi
+
+echo <<EOF
+Setup
+    > you have to have 'pipenv' installed
+        pipenv: $(which pipenv)
+    > you have to have PIPY_USERNAME and PIPY_PASSWORD in '.env' file
+        PYPI_USERNAME: $pypi_username
+    > you have to run the script from repostory root
+        current working directory: $(pwd)
+
+> creating python venv via 'pipenv $python_version_pipenv'
+EOF
+    pipenv $python_version_pipenv
+    pipenv run pip install pip-tools
+    for reqs_stub in "$@"
+    do
+        echo "> running pip_compile_reqs for $reqs_stub"
+        pip_compile_reqs $reqs_stub $PYPI_USERNAME $PYPI_PASSWORD
+    done
 }
 
 pip_bump_reqs_kiwi () {
     URL=$PIP_EXTRA
-    pip_bump_reqs $@ --extra-index_url $URL
+    pip_bump_reqs $@ --extra-index-url $URL
 }
 
 dir_pip_conf="$HOME/.config/pip/pip.conf"
@@ -125,7 +193,7 @@ bb_run_test () {
 
 bag_update_dev_from_keybase () {
 
-    cd /srv/da/abag_dev
+    cd /srv/kw/abag_dev
     gpull_rebase
 
     cdbag
@@ -399,7 +467,7 @@ else
         bid=$1
         logs_fname=$(ams_logs_fname $bid)
 
-        python /srv/da/automation/tools/logs_json_parser.py $logs_fname "${@:2}"
+        python /srv/kw/automation/tools/logs_json_parser.py $logs_fname "${@:2}"
         # ${@:2}  # = all args skipping the first
     }
 
@@ -471,3 +539,8 @@ EOF
     )"
 }
 
+
+
+okta_gitlab_login () {
+    xdg-open $KIWI_OKTA_LOGIN_URL
+}

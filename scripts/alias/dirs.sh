@@ -24,7 +24,9 @@ gr4_folderize "xnas_stuff" "/media/nas/video/video/meme/trailery/old"
 
 # kiwi folders
 
-gr4_folderize "da" "/srv/da"
+gr4_folderize "da" "/srv/kw"
+gr4_folderize "kw" "/srv/kw"
+gr4_folderize "kiwi" "/srv/kiwi"
 
 gr4_folderize_kiwi () {
 
@@ -80,7 +82,7 @@ gr4_folderize_kiwi () {
 # kw.gds-observer
 gr4_folderize_kiwi $dirda "go" "gds-observer" "" "" "docker-compose.yml" "" "kw/gds_observer"
 # kw.gds-viewer
-gr4_folderize_kiwi $dirda "gv" "gds-viewer" "" "" "docker-compose.yml" "" "kw/gds_viever"
+gr4_folderize_kiwi $dirda "gv" "gds-viewer" "" "" "docker-compose.yml" "" "kw/gds_viewer"
 
 # kw.autobaggage
 gr4_folderize_kiwi $dirda "bag" "autobaggage" "modules" "tests/unit" "docker-compose.yml" "docker-compose.dev.yml"
@@ -92,12 +94,15 @@ gr4_folderize "baglogfreeze" "${dirbag}/logs/freeze"
 alias vipbag='cd '$dirbagmod'; vim amadeus.py'
 alias vipamad='cdauto; vim '$dirbook$amad
 
+# kw.faust-lib
+gr4_folderize_kiwi $dirda "faust" "faust-lib" "" "" "" "" "kw/faust_client"
+
 # kw.provider-clients
 gr4_folderize_kiwi $dirda "pc" "provider-clients" "client" "" "" "" "kw/provider"
 gr4_folderize "pcgds" "${dirpckw}/client/gds"
 gr4_folderize "pcpro" "${dirpckw}/proton"
 
-dirwsdl='/srv/da/wsdl/tport/system_v32_0'
+dirwsdl='/srv/kw/wsdl/tport/system_v32_0'
 alias cdwsdl='cd '$dirwsdl
 
 # kw.black-box
@@ -159,4 +164,23 @@ gr4_folderize "bkp" "/srv/_all/"
 gr4_folderize "bkp_dd" "/srv/_all/home/dd/"
 gr4_folderize "bkp_ddused" "/srv/_all/home/dd/used"
 
-alias cd_wl="cd /home/dd/DATA/game/wild_life/2019.12.05_Shipping_Build_3/WindowsNoEditor"
+gr4_folderize "dd" "/srv/dd/"
+gr4_folderize "web" "/srv/dd/component/web_blog/gr4viton.gitlab.io"
+viweb () {
+    cd $dirweb/content/posts
+    vim to-write.md
+}
+
+gr4_folderize "kodi" "/srv/dd/component/kodi/hello_world/dd-addon-brutall"
+gr4_folderize "kodirc" "$HOME/.kodi"
+
+kodilog () {
+    cat $dirkodirc/temp/kodi.log | less -t
+}
+
+# nas ds218
+gr4_folderize "nas" "/media/nas/"
+gr4_folderize "nasvideo" "${dirnas}video/"
+gr4_folderize "nashomes" "${dirnas}homes/"
+
+

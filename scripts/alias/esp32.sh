@@ -141,11 +141,14 @@ esp_webrepl_cp_from_esp () {
     set +x
 }
 
+esp_mpfsh () {
+    pyt="/home/dd/venvs/mpfshell-0NS5kyKG/bin/python3"
+    $pyt -m mp.mpfshell $@
+}
 
 esp_connect_mpf_wifi () {
-    pyt="/home/dd/venvs/mpfshell-0NS5kyKG/bin/python3"
     cmd="open ws:$ESP_WEBREPL_IP,$ESP_WEBREPL_PWD"
-    $pyt -m mp.mpfshell -c "$cmd"
+    esp_mpfsh -c $cmd
 }
 
 

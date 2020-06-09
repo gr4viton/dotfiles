@@ -10,7 +10,7 @@
 
 do_build () {
     set -x
-    docker-compose -f $1 build
+    time docker-compose -f $1 build ${@:2}
     set +x
 }
 do_up () {
@@ -43,6 +43,9 @@ do_run () {
 
 do_run_sh () {
     do_run $1 /bin/sh
+}
+do_run_redis_flush () {
+    do_run redis '/usr/local/bin/redis-cli FLUSHALL'
 }
 
 # do_run_root () {
@@ -208,4 +211,8 @@ sudo systemctl unmask docker.service
 sudo systemctl unmask docker.socket
 sudo systemctl start docker.service
 sudo systemctl status docker
+}
+
+kube_info () {
+    kubectl get
 }

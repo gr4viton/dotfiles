@@ -8,6 +8,7 @@ gpl () {
 }
 alias gpull_rebase='gpl'
 gpf () {
+    ddate
     git push --force-with-lease
 }
 gd () {
@@ -53,14 +54,14 @@ alias b='branch'
 alias ch='checkout'
 
 git_set_global() {
-git config --global user.name $1
-git config --global user.email $2
-git config --list
+    git config --global user.name $1
+    git config --global user.email $2
+    git config --list
 }
 git_set_local() {
-git config --local user.name $1
-git config --local user.email $2
-git config --list
+    git config --local user.name $1
+    git config --local user.email $2
+    git config --list
 }
 
 alias git_iam_gr4viton_global="git_set_global gr4viton lordmutty@gmail.com"
@@ -89,25 +90,25 @@ git_generate_ssh() {
 
 
 git_delete_and_recheckout_current_branch() {
-# if the diff is empty
-# - deletes current branch, pulls origin, checkout it again
-cur=`git rev-parse --abbrev-ref HEAD`
-echo Current branch = $cur
-git checkout master
-git branch -D $cur
-git pull
-git checkout $cur
+    # if the diff is empty
+    # - deletes current branch, pulls origin, checkout it again
+    cur=`git rev-parse --abbrev-ref HEAD`
+    echo Current branch = $cur
+    git checkout master
+    git branch -D $cur
+    git pull
+    git checkout $cur
 }
 
 alias git_current_branch="git rev-parse --abbrev-ref HEAD"
 
 git_branch() {
-git rev-parse --abbrev-ref HEAD 2>/dev/null
+    git rev-parse --abbrev-ref HEAD 2>/dev/null
 }
 
 git_branch_cutted() {
-# returns only the last part after '/' of current branch name
-git_branch | sed 's:.*/::'
+    # returns only the last part after '/' of current branch name
+    git_branch | sed 's:.*/::'
 }
 
 
@@ -140,27 +141,27 @@ fi
 # search in commits
 
 git_search_in_all_commits_current_branch () {
-git log -S $1 --source
+    git log -S $1 --source
 }
 git_search_in_all_commits_current_branch_patch () {
-git log -S $1 --source --patch
+    git log -S $1 --source --patch
 }
 git_search_in_all_commits_all_branches () {
-git log -S $1 --source --all
+    git log -S $1 --source --all
 }
 git_search_in_all_commits_all_branches_patch () {
-git log -S $1 --source --patch -all
+    git log -S $1 --source --patch -all
 }
 
 git_regex_in_all_commits_current_branch () {
-git log -G $1 --source
+    git log -G $1 --source
 }
 git_regex_in_all_commits_current_branch_patch () {
-git log -G $1 --source --patch
+    git log -G $1 --source --patch
 }
 git_regex_in_all_commits_all_branches () {
-git log -G $1 --source --all --patch
+    git log -G $1 --source --all --patch
 }
 git_regex_in_all_commits_all_branches_patch () {
-git log -G $1 --source --all --patch
+    git log -G $1 --source --all --patch
 }

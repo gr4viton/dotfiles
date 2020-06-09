@@ -9,45 +9,82 @@ c_yellow=$'\e[1;33m'
 
 
 loadit() {
-if [ -f $1 ]; then
-    . $1
-    echo "Loaded $1"
+script_path=$1
+if [ -f $script_path ]; then
+    . $script_path
+    script_name=$(basename $script_path)
+    # script_name=$($script_name%%.*)
+    # echo -n "$script_name "
+    echo -n "$script_name "
 fi
 }
 
 dir_gr4=$HOME'/gr4log/'
 
 loadit_here() {
-    _dir_here=$(dirname $0) 
-    loadit "$_dir_here$1"
+    _dir_here="$(dirname $0)"
+    script_path=$1
+    loadit "${_dir_here}${script_path}"
 }
 
 loadit_script() {
-    _dir=$dir_gr4'/scripts/'
-    loadit $_dir$1
+    _dir="${dir_gr4}/scripts/"
+    script_path=$1
+    loadit "${_dir}${script_path}"
 }
 
 the_config=${dir_gr4}the_config.yaml
 # ############## LOAD ALIASES AND FUNCTION FILES ###############
 # speak synthesis
 # git
-loadit_script "ps1.sh"
-loadit_script "alias/office.sh"
-loadit_script "alias/git.sh"
-loadit_script "alias/centroid.sh"
-loadit_script "alias/install.sh"
-loadit_script "alias/speak.sh"
-loadit_script "alias/graphic.sh"
-loadit_script "alias/dev.sh"
-loadit_script "alias/esp32.sh"
-loadit_script "alias/hw.sh"
-loadit_script "alias/connect.sh"
-loadit_script "alias/dell.sh"
-loadit_script "alias/dirs.sh"
-loadit_script "alias/docker.sh"
-loadit_script "alias/kiwi.sh"
-loadit_script "alias/config.sh"
+_dir="${dir_gr4}/scripts/"
+echo "Loading from $_dir:"
+scripts=( 
+    "ps1.sh" 
+    "alias/office.sh" 
+    "alias/git.sh" 
+    "alias/centroid.sh" 
+    "alias/install.sh" 
+    "alias/speak.sh" 
+    "alias/graphic.sh" 
+    "alias/dev.sh" 
+    "alias/esp32.sh" 
+    "alias/hw.sh" 
+    "alias/connect.sh" 
+    "alias/dell.sh" 
+    "alias/dirs.sh" 
+    "alias/docker.sh" 
+    "alias/kiwi.sh" 
+    "alias/config.sh"
+    "alias/game.sh"
+)
 
+len_so_far=0
+limit_len_per_line=120
+start_line="\t"
+echo -en ${start_line}
+for script in ${scripts[@]}; do
+    script_name=$(basename $script)
+    script_name="${script_name%%.*}"
+    len_so_far=$(( $len_so_far + ${#script} ))
+    if (( $len_so_far > $limit_len_per_line )); then
+        echo ""
+        echo -en ${start_line}
+        len_so_far=0
+    fi
+    loadit_script $script
+done
+
+# for script in ${scripts[@]}; do
+#     loadit_script $script
+# done
+
+# for i in ${!scripts[@]}; do
+#     loadit_script ${scripts[$i]}
+#     if (( !(($i + 1) % 7) )); then
+#         echo ""
+#     fi
+# done
 
 export SHELL="/bin/bash"
 export EDITOR="/usr/bin/nvim"
@@ -256,10 +293,27 @@ rcbash_root=$home_root'.bashrc'
 alias src='source '$rcbash
 alias vrc='vim '$rcbash
 
-echo "gr4log .bashrc loaded!"
-
 alias better='echo "DancetteeMeritocracyMeddlesomeness"'
 
 export PYTHONDONTWRITEBYTECODE=1  # do not write pyc files when running python
 
 # export MESA_GL_VERSION_OVERRIDE=4.6
+
+echo "gr4log .bashrc loaded!"
+
+
+LANG=en_GB.UTF-8
+LANGUAGE=en_US
+LC_CTYPE="en_US.UTF-8"
+LC_NUMERIC="en_US.UTF-8"
+LC_TIME="en_US.UTF-8"
+LC_COLLATE="en_US.UTF-8"
+LC_MONETARY="en_US.UTF-8"
+LC_MESSAGES="en_US.UTF-8"
+LC_PAPER="en_US.UTF-8"
+LC_NAME="en_US.UTF-8"
+LC_ADDRESS="en_US.UTF-8"
+LC_TELEPHONE="en_US.UTF-8"
+LC_MEASUREMENT="en_US.UTF-8"
+LC_IDENTIFICATION="en_US.UTF-8"
+LC_ALL=en_US.UTF-8

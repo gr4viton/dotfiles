@@ -27,23 +27,41 @@
 
 # POPCORN TIME API
 
-dirnas="/media/nas/"
-dirnasvideo=$dirnas"video/"
 nas_mount () {
     # needed inst nfs-common
-    local=$dirnasvideo
-    sudo /sbin/mount.nfs 192.168.0.118:/volume1/video $local
+    local="${1:?local mount directory}"
+    remote="${2:?remote dir in volume1}"
+    set -x
+    sudo /sbin/mount.nfs 192.168.0.118:/volume1/$remote $local
+    set +x
 echo ">>> $local"
     ll $local
 }
-
-nas_umount () { 
-    local=$dirnasvideo
+nas_umount () {
+    local="${1:?local mount directory}"
 # sudo /sbin/mount.nfs 192.168.0.118:/volume1/video $local
 sudo umount $local
 echo ">>> $local"
     ll $local
 }
+
+nas_mount_homes () {
+    echo "Probly won't work cuz the folder shared ips is not *"
+    showmount -e 192.168.0.118
+
+    nas_mount $dirnashomes homes
+}
+nas_umount_homes () {
+    nas_umount $dirnashomes
+}
+
+nas_mount_video () {
+    nas_mount $dirnasvideo video
+}
+nas_umount_video () {
+    nas_umount $dirnasvideo
+}
+
 
 alias cdnas="cd $dirnas"
 alias cdnasvid="cd $dirnasvideo"

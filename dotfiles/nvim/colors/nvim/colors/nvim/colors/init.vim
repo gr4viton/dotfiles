@@ -358,7 +358,7 @@ let g:syntastic_python_flake8_args='--ignore=E501,E225'
 " https://unix.stackexchange.com/questions/199683/alt-mappings-for-vim-in-urxvt
 "
 " ctags for multi-file function definition search
-set tags=/srv/da/tags/tags
+set tags=/srv/kiwi/data/tags/tags
 " :tag <tag>
 " pattern
 " :tag /<pattern>

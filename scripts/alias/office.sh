@@ -1,5 +1,11 @@
 #!/bin/bash
 
+ddate () {
+    # date in rfc-3339 format
+    # it's like iso-8601 + time
+    date --rfc-3339=seconds
+}
+
 to_base64 () {
     echo "$1" | base64
 }
@@ -48,6 +54,15 @@ vimo () {
             echo "skipped opening of $# files"
         fi
     fi
+}
+
+vim_last_learned () {
+    out=$(cat <<-EOF
+%s//.../g  # uses the last searched term
+^r" # yells buffer to commandline
+EOF
+)
+    echo "$out"
 }
 
 vim () {
@@ -110,8 +125,8 @@ gr4_folderize() {
 
     export dir${abbrev}="$folder"
     export d${abbrev}="$folder"
-    which > /dev/null 2>&1 cd${abbrev} || alias cd${abbrev}="cd $folder"
-    which > /dev/null 2>&1 ls${abbrev} || alias lll${abbrev}o="lla $folder"
+    which > /dev/null 2>&1 cd${abbrev} || alias cd${abbrev}="cd \"$folder\""
+    which > /dev/null 2>&1 ls${abbrev} || alias lll${abbrev}o="lla \"$folder\""
 }
 
 # MV = move
@@ -365,6 +380,10 @@ vigr () {
     viag_cd $dirgr4log $@
 }
 
+viw () {
+    viag_cd $dirweb/content/ $@
+}
+
 vigralias () {
     viag_cd $dirgr4log/scripts/alias $@
 }
@@ -530,11 +549,26 @@ vitmux () {
 }
 
 
+alias youtube-dl="/srv/dd/app/youtube-dl/bin/youtube-dl"
+
 dirydlb="$HOME/DATA/DNz/batch.txt"
+
 alias ydl="youtube-dl"
+
 ydlb () {
-    youtube-dl -a $dirydlb
+    youtube-dl -a $dirydlb $@
 }
+
+ydlbb () {
+    cd $(dirname $dirydlb)
+    cd ydlbb
+    set -x
+    ydl --username $YDL_USER --password $YDL_PWD $@
+    set +x
+}
+
+alias yyy="ydlbb"
+
 alias cdydlb="cd $HOME/DATA/DNz/"
 alias viydlb="vim $dirydlb $dirydlb.old"
 
@@ -552,3 +586,9 @@ count_of_words_per_line () {
    calc $a/$b
 
 }
+
+
+alias zalgo="python3 /srv/dd/component/zalgo-cli/zalgo.py"
+
+alias dolphin_here="dolphin $PWD"
+alias dohe="dolphin $PWD"

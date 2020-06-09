@@ -338,7 +338,7 @@ vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 let g:syntastic_python_pylint_post_args="--max-line-length=120"
 let g:syntastic_python_flake8_args='--ignore=E501,E225'
 
-set tags=/srv/da/tags/tags
+set tags=/srv/kiwi/data/tags/tags
 
 " noremap = nvo == normal + (visual + select) + operator pending
 " noremap! = ic == insert + command-line mode

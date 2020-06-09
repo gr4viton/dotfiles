@@ -170,10 +170,12 @@ sudo dpkg -i "docker-ce_19.03.3~3-0~ubuntu-disco_amd64.deb"
 
 $ inst /srv/_all/DATA/deb/docker/*
 or this
+  - worked on 2020-05-03
 $ curl -fsSL https://get.docker.com -o get-docker.sh
 $ sudo sh get-docker.sh
 # after install you need to add your user to docker user group
 $ sudo usermod -aG docker your-user
+
 
 to remove
 $ sudo apt-get purge docker-ce
@@ -383,11 +385,11 @@ inst_py_dependencies () {
 
 
 inst_ctags_cron_vim () {
-    mkdir -p /srv/da/tags/
+    mkdir -p /srv/kiwi/data/tags/
     # the config file has to have suffix (eg .txt) otherwise it generates error
     ctags_config_file="/home/dd/.config/.ctags.txt"
-    scan_folder="/srv/da/"
-    tags_storage="/srv/da/tags/tags"
+    scan_folder="/srv/kw/"
+    tags_storage="/srv/kiwi/data/tags/tags"
     echo "Plz add the following line to \`crontab -e\`"
     echo "10 * * * * ctags -R -o $tags_storage $scan_folder --options=$ctags_config_file"
     echo ""
@@ -486,3 +488,4 @@ inst_touchpad () {
 uninst_displaylink_driver () {
     sudo displaylink-installer uninstall
 }
+

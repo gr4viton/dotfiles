@@ -54,7 +54,7 @@ recheckout_current_branch() {
 
 alias dbm_autogenerate="alembic revision --autogenerate -m $msg"
 alias dbm_run_postgres='docker run postgres'
-alias dbm_change_db='vim /srv/da/dbmodels/kw/automation/dbmodels/settings_local.py'
+alias dbm_change_db='vim /srv/kw/dbmodels/kw/automation/dbmodels/settings_local.py'
 
 alias dbm_psql='psql -h 172.17.0.2 -U postgres postgres'
 alias dbm_psql_drop='psql -h 172.17.0.2 -U postgres postgres -c "drop schema public cascade;"'
@@ -70,7 +70,7 @@ alias dbm_test_twice='dbm_test_once; dbm_test_once'
 
 alias dbm_versions_sort='ls alembic/versions/ |sort -k1.14'
 
-alias dbm_venv='source /srv/da/dbmodels/venv3_test/bin/activate'
+alias dbm_venv='source /srv/kw/dbmodels/venv3_test/bin/activate'
 
 dbm_recheckout_master_alembic_fcn() {
     cur=`git rev-parse --abbrev-ref HEAD`
@@ -119,10 +119,10 @@ alias apt_list_biggest_packages='dpkg-query -W --showformat="${Installed-Size} $
 
 alias pipenv="python3 -m pipenv"
 
-alias pip_compile='pip-compile --no-index --output-file requirements.txt requirements.in'
-alias pip_compile_test='pip-compile --no-index -r requirements.txt --output-file ./test-requirements.txt ./test-requirements.in'
+# alias pip_compile_basic='pip-compile --no-index --output-file requirements.txt requirements.in'
+# alias pip_compile_test='pip-compile --no-index -r requirements.txt --output-file ./test-requirements.txt ./test-requirements.in'
 
-alias pip_compile_both='pip_compile; pip_compile_test'
+# alias pip_compile_both='pip_compile; pip_compile_test'
 
 
 # sound
@@ -171,4 +171,155 @@ alias ppy3="python3"
 
 redis_flushall () {
     redis-cli FLUSHALL
+}
+
+
+alias pie="pipenv"
+alias pier="pie run"
+alias piep="pie run python"
+alias pies="pie shell"
+alias pie3="pie --three"
+
+# kubectl kubernetes k8s
+## alias kubectl to something sane
+alias kcl='kubectl'
+## alias to switch namespaces (kube switch namespace)
+kcl_context_use_namespace () {
+    namespace=$1
+    kubectl config set-context --current --namespace=$namespace
+}
+## alias to switch context (kube switch context)
+kcl_context_use () {
+    context=$1
+    set -x
+    kubectl config use-context $context
+    set +x
+}
+kcl_context_show_all () {
+    kubectl config get-contexts
+}
+
+kcl_context_grep () {
+    context_grep=$1
+    kcl_context_show_all | grep $context_grep | awk '{print $2}'
+}
+kcl_context_use_grep () {
+    kcl_context_use $(kcl_context_grep $@)
+}
+
+kcl_context_use_prod () {
+    kcl_context_use_grep "autobooking-prod"
+}
+
+kcl_context_use_sandbox () {
+    kcl_context_use_grep "autobooking-sandbox"
+}
+
+alias kcl_prod="kcl_context_use_prod"
+alias kcl_sandbox="kcl_context_use_sandbox"
+
+kcl_pod_grep () {
+    kcl get pods --all-namespaces | grep $@
+}
+kcl_pod_all () {
+    kcl get pods --all-namespaces
+}
+
+_kcl_pod_command_default="/bin/bash"
+
+kcl_pod_exec_first () {
+    name=$1
+    command="${2:-$_kcl_pod_command_default}"
+    pod_row=$(kcl_pod_grep $name | head -1)
+    pod_namespace=$(echo $pod_row | awk '{print $1}')
+    pod_name=$(echo $pod_row | awk '{print $2}')
+    set -x
+    kcl exec -it $pod_name -n $pod_namespace "$command"
+    set +x
+}
+
+
+kcl_pod_exec_exact () {
+    pod_name=$1
+    kcl exec -it $pod_name $_kcl_pod_command
+}
+alias kcl_pod_exec="kcl_pod_exec_first"
+
+kcl_in () {
+    kcl_pod_exec "$1"
+}
+
+kcl_black () {
+    kcl_pod_exec black-box "/bin/sh"
+}
+kcl_black_cmd () {
+    cmd=$'\'$@\''
+    kcl_pod_exec black-box '-- /bin/sh -c '"$cmd"
+}
+
+kcl_modules_staging () {
+    # todo add git branch current as default
+    branch="${1:-branch-dashed-name-first-9-letters}"
+    cmd="/bin/sh"
+    kcl_pod_exec "modules-staging-$branch"
+}
+
+kcl_gds_in_gcp () {
+    kcl_pod_exec dd-gds-gc
+}
+
+kcl_pod_exec_namespace () {
+    pod_name=$1  # eg black-box-7f6dc5956c-2fzmd
+    name_space=$2  # eg black-box
+    kcl exec -it $pod_name -n $name_space
+}
+
+# kubernetes deployments
+
+kcl_rollout_restart_deploy () {
+    name=$1
+    pod_row=$(kcl_pod_grep $name | head -1)
+    pod_namespace=$(echo $pod_row | awk '{print $1}')
+    set -x
+    kcl rollout restart deploy $pod_namespace -n $pod_namespace
+    set +x
+}
+kcl_redeploy () {
+    kcl_rollout_restart_deploy $@
+}
+
+kcl_redeploy_all_gds () {
+    projects=( black-box schedule-changer configuru refundopedia gds-viewer gds-queue-handler master-switch vemark log-viewer )
+    for var in "${projects[@]}"
+    do
+      echo "redeploy for: ${var}"
+      kcl_redeploy ${var}
+    done
+}
+
+kcl_deploy_undo () {
+    name=$1
+    kcl rollout undo deployment $name
+}
+
+kcl_deployment_history () {
+    name=$1
+    kcl rollout history deployment $name
+}
+
+kcl_deployment_status () {
+    name=$1
+    kcl rollout status -w deployment $name
+}
+
+kcl_deploy_revision () {
+    name=$1
+    revision_number="${2?revision number}"
+    kcl rollout undo deployment --to-revision=$revision_number
+}
+
+
+pip_unused_packages () {
+    echo "viz https://kiwi.wiki/handbook/how-to/manage-python-dependencies/"
+    cat *requirements.in | grep --color=none "^[^#-][^][~=<># ]\+" -o | uniq | tr '-' '_' | xargs -I{} bash -c '! git --no-pager grep -w -q -i {} "*.py" && echo "{} not found in Python files"'
 }

@@ -50,3 +50,17 @@ sudo sh -c "echo \"$ico\" > $xsc_theme"
 gconftool-2 --type int --set /apps/gnome-screensaver/cycle-delay 10000
 
 }
+
+
+inst_xwinwrap () {
+    echo https://github.com/ujjwal96/xwinwrap
+    sudo apt-get install xorg-dev build-essential libx11-dev x11proto-xext-dev libxrender-dev libxext-dev -y
+git clone https://github.com/ujjwal96/xwinwrap.git
+cd xwinwrap
+make
+sudo make install
+make clean
+
+    inst gifsicle
+    echo "xwinwrap -g 400x400 -ni -s -nf -b -un -argb -sh circle -- gifview -w WID mygif.gif -a"
+}
