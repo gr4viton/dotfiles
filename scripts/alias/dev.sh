@@ -134,6 +134,7 @@ alias samsung_unmount="fusermount -u /media/myphone"
 
 
 alias pyc_remove_recursively='sudo find . -name "*.pyc" -exec rm -f {} \;'
+alias pyorig_remove_recursively='sudo find . -name "*.py.orig" -exec rm -f {} \;'
 
 function pudb_connect () {
     port="${1-6900}"
@@ -238,6 +239,14 @@ kcl_pod_exec_first () {
     set +x
 }
 
+kcl_pod_get_first () {
+    name=$1
+    pod_row=$(kcl_pod_grep $name | head -1)
+    pod_namespace=$(echo $pod_row | awk '{print $1}')
+    pod_name=$(echo $pod_row | awk '{print $2}')
+    echo "-it $pod_name -n $pod_namespace"
+}
+
 
 kcl_pod_exec_exact () {
     pod_name=$1
@@ -245,16 +254,25 @@ kcl_pod_exec_exact () {
 }
 alias kcl_pod_exec="kcl_pod_exec_first"
 
-kcl_in () {
-    kcl_pod_exec "$1"
+kcl_sh_cmd () {
+    pod_name=$1  # eg black-box-7f6dc5956c-2fzmd
+    shift
+    kcl exec $(kcl_pod_get_first $pod_name) -- /bin/sh -c "$@"
 }
 
-kcl_black () {
-    kcl_pod_exec black-box "/bin/sh"
+kcl_bash () {
+    pod_name=$1  # eg black-box-7f6dc5956c-2fzmd
+    kcl exec $(kcl_pod_get_first $pod_name) -- /bin/bash
 }
+
+kcl_sh () {
+    pod_name=$1  # eg black-box-7f6dc5956c-2fzmd
+    kcl exec $(kcl_pod_get_first $pod_name) -- /bin/sh
+}
+
+
 kcl_black_cmd () {
-    cmd=$'\'$@\''
-    kcl_pod_exec black-box '-- /bin/sh -c '"$cmd"
+    kcl_sh_cmd black-box "$@"
 }
 
 kcl_modules_staging () {
@@ -273,6 +291,14 @@ kcl_pod_exec_namespace () {
     name_space=$2  # eg black-box
     kcl exec -it $pod_name -n $name_space
 }
+
+kcl_pod_platform_id () {
+    pod_name=$1
+    cmd="sed -E 's/^(\d+)\.(\d+)\.(\d+)$/linux_alpine\1_\2_x86_64/' /etc/alpine-release"
+    # cmd="cat /etc/alpine-release;"
+    kcl_sh_cmd $pod_name "$cmd"
+}
+
 
 # kubernetes deployments
 
@@ -318,8 +344,70 @@ kcl_deploy_revision () {
     kcl rollout undo deployment --to-revision=$revision_number
 }
 
-
 pip_unused_packages () {
     echo "viz https://kiwi.wiki/handbook/how-to/manage-python-dependencies/"
     cat *requirements.in | grep --color=none "^[^#-][^][~=<># ]\+" -o | uniq | tr '-' '_' | xargs -I{} bash -c '! git --no-pager grep -w -q -i {} "*.py" && echo "{} not found in Python files"'
+}
+
+
+test_auto_db () {
+    echo python -c "import psycopg2;try:;psycopg2.connect('$KIWI_AUTOMATION_DB_FULL_URL');except:print('does not work'); print('works')"
+}
+
+
+# ROS
+
+# LXC
+## the ros2 foxy needs ubuntu 20.04 - i have ubuntu 19.10
+## though i can run the ubuntu 20.04 via LXC (even with gui apps)
+
+LXC_CONT="bestest"
+
+# plain LXC
+_lxc_create () {
+    echo "from https://linuxcontainers.org/lxc/getting-started/"
+    sudo lxc-create -t download -n $LXC_CONT
+}
+_lxc_start () {
+    sudo lxc-start -n $LXC_CONT -d
+    sudo lxc-info -n $LXC_CONT
+}
+_lxc_attach () { sudo lxc-attach -n $LXC_CONT ; }
+_lxc_stop () { sudo lxc-stop -n $LXC_CONT ; }
+_lxc_delete () { sudo lxc-destroy -n $LXC_CONT ; }
+_lxc_restart () { lxc_stop; lxc_start; }
+_lxc_restart_attach () { lxc_stop; lxc_start; lxc_attach; }
+_lxc_config () {
+    vim $HOME/.config/lxc/default.conf
+    # $HOME/.local/share/lxc
+}
+
+# when using LXC installed via LXD
+
+lxc_launch () { lxc launch ubuntu:20.04 $LXC_CONT ; }
+lxc_delete () { lxc delete $LXC_CONT ; }
+lxc_list () { lxc list ; }
+lxc_start () { lxc start $LXC_CONT ; }
+lxc_stop () { lxc stop $LXC_CONT ; }
+lxc_bash () { lxc exec $LXC_CONT -- su --login ubuntu ; }
+lxc_bash_root () { lxc exec $LXC_CONT -- /bin/bash ; }
+lxc_cp_from_container () { echo "file: lxc file pull instancename/path-in-container path-on-host
+folder: lxc file pull -r instancename/path-in-container path-on-host"
+}
+# lxc_cp_to_container
+lxc_storage () {
+    lxc storage list
+    lxc storage info default
+}
+
+lxc_mount_this () {
+    cont_dir="/mnt/ros_rpi/"
+    host_dir="$HOME/DATA/image/ros_rpi"
+    lxc exec $LXC_CONT -- "mkdir -p $cont_dir"
+    lxc config device add $LXC_CONT myhomedir disk source=$host_dir path=$cont_dir
+    lxc config device show $LXC_CONT
+}
+lxc_umount_this () {
+    cont_dir="/mnt/ros_rpi/"
+    lxc config device remove $LXC_CONT $cont_dir
 }

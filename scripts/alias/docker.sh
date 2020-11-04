@@ -105,6 +105,7 @@ do_compose_yml_from_regex () {
 
 do_regex_dev=".*dev"
 do_regex_pudb=".*pudb"
+do_regex_debug=".*debug"
 do_regex_local=".*local"
 do_regex_local_dev=".*local.*dev"
 do_regex_dev_local=".*dev.*local"
@@ -114,6 +115,8 @@ do_regex_from_category () {
     category="${1?category: dev, pudb, prod, dev_local}"
     if [[ $category == "dev" ]]; then
         echo $do_regex_dev
+    elif [[ $category == "debug" ]]; then
+        echo $do_regex_debug
     elif [[ $category == "pudb" ]]; then
         echo $do_regex_pudb
     elif [[ $category == "dev_local" ]]; then
@@ -135,12 +138,13 @@ do_regex_from_category () {
 do_compose_yml_all () {
     echo $(do_compose_yml_dev $@)
     echo $(do_compose_yml_pudb $@)
+    echo $(do_compose_yml_debug $@)
     echo $(do_compose_yml_dev_local $@)
     echo $(do_compose_yml_prod $@)
 }
 
 do_cat_compose () {
-    category="${1?category: dev, pudb, prod, dev_local}"
+    category="${1?category: dev, pudb, debug, prod, dev_local}"
     regex=$(do_regex_from_category $category)
     file=$(do_compose_yml_from_regex $regex ${@:2})
     echo $file
@@ -174,7 +178,7 @@ vido_compose_yml_all () {
 # }
 
 do_cat_up () {
-    category="${1?category: dev, pudb, prod, dev_local}"
+    category="${1?category: dev, pudb, debug, prod, dev_local}"
     echo "category: \"$category\""
     regex=$(do_regex_from_category $category)
     echo "category inner regex: \"$regex\""
@@ -188,7 +192,7 @@ do_cat_up_sh () {
 }
 
 do_cat_build () {
-    category="${1?category: dev, pudb, prod, dev_local}"
+    category="${1?category: dev, pudb, debug, prod, dev_local}"
     echo "category: \"$category\""
     regex=$(do_regex_from_category $category)
     echo "category inner regex: \"$regex\""

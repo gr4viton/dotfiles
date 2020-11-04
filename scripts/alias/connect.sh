@@ -45,6 +45,10 @@ ssh_s8 () {
     ssh 192.168.0.108 -p 8022
 }
 
+ssh_ros () {
+    ssh ubuntu@192.168.0.190
+}
+
 mosh_rpi () {
 	mosh pi@192.168.0.105
 }

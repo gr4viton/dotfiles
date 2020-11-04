@@ -142,7 +142,8 @@ inst  htop chromium-browser
 inst_neovim
 
 inst git make
-inst exuberant-ctags  # vim ctags
+# inst exuberant-ctags  # unmaintained
+inst universal-ctags  # vim ctags
 
 
 echo $(cat << EOF

@@ -119,6 +119,9 @@ gr4_folderize_kiwi $dirda "conf" "configuru" "" "" "" "" "kw/configuru"
 # kw.autobooking - backbone
 gr4_folderize_kiwi $dirda "back" "backbone" "" "" "" "" "kw/autobooking"
 
+# wiki - handbook
+gr4_folderize "wik" "$dirda/handbook"
+gr4_folderize "wiki" "$dirwik/src/docs/autobooking/gds"
 
 # kw.dbmodels
 gr4_folderize_kiwi $dirda "dbmodels" "dbmodels"
@@ -129,9 +132,13 @@ gr4_folderize "aut" "$dirda/automation"
 # gr4_folderize "anskw" "$dirbag/kw/autobaggage"
 gr4_folderize "autbook" "$diraut/booking"
 gr4_folderize "autair" "$diraut/booking/airlines"
-gr4_folderize "autobs" "$dirautbook/gds_observer"
-gr4_folderize "autque" "$dirautobs/queues_observer"
-gr4_folderize "antage" "$dirautobs/agent_performance"
+gr4_folderize "autgds" "$diraut/booking/airlines/gds"
+gr4_folderize "autama" "$diraut/booking/airlines/gds/amadeus"
+gr4_folderize "auttra" "$diraut/booking/airlines/gds/travelport"
+gr4_folderize "autsab" "$diraut/booking/airlines/gds/sabre"
+# gr4_folderize "autobs" "$dirautbook/gds_observer"
+# gr4_folderize "autque" "$dirautobs/queues_observer"
+# gr4_folderize "antage" "$dirautobs/agent_performance"
 
 autama="$dirautair/amadeus_partner.py"
 auttra="$dirautair/travelport_partner.py"

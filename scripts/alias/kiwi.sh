@@ -1,4 +1,4 @@
-alias do_login="docker login $KIWI_PYPI_REGISTRY_LOGIN"
+alias do_login="docker login $KIWI_DOCKER_REGISTRY_URL"
 
 # alias bag_copy_test_env_from_keybase="cp /run/user/1000/keybase/kbfs/team/kiwi_autobaggage/* /srv/kw/autobaggage/"
 

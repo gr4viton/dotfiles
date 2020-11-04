@@ -3,6 +3,17 @@
 alias git_initial_setup='git config --global pull.rebase true; git config --global alias.pushf "push --force-with-lease"'
 # alias gdiff='git diff --color-words'
 
+alias git_current_branch="git rev-parse --abbrev-ref HEAD"
+
+git_branch() {
+    git rev-parse --abbrev-ref HEAD 2>/dev/null
+}
+
+git_branch_cutted() {
+    # returns only the last part after '/' of current branch name
+    git_branch | sed 's:.*/::'
+}
+
 gpl () {
     git pull --rebase origin master
 }
@@ -11,26 +22,48 @@ gpf () {
     ddate
     git push --force-with-lease
 }
-gd () {
+
+gid () {
     git diff --color-words
 }
+
 alias pushf='gpf'
 
-alias glog='git log --stat'
-alias glog_oneline='git log --pretty=oneline'
-alias glogp='git log --stat --patch'
-alias glogfiles='git ls-files'
+alias gilog='git log --stat'
+alias gilog_oneline='git log --pretty=oneline'
+alias gilogp='git log --stat --patch'
+alias gilogfiles='git ls-files'
 
 # git
-alias glogd="git branch --sort=-committerdate"
-gbr_delete_merged () {
+gilogdd () {
+    # git branch --sort=-committerdate
+    # the same
+    git for-each-ref --format='%(refname:short)' refs/heads/** --sort=-committerdate
+}
+
+gilogd () {
+    gilogdd | head -20
+}
+gilogd_get () {
+    num="${1:?number of line - first = 1}"
+    sed -n "${num}p" <(gilogdd)
+}
+git_install_gci () {
+    echo "install the git checkout interactive"
+    npm install --global git-checkout-interactive
+}
+gic () {
+    gci
+}
+
+gi_delete_merged () {
     git checkout master && git branch -d $(git branch --merged | tr '*' ' ' | tr 'master' ' ')
 }
-alias gloghash='git log --pretty=format:"%h %s"'
+alias giloghash='git log --pretty=format:"%h %s"'
 
-glogdog () { git log --all --decorate --oneline --graph; }
-gloggraph () { git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all; }
-gloggraph_2line () { git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all; }
+gilogdog () { git log --all --decorate --oneline --graph; }
+giloggraph () { git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all; }
+giloggraph_2line () { git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all; }
 
 alias gir="git rebase"
 
@@ -42,6 +75,10 @@ giri () {  # git rebase
 gir_conflict_files () {
     git diff --name-only --diff-filter=U
 }
+vigir_conflict_files () {
+    vim $(git diff --name-only | uniq)
+}
+
 vigit_rebase_conflict2 () {
     vimo $(gir_conflict_files)
 }
@@ -100,18 +137,6 @@ git_delete_and_recheckout_current_branch() {
     git checkout $cur
 }
 
-alias git_current_branch="git rev-parse --abbrev-ref HEAD"
-
-git_branch() {
-    git rev-parse --abbrev-ref HEAD 2>/dev/null
-}
-
-git_branch_cutted() {
-    # returns only the last part after '/' of current branch name
-    git_branch | sed 's:.*/::'
-}
-
-
 alias git__branches_all="git branch | sed 's|* |  |' | sort"
 alias git__branches_remote="git branch -r | sed 's|origin/||' | sort"
 
@@ -139,29 +164,34 @@ fi
 
 
 # search in commits
+git_search () {
+    set -x
+    git log $@
+    set +x
+}
 
 git_search_in_all_commits_current_branch () {
-    git log -S $1 --source
+    git_search -S "$1" --source
 }
 git_search_in_all_commits_current_branch_patch () {
-    git log -S $1 --source --patch
+    git_search -S "$1" --source --patch
 }
 git_search_in_all_commits_all_branches () {
-    git log -S $1 --source --all
+    git_search -S "$1" --source --all
 }
 git_search_in_all_commits_all_branches_patch () {
-    git log -S $1 --source --patch -all
+    git_search -S "$1" --source --patch -all
 }
 
 git_regex_in_all_commits_current_branch () {
-    git log -G $1 --source
+    git_search -G "$1" --source
 }
 git_regex_in_all_commits_current_branch_patch () {
-    git log -G $1 --source --patch
+    git_search -G "$1" --source --patch
 }
 git_regex_in_all_commits_all_branches () {
-    git log -G $1 --source --all --patch
+    git_search -G "\"$1\"" --source --all --patch
 }
 git_regex_in_all_commits_all_branches_patch () {
-    git log -G $1 --source --all --patch
+    git_search -G "\"$1\"" --source --all --patch
 }

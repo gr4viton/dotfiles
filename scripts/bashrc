@@ -57,6 +57,7 @@ scripts=(
     "alias/kiwi.sh" 
     "alias/config.sh"
     "alias/game.sh"
+    "alias/tags.sh"
 )
 
 len_so_far=0

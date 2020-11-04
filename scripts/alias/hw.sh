@@ -36,3 +36,13 @@ alias bluetooth_restart="sudo /etc/init.d/bluetooth restart"
 unity () {
     /usr/bin/unity3d -force-glcore -noUpm
 }
+
+
+dd_flash () {
+    file="2020-08-20-raspios-buster-armhf.img"
+    device="/dev/sdX"
+    file=$1
+    device=$2
+    echo "flashing file $file to $device"
+    sudo dd bs=4M if="$file" of="$device" status=progress conv=fsync
+}
