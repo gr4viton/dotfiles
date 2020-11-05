@@ -1,5 +1,12 @@
 #!/bin/bash
+
+if [ -z "$DIR_DD" ]; then
+    echo "DIR_DD varialble not defined!"
+fi
+DIR_DDD="$DIR_DD/dotfiles/"
+
 # .bashrc of gr4viton
+
 c_end=$'\e[0m'
 c_blue=$'\e[1;34m'
 c_red=$'\e[1;31m'
@@ -9,17 +16,15 @@ c_yellow=$'\e[1;33m'
 
 
 loadit() {
-script_path=$1
-if [ -f $script_path ]; then
-    . $script_path
-    script_name=$(basename $script_path)
-    # script_name=$($script_name%%.*)
-    # echo -n "$script_name "
-    echo -n "$script_name "
-fi
+    script_path=$1
+    if [ -f $script_path ]; then
+        . $script_path
+        script_name=$(basename $script_path)
+        # script_name=$($script_name%%.*)
+        # echo -n "$script_name "
+        echo -n "$(basename $script_name .sh) "
+    fi
 }
-
-dir_gr4=$HOME'/gr4log/'
 
 loadit_here() {
     _dir_here="$(dirname $0)"
@@ -27,42 +32,42 @@ loadit_here() {
     loadit "${_dir_here}${script_path}"
 }
 
+DIR_LOADIT_SCRIPT="${DIR_DDD}bash/"
+
 loadit_script() {
-    _dir="${dir_gr4}/scripts/"
     script_path=$1
-    loadit "${_dir}${script_path}"
+    loadit "${DIR_LOADIT_SCRIPT}${script_path}"
 }
 
-the_config=${dir_gr4}the_config.yaml
+the_config=${DIR_DD}the_config.yaml
 # ############## LOAD ALIASES AND FUNCTION FILES ###############
 # speak synthesis
 # git
-_dir="${dir_gr4}/scripts/"
-echo "Loading from $_dir:"
-scripts=( 
-    "ps1.sh" 
-    "alias/office.sh" 
-    "alias/git.sh" 
-    "alias/centroid.sh" 
-    "alias/install.sh" 
-    "alias/speak.sh" 
-    "alias/graphic.sh" 
-    "alias/dev.sh" 
-    "alias/esp32.sh" 
-    "alias/hw.sh" 
-    "alias/connect.sh" 
-    "alias/dell.sh" 
-    "alias/dirs.sh" 
-    "alias/docker.sh" 
-    "alias/kiwi.sh" 
+echo "Sourced files $DIR_LOADIT_SCRIPT:"
+scripts=(
+    "ps1.sh"
+    "alias/office.sh"
+    "alias/git.sh"
+    "alias/centroid.sh"
+    "alias/install.sh"
+    "alias/speak.sh"
+    "alias/graphic.sh"
+    "alias/dev.sh"
+    "alias/esp32.sh"
+    "alias/hw.sh"
+    "alias/connect.sh"
+    "alias/dell.sh"
+    "alias/dirs.sh"
+    "alias/docker.sh"
+    "alias/kiwi.sh"
     "alias/config.sh"
     "alias/game.sh"
     "alias/tags.sh"
 )
 
 len_so_far=0
-limit_len_per_line=120
-start_line="\t"
+limit_len_per_line=140
+start_line='>>> '
 echo -en ${start_line}
 for script in ${scripts[@]}; do
     script_name=$(basename $script)
@@ -133,7 +138,7 @@ if [[ $(apt_installed xcape) ]]; then
 xcape -e 'Control_L=Escape'
 fi
 
-fi 
+fi
 
 
 # prompt line
@@ -184,8 +189,8 @@ extract () {
  fi
 }
 
-alias vircvim_old='vim '$home'.vimrc' 
-alias vircvim='vim ~/.config/nvim/init.vim' 
+alias vircvim_old='vim '$home'.vimrc'
+alias vircvim='vim ~/.config/nvim/init.vim'
 
 alias vircbash="vim $rcbash"
 
@@ -222,7 +227,7 @@ alias v2='cd '$dirgr4log';vim -O '$dirgr4log'gr4log.vim '$dirkiwilog'kiwi\ log.v
 alias v3='vim -O '$dirgr4log'LOG/nix/logFedora.vim '$dirgr4log
 
 if [[ $(apt_installed thefuck) ]]; then
-    eval $(thefuck --alias) 
+    eval $(thefuck --alias)
 fi
 
 alias cdC='cd /mnt/C'
@@ -233,17 +238,17 @@ alias cdD='cd /mnt/D'
 
 
 
-# colorscheme from 
+# colorscheme from
 # http://ciembor.github.io/4bit/#
 
 # data:text/plain,%23!%2Fbin%2Fbash %0A%0A%23 Save this script into set_colors.sh%2C make this file executable and run it%3A %0A%23 %0A%23 %24 chmod %2Bx set_colors.sh %0A%23 %24 .%2Fset_colors.sh %0A%23 %0A%23 Alternatively copy lines below directly into your shell. %0A%0Agconftool-2 --set %2Fapps%2Fgnome-terminal%2Fprofiles%2FDefault%2Fuse_theme_background --type bool false %0Agconftool-2 --set %2Fapps%2Fgnome-terminal%2Fprofiles%2FDefault%2Fuse_theme_colors --type bool false %0Agconftool-2 -s -t string %2Fapps%2Fgnome-terminal%2Fprofiles%2FDefault%2Fbackground_color '%23393902022727'%0Agconftool-2 -s -t string %2Fapps%2Fgnome-terminal%2Fprofiles%2FDefault%2Fforeground_color '%23d9d9e6e6f2f2'%0Agconftool-2 -s -t string %2Fapps%2Fgnome-terminal%2Fprofiles%2FDefault%2Fpalette '%23000000000000%3A%23bdbd4c4c4f4f%3A%234f4fbdbd4c4c%3A%23bdbdbaba4c4c%3A%234c4c4f4fbdbd%3A%23baba4c4cbdbd%3A%234c4cbdbdbaba%3A%23e1e1e1e1e1e1%3A%231a1a1a1a1a1a%3A%23e8e8bfbfc0c0%3A%23c0c0e8e8bfbf%3A%23e8e8e6e6bfbf%3A%23bfbfc0c0e8e8%3A%23e6e6bfbfe8e8%3A%23bfbfe8e8e6e6%3A%23ffffffffffff'%0A
 
-# Save this script into set_colors.sh, make this file executable and run it: 
-# 
-# $ chmod +x set_colors.sh 
-# $ ./set_colors.sh 
-# 
-# Alternatively copy lines below directly into your shell. 
+# Save this script into set_colors.sh, make this file executable and run it:
+#
+# $ chmod +x set_colors.sh
+# $ ./set_colors.sh
+#
+# Alternatively copy lines below directly into your shell.
 
 #if [ -n $set_colors_gconftool ]
 #then
@@ -284,12 +289,12 @@ alias .....='..;....'
 export SIGROK_FIRMWARE_DIR='/home/dd/DATA/dev/log_analyzer/fw'
 
 
-# computer specific 
+# computer specific
 user=$USER
-home='/home/'$user'/' 
-home_root='/root/' 
-rcbash=$home'.bashrc' 
-rcbash_root=$home_root'.bashrc' 
+home='/home/'$user'/'
+home_root='/root/'
+rcbash=$home'.bashrc'
+rcbash_root=$home_root'.bashrc'
 
 alias src='source '$rcbash
 alias vrc='vim '$rcbash
@@ -300,8 +305,7 @@ export PYTHONDONTWRITEBYTECODE=1  # do not write pyc files when running python
 
 # export MESA_GL_VERSION_OVERRIDE=4.6
 
-echo "gr4log .bashrc loaded!"
-
+echo "gr4viton .bashrc loaded!"
 
 LANG=en_GB.UTF-8
 LANGUAGE=en_US

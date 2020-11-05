@@ -105,8 +105,9 @@ visearch() {
 
 viag_cd () {
     dir=$1
+    shift
     cd $dir
-    viag ${@:2} $dir
+    viag $@ $dir
 }
 
 viag_gitlabci_in_subfolders () {
@@ -401,9 +402,12 @@ viw () {
     viag_cd $dirweb/content/ $@
 }
 
-vigralias () {
-    viag_cd $dirgr4log/scripts/alias $@
+vialias () {
+    viag_cd $DIR_DDD/bash/alias/ $@
 }
+
+alias vigralias="vialias"
+
 vigrlog () {
     viag_cd $dirgr4log/log $@
 }
@@ -773,3 +777,8 @@ aosd_show_time () {
 
     done
 }
+
+
+# jekyll
+alias jekyll_me='bundle exec jekyll serve'
+
