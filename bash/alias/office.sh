@@ -760,19 +760,26 @@ aosd_show_time () {
     fade_full="${2:-500}"
     padding="${3:-0}"
 
-    base_args=(
-        --font="Ubuntu $font_size" --shadow-offset=1 --back-color=black --back-opacity=200 --fore-color=white --lines=0 --lines=3
-        --fade-in=0 --fade-out=0 --fade-full=$fade_full --padding=$padding
-    )
+    # base_args=(
+    #     --font="Ubuntu $font_size" --shadow-offset=1 --back-color=black --back-opacity=200 --fore-color=white --lines=0 --lines=3
+    #     --fade-in=0 --fade-out=0 --fade-full=$fade_full --padding=$padding
+    # )
     echo "Getting centers"
-    IFS='\n' read -r centers <<< $(aosd_get_centers_xy_args)
-    echo "$centers"
+    # IFS='\n' read -r centers <<< $(aosd_get_centers_xy_args)
+    # echo "$centers"
     # for pos_args in
-    for pos_args in ${centers[@]}
+    # for pos_args in $(aosd_get_centers_xy_args)
+    for pos_args in "$(aosd_get_centers_xy_args)"
+    # for pos_args in ${centers[@]}
     do
         echo "Showing time: $pos_args"
         IFS=' ' read -r -a pos_args_array <<< "$pos_args"
-        full_args=(${base_args[@]} ${pos_args_array[@]})
+        full_args=(
+            --font="Ubuntu $font_size" --shadow-offset=1 --back-color=black --back-opacity=200 --fore-color=white --lines=0 --lines=3
+            --fade-in=0 --fade-out=0 --fade-full=$fade_full --padding=$padding
+            ${pos_args_array[@]}
+        )
+        echo "Showing time: $full_args"
         date +"%H:%M" | aosd_cat "${full_args[@]}"
 
     done
@@ -781,4 +788,3 @@ aosd_show_time () {
 
 # jekyll
 alias jekyll_me='bundle exec jekyll serve'
-
