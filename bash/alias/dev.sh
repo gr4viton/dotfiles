@@ -411,3 +411,24 @@ lxc_umount_this () {
     cont_dir="/mnt/ros_rpi/"
     lxc config device remove $LXC_CONT $cont_dir
 }
+
+
+## PYPI pypi uploads
+
+pypi_generate_dist () {
+    python3 setup.py sdist bdist_wheel
+    ll dist/
+}
+pypi_upload_all () {
+    twine upload dist/*
+}
+
+pypi_upload () {
+    twine upload $@
+}
+pypi_upload_test_all () {
+    twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+}
+pypi_upload_test () {
+    twine upload --repository-url https://test.pypi.org/legacy/ $@
+}
