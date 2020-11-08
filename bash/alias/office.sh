@@ -656,7 +656,7 @@ echo_py_src () {
     # echo_py_src 'print("HI")' "first_arg" "second_arg"
     PYSRC="${1:?python source text}"
     shift  # skip the first arg = $PYSRC
-    result="$(python3 -c "$PYSRC" "$@")"
+    result="$(/usr/bin/python3 -c "$PYSRC" "$@")"
     echo "$result"
 }
 
