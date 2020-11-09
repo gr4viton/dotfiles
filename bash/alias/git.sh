@@ -195,3 +195,22 @@ git_regex_in_all_commits_all_branches () {
 git_regex_in_all_commits_all_branches_patch () {
     git_search -G "\"$1\"" --source --all --patch
 }
+
+
+
+# git
+GIT_ALIAS_FILE="$HOME/.gitconfig"
+
+git_alias_set () {
+	ABBREV="${1:?abbreviation}"
+	COMMAND="${2:?abbreviation}"
+	git config --global alias.$ABBREV $COMMAND
+}
+
+git_alias_show () {
+	cat $GIT_ALIAS_FILE
+}
+
+git_alias_open () {
+	vim $GIT_ALIAS_FILE
+}

@@ -494,8 +494,6 @@ muxl_base_dd () {
 }
 
 
-eval $(thefuck --alias)
-
 difff () {
     diff -u $@ | ydiff -s
 }
@@ -788,3 +786,18 @@ aosd_show_time () {
 
 # jekyll
 alias jekyll_me='bundle exec jekyll serve'
+
+
+# files
+## configs
+alias virctmuxp="vim -O ~/.confix/tmuxp/*.yml"
+alias virctmux='vim ~/.tmux.conf'
+alias cdtmuxp="cd ~/.tmuxp/"
+# muxl, muxe
+
+
+# rcurxvt="~/.Xresources"
+rcurxvt="~/.Xdefaults"
+alias urxvt_reload="xrdb -load $rcurxvt"
+alias vircurxvt="vim -O $rcurxvt"
+

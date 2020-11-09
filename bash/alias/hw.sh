@@ -46,3 +46,14 @@ dd_flash () {
     echo "flashing file $file to $device"
     sudo dd bs=4M if="$file" of="$device" status=progress conv=fsync
 }
+
+# keyboard
+
+# make CapsLock behave like Ctrl:
+setxkbmap -option ctrl:nocaps
+
+# make short-pressed Ctrl behave like Escape:
+if [[ $(apt_installed xcape) ]]; then
+xcape -e 'Control_L=Escape'
+fi
+

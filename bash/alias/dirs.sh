@@ -1,18 +1,5 @@
 #!/bin/bash
 
-# files
-## configs
-alias virctmuxp="vim -O ~/.confix/tmuxp/*.yml"
-alias virctmux='vim ~/.tmux.conf'
-alias cdtmuxp="cd ~/.tmuxp/"
-# muxl, muxe
-
-
-# rcurxvt="~/.Xresources"
-rcurxvt="~/.Xdefaults"
-alias urxvt_reload="xrdb -load $rcurxvt"
-alias vircurxvt="vim -O $rcurxvt"
-
 
 # watch
 gr4_folderize "das_film" "/media/dd/datasss/FILM/"

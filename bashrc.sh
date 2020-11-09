@@ -47,8 +47,6 @@ the_config=${DIR_DD}the_config.yaml
 HOSTNAME=$(hostname)
 
 
-echo "E"
-
 if [[ "$HOSTNAME" == "dddell-latitude-5401" ]]; then
     _scripts="full"
 elif [[ "$HOSTNAME" == "ubuntu" || "$HOSTNAME" == "ros_bot" ]]; then
@@ -88,15 +86,8 @@ elif [[ "$_scripts" == "ros" ]]; then
         "ps1.sh"
         "alias/office.sh"
         "alias/git.sh"
-        "alias/centroid.sh"
-        "alias/install.sh"
-        "alias/speak.sh"
-        "alias/dev.sh"
-        "alias/esp32.sh"
-        "alias/hw.sh"
         "alias/connect.sh"
-        "alias/dirs.sh"
-        "alias/tags.sh"
+        "alias/ros.sh"
     )
 
 elif [[ "$_scripts" == "min" ]]; then
@@ -106,7 +97,6 @@ elif [[ "$_scripts" == "min" ]]; then
         "alias/office.sh"
         "alias/git.sh"
         "alias/connect.sh"
-        "alias/dirs.sh"
     )
 
 fi
@@ -164,30 +154,6 @@ else
     # Unknown.
     os_name="unknown"
 fi
-
-if [[ "$os_name" == "linux" ]]; then
-    if [ -f /etc/system-release ]; then
-        system_str=$(cat /etc/system-release)
-    fi
-    echo $system_str
-    case "Fedora" in
-        *system_str*)
-        distribution_name="fedora"
-            ;;
-    esac
-    echo "$distribution_name"
-
-
-# make CapsLock behave like Ctrl:
-setxkbmap -option ctrl:nocaps
-
-# make short-pressed Ctrl behave like Escape:
-if [[ $(apt_installed xcape) ]]; then
-xcape -e 'Control_L=Escape'
-fi
-
-fi
-
 
 # prompt line
 BRANCH="\$(git_branch_cutted)"
@@ -344,15 +310,14 @@ home_root='/root/'
 rcbash=$home'.bashrc'
 rcbash_root=$home_root'.bashrc'
 
-alias src='source '$rcbash
-alias vrc='vim '$rcbash
-
-alias better='echo "DancetteeMeritocracyMeddlesomeness"'
+vrc () { vim $rcbash $DIR_DD/dotfiles/bashrc.sh; }
+src () { source $rcbash; }
 
 export PYTHONDONTWRITEBYTECODE=1  # do not write pyc files when running python
 
 # export MESA_GL_VERSION_OVERRIDE=4.6
 
+echo ""
 echo "gr4viton .bashrc loaded!"
 
 LANG=en_GB.UTF-8
