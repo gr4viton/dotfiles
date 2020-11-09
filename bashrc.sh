@@ -43,27 +43,75 @@ the_config=${DIR_DD}the_config.yaml
 # ############## LOAD ALIASES AND FUNCTION FILES ###############
 # speak synthesis
 # git
-echo "Sourced files $DIR_LOADIT_SCRIPT:"
-scripts=(
-    "ps1.sh"
-    "alias/office.sh"
-    "alias/git.sh"
-    "alias/centroid.sh"
-    "alias/install.sh"
-    "alias/speak.sh"
-    "alias/graphic.sh"
-    "alias/dev.sh"
-    "alias/esp32.sh"
-    "alias/hw.sh"
-    "alias/connect.sh"
-    "alias/dell.sh"
-    "alias/dirs.sh"
-    "alias/docker.sh"
-    "alias/kiwi.sh"
-    "alias/config.sh"
-    "alias/game.sh"
-    "alias/tags.sh"
-)
+
+HOSTNAME=$(hostname)
+
+
+echo "E"
+
+if [[ "$HOSTNAME" == "dddell-latitude-5401" ]]; then
+    _scripts="full"
+elif [[ "$HOSTNAME" == "ubuntu" || "$HOSTNAME" == "ros_bot" ]]; then
+    _scripts="min"
+else
+    _scripts="full"
+fi
+
+echo "Sourcing [$_scripts script] files from $DIR_LOADIT_SCRIPT:"
+
+if [[ "$_scripts" == "full" ]]; then
+
+    scripts=(
+        "ps1.sh"
+        "alias/office.sh"
+        "alias/git.sh"
+        "alias/centroid.sh"
+        "alias/install.sh"
+        "alias/speak.sh"
+        "alias/graphic.sh"
+        "alias/dev.sh"
+        "alias/esp32.sh"
+        "alias/hw.sh"
+        "alias/connect.sh"
+        "alias/dell.sh"
+        "alias/dirs.sh"
+        "alias/docker.sh"
+        "alias/kiwi.sh"
+        "alias/config.sh"
+        "alias/game.sh"
+        "alias/tags.sh"
+    )
+
+elif [[ "$_scripts" == "ros" ]]; then
+
+    scripts=(
+        "ps1.sh"
+        "alias/office.sh"
+        "alias/git.sh"
+        "alias/centroid.sh"
+        "alias/install.sh"
+        "alias/speak.sh"
+        "alias/dev.sh"
+        "alias/esp32.sh"
+        "alias/hw.sh"
+        "alias/connect.sh"
+        "alias/dirs.sh"
+        "alias/tags.sh"
+    )
+
+elif [[ "$_scripts" == "min" ]]; then
+
+    scripts=(
+        "ps1.sh"
+        "alias/office.sh"
+        "alias/git.sh"
+        "alias/connect.sh"
+        "alias/dirs.sh"
+    )
+
+fi
+
+
 
 len_so_far=0
 limit_len_per_line=140
