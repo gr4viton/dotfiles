@@ -50,7 +50,7 @@ HOSTNAME=$(hostname)
 if [[ "$HOSTNAME" == "dddell-latitude-5401" ]]; then
     _scripts="full"
 elif [[ "$HOSTNAME" == "ubuntu" || "$HOSTNAME" == "ros_bot" ]]; then
-    _scripts="min"
+    _scripts="ros"
 else
     _scripts="full"
 fi
