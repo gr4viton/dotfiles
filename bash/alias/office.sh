@@ -1,5 +1,28 @@
 #!/bin/bash
 
+# handy extract function for various archives
+extract () {
+ if [ -f $1 ] ; then
+ case $1 in
+ *.tar.bz2) tar xjf $1 ;;
+ *.tar.gz) tar xzf $1 ;;
+ *.bz2) bunzip2 $1 ;;
+ *.rar) rar x $1 ;;
+ *.gz) gunzip $1 ;;
+ *.tar) tar xf $1 ;;
+ *.tbz2) tar xjf $1 ;;
+ *.tgz) tar xzf $1 ;;
+ *.zip) unzip $1 ;;
+ *.Z) uncompress $1 ;;
+ *.7z) 7z x $1 ;;
+ *) echo "'$1' cannot be extracted via extract()" ;;
+ esac
+ else
+ echo "'$1' is not a valid file"
+ fi
+}
+
+
 ddate () {
     # date in rfc-3339 format
     # it's like iso-8601 + time
@@ -39,7 +62,13 @@ agp_dict() {
     agp "\[['|\"][^,]*?['|\"]\]";
 }
 
-# VIM
+# application: vim nvim
+
+# alias vircvim_old='vim '$home'.vimrc'
+alias vircvim='vim ~/.config/nvim/init.vim'
+
+alias vircbash="vim $rcbash"
+
 vimopen () {
     nvim -O "$@"
 }
@@ -800,4 +829,29 @@ alias cdtmuxp="cd ~/.tmuxp/"
 rcurxvt="~/.Xdefaults"
 alias urxvt_reload="xrdb -load $rcurxvt"
 alias vircurxvt="vim -O $rcurxvt"
+
+
+if [[ $(apt_installed thefuck) ]]; then
+    eval $(thefuck --alias)
+fi
+
+
+# ############## gr4log
+
+# gr4log
+dirgr4log=$HOME'/gr4log/'
+dir_gr4scripts="$HOME/gr4log/scripts"
+
+alias gr4log='vim '$dirgr4log'gr4log.vim'
+alias cdgr4log='cd '$dirgr4log
+
+alias vgr4='vim -O bashrc alias/install.sh ~/.bashrc'
+alias vgrc='cd $dir_gr4scripts && vgr4'
+
+alias log='cdgr4log;gr4log'
+alias log_dreamer='vim '$dirgr4log'LOG/logDreamer.vim'
+# sync all
+
+alias gr4log_sync=$dirgr4log'gr4log_git_update.sh'
+alias syncall='gr4log_sync'
 

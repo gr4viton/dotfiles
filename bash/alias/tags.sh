@@ -20,5 +20,3 @@ ctags() {
 tags_rerun () {
     ctags -Re -o $CTAGS_TAGS_FILE $CTAGS_SCAN_DIR --options=$CTAGS_OPTIONS_FILE --output-format=e-ctags
 }
-
-

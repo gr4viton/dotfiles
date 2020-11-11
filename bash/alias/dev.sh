@@ -5,6 +5,8 @@ make_python_venv () {
 
 }
 
+export PYTHONDONTWRITEBYTECODE=1  # do not write pyc files when running python
+
 alias venv_cv2='source /srv/cv2/venv_cv2/bin/activate'
 
 alias all_py='find . -type f -regextype sed -regex ".*\.py" -print0'

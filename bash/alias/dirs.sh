@@ -178,3 +178,27 @@ gr4_folderize "nasvideo" "${dirnas}video/"
 gr4_folderize "nashomes" "${dirnas}homes/"
 
 
+# project songinator
+dirsonginator='/srv/songinator/'
+alias cdsonginator='cd $dirsonginator'
+
+# project centroid
+dir_datagrab='/srv/centroid/datagrab/'
+alias cd_datagrab='cd '$dir_datagrab
+alias venv_datagrab='source '$dir_datagrab'/venv_data_py36/bin/activate'
+
+
+# ele
+## log analyzers
+export SIGROK_FIRMWARE_DIR='/home/dd/DATA/dev/log_analyzer/fw'
+
+# mount windows C, D
+alias cdC='cd /mnt/C'
+alias cdD='cd /mnt/D'
+
+
+# gr4log
+# logs
+logAutomateMe=$dirgr4log'LOG/dev/logAutomateMe.vim'
+dirkiwilog=$dirgr4log'LOG/work/kiwi/'
+
