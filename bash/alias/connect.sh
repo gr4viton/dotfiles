@@ -157,13 +157,6 @@ endora_me () {
 }
 
 
-mount_ftp () {
-    local server="${1:?ftp server must be specified}"
-    local mount_dir="${1:?ftp mount directory must be specified}"
-    local user="${1:?user must be specified}"
-    curlftpfs $server $mount_dir -o user=$user
-}
-
 gr4_folderize endora_gr4viton "/media/ftp/gr4viton.cz/"
 
 alias mount_ftp_endora_gr4viton="mount_ftp sasanka.endora.cz $direndora_gr4viton gr4viton"

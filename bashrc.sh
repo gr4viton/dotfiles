@@ -39,14 +39,14 @@ loadit_script() {
 HOSTNAME=$(hostname)
 
 if [[ "$HOSTNAME" == "dddell-latitude-5401" ]]; then
-    _scripts="full"
+    DD_SELECTOR="full"
 elif [[ "$HOSTNAME" == "ubuntu" || "$HOSTNAME" == "ros_bot" ]]; then
-    _scripts="ros"
+    DD_SELECTOR="ros"
 else
-    _scripts="full"
+    DD_SELECTOR="full"
 fi
 
-echo "Sourcing [$_scripts script] files from $DIR_LOADIT_SCRIPT:"
+echo "Sourcing [$DD_SELECTOR script] files from $DIR_LOADIT_SCRIPT:"
 
 # script lists
 # - all script lists should contain the alias/git.sh
@@ -57,13 +57,30 @@ echo "Sourcing [$_scripts script] files from $DIR_LOADIT_SCRIPT:"
 # basic stuff - colors, ll, cd.., grep, rm ...
 # source $DIR_DD/dotfiles/bash/basic.sh
 
-if [[ "$_scripts" == "full" ]]; then
+if [[ "$DD_SELECTOR" == "full" ]]; then
 
     scripts=(
         "ps1.sh"
         "basic.sh"
+
+            # basic
+            "alias/app/ag.sh"
+            "alias/app/git.sh"
+            "alias/app/python.sh"
+            "alias/app/tmux.sh"
+            "alias/app/vim.sh"
+            "alias/app/ssh.sh"
+
+            # laptop ubuntu
+            "alias/app/aosd.sh"
+            "alias/app/curlftpfs.sh"
+            "alias/app/docker.sh"
+            "alias/app/kubectl.sh"
+            "alias/app/lxc.sh"
+            "alias/app/redis.sh"
+            "alias/app/youtube-dl.sh"
+
         "alias/office.sh"
-        "alias/git.sh"
         "alias/centroid.sh"
         "alias/install.sh"
         "alias/speak.sh"
@@ -74,31 +91,46 @@ if [[ "$_scripts" == "full" ]]; then
         "alias/connect.sh"
         "alias/dell.sh"
         "alias/dirs.sh"
-        "alias/docker.sh"
         "alias/kiwi.sh"
         "alias/config.sh"
         "alias/game.sh"
         "alias/tags.sh"
     )
 
-elif [[ "$_scripts" == "ros" ]]; then
+elif [[ "$DD_SELECTOR" == "ros" ]]; then
 
     scripts=(
         "ps1.sh"
         "basic.sh"
+
+            # basic
+            "alias/app/ag.sh"
+            "alias/app/git.sh"
+            "alias/app/python.sh"
+            "alias/app/tmux.sh"
+            "alias/app/vim.sh"
+            "alias/app/ssh.sh"
+
         "alias/office.sh"
-        "alias/git.sh"
         "alias/connect.sh"
         "alias/ros.sh"
     )
 
-elif [[ "$_scripts" == "min" ]]; then
+elif [[ "$DD_SELECTOR" == "min" ]]; then
 
     scripts=(
         "ps1.sh"
         "basic.sh"
+
+            # basic
+            "alias/app/ag.sh"
+            "alias/app/git.sh"
+            "alias/app/python.sh"
+            "alias/app/tmux.sh"
+            "alias/app/vim.sh"
+            "alias/app/ssh.sh"
+
         "alias/office.sh"
-        "alias/git.sh"
         "alias/connect.sh"
     )
 
@@ -133,8 +165,6 @@ HOME_ROOT="/root/"
 
 rcbash="${HOME_DD}.bashrc"
 rcbash_root="${HOME_ROOT}.bashrc"
-
-ssasd () { echo "A" ; }
 
 src () { source /home/dd/.bashrc ; }
 vrc () { vim "${rcbash}" "${DIR_DD}/dotfiles/bashrc.sh" ; }

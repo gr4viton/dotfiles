@@ -4,7 +4,27 @@ My (gr4viton) dotenv files (configurations, bashrc, functions and aliases).
 
 Ejoy!
 
-# files
+# new file structure
+- bash/alias
+  - `app`
+    - does not contain any per device config
+    - nor user defined config
+    - can contain application default config
+    - files
+        - apt
+        - vim
+        - lxc
+        - curlftpfs
+        - ssh
+        - docker
+        ...
+  - `action` - does not contain any per device config nor user defined config
+    - mount
+
+
+# old file structurs
+
+All in `bash/alias.sh`
 
 ## centroid.sh
 - centroid mounts
@@ -26,31 +46,12 @@ Ejoy!
 
 ## dev.sh
 - venv cv2
-- regex py
-- pyc_remove
-- pudb_connect + loop
 - swag_validate
-- kcl
-- lxc
-- pypi
 
 - mount_ntfs_kill_hibernate_C
 - dbm alembic
 - logrotate
-- apt_list_biggest
-- pipenv
 - samsung_mount
-
-## dirs.sh
-- folderize
-  - kiwi
-  - gr4
-  - centroid
-  - kodi ... projects
-
-## docker.sh
-- `do_*`
-- `docker_*`
 
 ## esp32.sh
 - esp
@@ -64,14 +65,10 @@ Ejoy!
 - proton
 - folderize
 
-## git.sh
-- git
-- glog..
-
 ## graphic
 - convert
 
-## hw.
+## hw
 - restart
   - audio
   - bluetooth
@@ -113,7 +110,6 @@ Ejoy!
 - killit, kfire
 - apk
 - black
-- tmux
 - swap
 - ydlbb
 - sus

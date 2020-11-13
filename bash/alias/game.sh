@@ -28,3 +28,10 @@ gr4_folderize "game_witcher1_save" "/fun/GAME/STEAM/steamapps/compatdata/20900/p
 
 gr4_folderize "game_witcher2_save" "/home/dd/.local/share/cdprojektred/witcher2/GameDocuments/The Witcher/saves"
 
+
+# game
+# wine https://help.ubuntu.com/community/Wine
+wow () {
+    wine /fun/game/wow/wow434/Wow.exe
+}
+

@@ -126,6 +126,15 @@ git_generate_ssh() {
 }
 
 
+git_recheckout_current_branch() {
+    cur=`git rev-parse --abbrev-ref HEAD`
+    echo Current branch = $cur
+    git checkout master
+    git branch -D $cur
+    git pull
+    git checkout $cur
+}
+
 git_delete_and_recheckout_current_branch() {
     # if the diff is empty
     # - deletes current branch, pulls origin, checkout it again
@@ -214,3 +223,9 @@ git_alias_show () {
 git_alias_open () {
 	vim $GIT_ALIAS_FILE
 }
+
+
+git_mv_snake_case_to_dash_case () {
+    for file in ./* ; do git mv "$file" "$(echo $file|sed -e 's/_/-/g')"; done
+}
+

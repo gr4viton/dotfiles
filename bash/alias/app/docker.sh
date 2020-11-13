@@ -67,8 +67,8 @@ docker_inspect_bag_ip() { docker inspect $(docker ps | grep dev_app | awk '{prin
 docker_attach_bag_old() { docker attach $(docker ps | grep autobaggage_app | awk '{print $1}'); }
 docker_inspect_bag_old() { docker inspect $(docker ps | grep autobaggage_app | awk '{print $1}'); }
 
-alias psdocker="ps -aux | grep 'docker' --color=always | sort -k10"
-alias psdocker2='docker ps'
+alias docker_ps="ps -aux | grep 'docker' --color=always | sort -k10"
+alias docker_ps2='docker ps'
 
 alias _docker_stop='sudo service docker stop'
 alias docker_stop='echo "After pwd input the docker will stop - may take dozen seconds or so... WAIT!"; _docker_stop'
@@ -215,8 +215,4 @@ sudo systemctl unmask docker.service
 sudo systemctl unmask docker.socket
 sudo systemctl start docker.service
 sudo systemctl status docker
-}
-
-kube_info () {
-    kubectl get
 }
