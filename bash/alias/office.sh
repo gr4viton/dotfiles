@@ -433,3 +433,4 @@ alias log_dreamer='vim '$dirgr4log'LOG/logDreamer.vim'
 alias gr4log_sync=$dirgr4log'gr4log_git_update.sh'
 alias syncall='gr4log_sync'
 
+alias man="info"

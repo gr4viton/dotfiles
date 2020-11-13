@@ -65,6 +65,7 @@ if [[ "$DD_SELECTOR" == "full" ]]; then
 
             # basic
             "alias/app/ag.sh"
+            "alias/app/apt.sh"
             "alias/app/git.sh"
             "alias/app/python.sh"
             "alias/app/tmux.sh"
@@ -166,8 +167,26 @@ HOME_ROOT="/root/"
 rcbash="${HOME_DD}.bashrc"
 rcbash_root="${HOME_ROOT}.bashrc"
 
-src () { source /home/dd/.bashrc ; }
-vrc () { vim "${rcbash}" "${DIR_DD}/dotfiles/bashrc.sh" ; }
+src () {
+    file="${1:-.bashrc}"
+    if [[ "$file" == ".bashrc" ]]; then
+        source "${HOME_DD}.bashrc" ;
+    else
+        file=$(ag --sh -l "$@" ${DIR_DDD})
+        echo "source $file"
+        source $file
+    fi
+}
+vrc () {
+    file="${1:-.bashrc}"
+    if [[ "$file" == ".bashrc" ]]; then
+        vim "${DIR_DDD}bashrc.sh" "${rcbash}" ;
+    else
+        file=$(ag --sh -l "$@" ${DIR_DDD})
+        echo "vim $file"
+        vim $file
+    fi
+}
 
 
 echo ""

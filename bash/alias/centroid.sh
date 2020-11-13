@@ -22,7 +22,6 @@
 
 # impl
 # automatic alias creation for all the python functions
-# generate say alias...
 
 
 # POPCORN TIME API

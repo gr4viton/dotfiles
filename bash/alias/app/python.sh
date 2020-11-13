@@ -11,6 +11,7 @@ pypi_generate_dist () {
     python3 setup.py sdist bdist_wheel
     ll dist/
 }
+
 pypi_upload_all () {
     twine upload dist/*
 }
