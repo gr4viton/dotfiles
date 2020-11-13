@@ -79,6 +79,7 @@ if [[ "$DD_SELECTOR" == "full" ]]; then
             "alias/app/kubectl.sh"
             "alias/app/lxc.sh"
             "alias/app/redis.sh"
+            "alias/app/tldr.sh"
             "alias/app/youtube-dl.sh"
 
         "alias/office.sh"
