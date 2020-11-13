@@ -29,24 +29,24 @@ gid () {
 
 alias pushf='gpf'
 
-alias gilog='git log --stat'
-alias gilog_oneline='git log --pretty=oneline'
-alias gilogp='git log --stat --patch'
-alias gilogfiles='git ls-files'
+alias glog='git log --stat'
+alias glog_oneline='git log --pretty=oneline'
+alias glogp='git log --stat --patch'
+alias glogfiles='git ls-files'
 
 # git
-gilogdd () {
+glogdd () {
     # git branch --sort=-committerdate
     # the same
     git for-each-ref --format='%(refname:short)' refs/heads/** --sort=-committerdate
 }
 
-gilogd () {
-    gilogdd | head -20
+glogd () {
+    glogdd | head -20
 }
-gilogd_get () {
+glogd_get () {
     num="${1:?number of line - first = 1}"
-    sed -n "${num}p" <(gilogdd)
+    sed -n "${num}p" <(glogdd)
 }
 git_install_gci () {
     echo "install the git checkout interactive"
@@ -59,11 +59,11 @@ gic () {
 gi_delete_merged () {
     git checkout master && git branch -d $(git branch --merged | tr '*' ' ' | tr 'master' ' ')
 }
-alias giloghash='git log --pretty=format:"%h %s"'
+alias gloghash='git log --pretty=format:"%h %s"'
 
-gilogdog () { git log --all --decorate --oneline --graph; }
-giloggraph () { git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all; }
-giloggraph_2line () { git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all; }
+glogdog () { git log --all --decorate --oneline --graph; }
+gloggraph () { git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all; }
+gloggraph_2line () { git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all; }
 
 alias gir="git rebase"
 
