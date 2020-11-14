@@ -69,7 +69,7 @@ init_dot_nvim () {
         "${DIR_DDDOT}/nvim/UltiSnips"
 }
 
-init_dot_tmux () {
+_init_dot_tmux () {
     echo "NOT IMPLEMENTED YET"
     mux_sys=$home".config/tmuxinator/"
     mux_my=$dotfiles"tmuxinator/"
@@ -78,7 +78,7 @@ init_dot_tmux () {
     muxp_my="${dotfiles}tmuxp/"
 }
 
-init_dot_urxvt () {
+_init_dot_urxvt () {
     echo "NOT IMPLEMENTED YET"
     urxvt_to=$dotfiles"urxvt/.Xresources"
     urxvt_from=$home".Xresources"
@@ -87,15 +87,24 @@ init_dot_urxvt () {
     urxvt_from2=$home".Xdefaults"
 }
 
-init_dot_autokey () {
+_init_dot_autokey () {
     echo "NOT IMPLEMENTED YET"
     autokey_sys="${home}.config/autokey/data/"
     autokey_my="${dotfiles}/autokey_data/"
 }
 
-init_dot_mate_panel () {
+_init_dot_mate_panel () {
     echo "NOT IMPLEMENTED YET"
     sys="/usr/share/mate-panel/layouts/gr4viton*"
     myy="${dotfiles}mate_panel_layouts/"
     echo $1 "files" $myy $sys
+}
+
+init_dot_git_config () {
+    app_name="git_user_config"
+    config_dir="${HOME}"
+    echo $config_dir
+    init_dot $app_name \
+        "${config_dir}/.gitconfig" \
+        "${DIR_DDDOT}/git/dd.gitconfig"
 }
