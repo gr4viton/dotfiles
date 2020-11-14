@@ -239,6 +239,11 @@ set wrap
 au FileType gitcommit set tw=72
 autocmd FileType yaml,yml,md setlocal ts=2 sts=2 sw=2 expandtab
 
+function! HostnameIs(hostname)
+    " matches hostname with passed string
+    return match(system("echo -n $HOST"), a:hostname) >= 0
+endfunction
+
 " load plug_install.vim, searching it in "all vim places"
 runtime plug_install.vim
 

@@ -6,7 +6,12 @@
 " PlugDiff
 " PlugInstall [name...] [#threads]
 
+" if !HostnameIs('dell')
+" elseif !HostnameIs('rosbot')
+" endif
+
 call plug#begin()
+
 Plug 'Chiel92/vim-autoformat'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'Numkil/ag.nvim'
@@ -61,6 +66,5 @@ Plug 'wincent/command-t'
 " Plug 'tpope/vim-speeddating'
 " Plug 'vim-airline/vim-airline'
 " Plug 'wakatime/vim-wakatime'
+
 call plug#end()
-
-
