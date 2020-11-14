@@ -1,0 +1,27 @@
+# do not use global user 
+# -> call `git_iam_...` in newly cloned repos
+#[user]
+    #name = daniel.davidek
+    #email = daniel.davidek@kiwi.com
+# lrn - https://gitlab.skypicker.com/snippets/12
+# [push]         
+#       default = matching 
+# [pull]         
+#       rebase = true
+[alias]
+        pushf = push --force-with-lease
+        co = checkout
+        au = add -u
+        br = branch
+        ci = commit
+        ca = commit --amend
+        cf = commit -a --fixup
+        st = status
+        hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+        type = cat-file -t
+        dump = cat-file -p
+        l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+        rbi = rebase --interactive --autosquash
+        pom = pull origin master
+[color]
+        ui = auto
