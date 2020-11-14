@@ -31,6 +31,8 @@ lxc_delete () { lxc delete $LXC_CONT ; }
 lxc_list () { lxc list ; }
 lxc_start () { lxc start $LXC_CONT ; }
 lxc_stop () { lxc stop $LXC_CONT ; }
+
+lxc_exec () { lxc exec $LXC_CONT $@ ; }
 lxc_bash () { lxc exec $LXC_CONT -- su --login ubuntu ; }
 lxc_bash_root () { lxc exec $LXC_CONT -- /bin/bash ; }
 lxc_cp_from_container () { echo "file: lxc file pull instancename/path-in-container path-on-host
@@ -54,3 +56,19 @@ lxc_umount_this () {
     lxc config device remove $LXC_CONT $cont_dir
 }
 
+
+# to enable graphic X apps from inside of lxc running system
+# more info: https://blog.simos.info/how-to-run-wine-graphics-accelerated-in-an-lxd-container-on-ubuntu/
+lxc_config_remap_root () {
+    lxc config set $LXC_CONT raw.idmap "both $UID 1000"
+    lxc config device add $LXC_CONT X0 disk path=/tmp/.X11-unix/X0 source=/tmp/.X11-unix/X0
+    lxc config device add $LXC_CONT Xauthority disk path=/home/ubuntu/.Xauthority source=/home/dd/.Xauthority
+    lxc config device add $LXC_CONT mygpu gpu
+    lxc config device set $LXC_CONT mygpu uid 1000
+    lxc config device set $LXC_CONT mygpu gid 1000
+    lxc restart $LXC_CONT
+}
+
+lxc_run_xclock () {
+    lxc_exec -- /bin/bash -c "xclock";
+}
