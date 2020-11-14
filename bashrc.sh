@@ -100,6 +100,7 @@ if [[ "$DD_SELECTOR" == "full" ]]; then
         "alias/config.sh"
         "alias/game.sh"
         "alias/tags.sh"
+        "alias/dotfiles.sh"
     )
 
 elif [[ "$DD_SELECTOR" == "ros" ]]; then
