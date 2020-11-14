@@ -498,7 +498,7 @@ nmap <F8> :TagbarToggle<CR>
 set timeoutlen=1000 ttimeoutlen=0
 
 " load plug_coc.vim, searching it in "all vim places"
-runtime plug_coc.vim
+" runtime plug_coc.vim
 
 
 
