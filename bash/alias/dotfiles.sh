@@ -69,8 +69,15 @@ init_dot_nvim () {
         "${DIR_DDDOT}/nvim/UltiSnips"
 }
 
-_init_dot_tmux () {
-    echo "NOT IMPLEMENTED YET"
+init_dot_tmux () {
+    app_name="tmux"
+    config_dir="${HOME}"
+    init_dot $app_name \
+        "${config_dir}/.tmux.conf" \
+        "${DIR_DDDOT}/tmux/dd.tmux.conf"
+
+
+    echo "NOT FULLY IMPLEMENTED YET"
     mux_sys=$home".config/tmuxinator/"
     mux_my=$dotfiles"tmuxinator/"
 
