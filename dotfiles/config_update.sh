@@ -1,7 +1,7 @@
 #!/bin/bash
 
 home="/home/$USER/"
-main_dir=$home"gr4log/"
+main_dir="/home/dd/dd/dotfiles/"
 cd $main_dir
 
 dotfiles=$main_dir"dotfiles/"

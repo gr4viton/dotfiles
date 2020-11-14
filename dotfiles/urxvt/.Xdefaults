@@ -71,7 +71,7 @@ URxvt.perl-lib: /home/dd/.urxvt/ext/
 !URxvt.perl-ext-common: tabbed,font-size,default,matcher,selection-to-clipboard,pasta,keyboard-select
 !URxvt.perl-ext-common: tabbed,font-size,default,matcher,pasta,keyboard-select
 !tabbeded
-URxvt.perl-ext-common: font-size,default,matcher,tabbedex,vtwheel,fullscreen,clipboard,selection-to-clipboard,pasta
+URxvt.perl-ext-common: font-size,default,matcher,tabbedex,vtwheel,fullscreen,clipboard,selection-to-clipboard,pasta,perl:clipboard_xclip:paste
 
 URxvt.keysym.M-u:     perl:url-select:select_next
 
@@ -178,10 +178,11 @@ URxvt*scrollstyle: plain
 !URxvt*scrollstyle: rxvt
 
 ! clickable URLs
-! URxvt*url-launcher: /usr/bin/firefox
+URxvt*url-launcher: /usr/bin/firefox
+URxvt*url-select.launcher: /usr/bin/firefox
 ! URxvt*url-launcher: /usr/bin/firefox-esr
-URxvt*url-launcher: /usr/bin/chromium-browser 
-URxvt*url-select.launcher: /usr/bin/chromium-browser 
+! URxvt*url-launcher: /usr/bin/chromium-browser 
+! URxvt*url-select.launcher: /usr/bin/chromium-browser 
 
 URxvt*matcher.button: 1
 
@@ -229,6 +230,10 @@ URxvt*modifier: alt
 !URxvt.keysym.M-v: perl:clipboard:paste
 URxvt.keysym.Shift-Control-V: eval:paste_clipboard
 URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
+
+! new clipboard_xclip
+URxvt.keysym.Control-Alt-V: perl:clipboard_xclip:paste
+URxvt.iso14755: False
 
 
 URxvt.keysym.M-n: matcher:select
