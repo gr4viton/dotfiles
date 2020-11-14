@@ -59,14 +59,21 @@ init_dot_nvim () {
     init_dot $app_name \
         "${config_dir}/init.vim" \
         "${DIR_DDDOT}/nvim/init.vim"
+    init_dot $app_name \
+        "${config_dir}/plug_install.vim" \
+        "${DIR_DDDOT}/nvim/plug_install.vim"
+    init_dot $app_name \
+        "${config_dir}/plug_coc.vim" \
+        "${DIR_DDDOT}/nvim/plug_coc.vim"
+
+    init_dot $app_name \
+        "${config_dir}/UltiSnips" \
+        "${DIR_DDDOT}/nvim/UltiSnips"
 
     init_dot $app_name \
         "${config_dir}/colors/wombat256mod.vim" \
         "${DIR_DDDOT}/nvim/colors/wombat256mod.vim"
 
-    init_dot $app_name \
-        "${config_dir}/UltiSnips" \
-        "${DIR_DDDOT}/nvim/UltiSnips"
 }
 
 init_dot_tmux () {
