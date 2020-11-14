@@ -40,10 +40,13 @@ HOSTNAME=$(hostname)
 
 if [[ "$HOSTNAME" == "dddell-latitude-5401" ]]; then
     DD_SELECTOR="full"
-elif [[ "$HOSTNAME" == "ubuntu" || "$HOSTNAME" == "ros_bot" ]]; then
+    USER_DD="dd"
+elif [[ "$HOSTNAME" == "ubuntu" || "$HOSTNAME" == "rosbot" ]]; then
     DD_SELECTOR="ros"
+    USER_DD="ubuntu"
 else
     DD_SELECTOR="full"
+    USER_DD="dd"
 fi
 
 echo "Sourcing [$DD_SELECTOR script] files from $DIR_LOADIT_SCRIPT:"
@@ -113,9 +116,15 @@ elif [[ "$DD_SELECTOR" == "ros" ]]; then
             "alias/app/vim.sh"
             "alias/app/ssh.sh"
 
+            # ubuntu
+            "alias/app/apt.sh"
+
         "alias/office.sh"
         "alias/connect.sh"
-        "alias/ros.sh"
+
+            # rosbot
+            "alias/project/ros_bot.sh"
+
     )
 
 elif [[ "$DD_SELECTOR" == "min" ]]; then
@@ -161,7 +170,6 @@ done
 # $home -> HOME_DD
 # $user -> USER_DD
 # $home_root -> HOME_ROOT
-USER_DD="dd"
 HOME_DD="/home/${USER_DD}/"
 HOME_ROOT="/root/"
 

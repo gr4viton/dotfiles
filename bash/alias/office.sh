@@ -55,7 +55,7 @@ lsd () {
 alias lls="lsd"
 # FOLDERIZE
 
-gr4_folderize() {
+folderize () {
     # creates aliases and variables for a folder
     #
     # $1 = abbreviation used for folder aliases
@@ -67,8 +67,8 @@ gr4_folderize() {
     # - envars: `diresp32`, `desp32`
 
     # ${param:?word} writes word to stdout when param is unset or null
-    local abbrev="${1:?No abbreviation alias.}"
-    local folder="${2:?No directory to folderize.}"
+    local abbrev="${1:?Abbreviation alias needed.}"
+    local folder="${2:?Directory to folderize needed.}"
 
     export dir${abbrev}="$folder"
     export d${abbrev}="$folder"
@@ -76,9 +76,11 @@ gr4_folderize() {
     which > /dev/null 2>&1 ls${abbrev} || alias lll${abbrev}o="lla \"$folder\""
 }
 
+alias gr4_folderize="folderize"
+
 # MV = move
 
-gr4_mkdir_move() {
+gr4_mkdir_move () {
     local what="${1:?No files.}"
     local new_dir="${2:?No directory to move to.}"
     mkdir -p $new_dir
