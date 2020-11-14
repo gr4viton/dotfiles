@@ -63,6 +63,9 @@ init_dot_nvim () {
         "${config_dir}/plug_install.vim" \
         "${DIR_DDDOT}/nvim/plug_install.vim"
     init_dot $app_name \
+        "${config_dir}/plug_info.md" \
+        "${DIR_DDDOT}/nvim/plug_info.md"
+    init_dot $app_name \
         "${config_dir}/plug_coc.vim" \
         "${DIR_DDDOT}/nvim/plug_coc.vim"
 
