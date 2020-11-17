@@ -33,10 +33,11 @@ pip_unused_packages () {
 }
 
 
-alias py="ipython"
-alias ppy="python"
-alias py3="ipython3"
-alias ppy3="python3"
+alias py2="python"
+alias py="python3"
+
+alias ipy2="ipython"
+alias ipy="ipython3"
 
 
 

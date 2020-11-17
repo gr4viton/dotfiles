@@ -4,6 +4,13 @@ My (gr4viton) dotenv files (configurations, bashrc, functions and aliases).
 
 Ejoy!
 
+# Devices
+
+- Laptop
+- Android
+- NAS synology
+- RaspberryPi bot ubuntu
+
 # new file structure
 - bash/alias
   - `app`
