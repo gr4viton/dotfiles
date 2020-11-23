@@ -53,6 +53,7 @@ git_install_gci () {
     npm install --global git-checkout-interactive
 }
 gic () {
+    # interactvie checkout of branches
     gci
 }
 

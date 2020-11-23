@@ -208,29 +208,29 @@ rsync_to_s8 () {
 # nas
 rsync_to_nas() {
 __usage="
-Usage: $(basename $0) [OPTIONS]
+Usage: $ (basename $0) [OPTIONS]
 
 Options:
     copy to nas via rsync
     example:
-    nas_rsync_cp -zz "booo/*" /volume1/video/
+    rsync_to_nas -zz "booo/*" /volume1/video/
     if you use wildcards, enquote the argument (like in the example
 
     -a = take folder - use the / at the end
     -n = dry run
-    nas_rsync_cp_precompress -an zz/ /volume1/video/
+    rsync_to_nas -an zz/ /volume1/video/
 "
 if [ "$1" == "-h" ]; then
   echo "$__usage"
 else
 
-    last=${@:$#} # last parameter
-    other=${*%${!#}} # all parameters except the last
-    in=$other
-    out=$last
+    last="${@:$#}" # last parameter
+    other="${*%${!#}}" # all parameters except the last
+    local_files="$other"
+    remote_dir="$last"
 
     set -x
-    rsync $_basic_rsync_kwargs $in gr4viton@192.168.0.118:$out --rsync-path=/opt/bin/rsync
+    rsync $_basic_rsync_kwargs $local_files "gr4viton@192.168.0.118:$remote_dir" --rsync-path=/opt/bin/rsync
     set +x
 fi
 }
@@ -242,6 +242,10 @@ rsync_to_nas_zip_it () {
 rsync_to_nas_precompress () {
     # precompress sent data, but decompress on reciever
     nas_rsync_cp -zz "$@"
+}
+
+rsync_dnz () {
+    rsync_to_nas -a /home/dd/DATA/DNz/new/ /volume1/video/video/dnz/vid/new/
 }
 
 alias rsync_progress="rsync -a --info=progress2"

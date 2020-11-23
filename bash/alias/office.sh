@@ -23,10 +23,17 @@ extract () {
 }
 
 
+
 ddate () {
     # date in rfc-3339 format
     # it's like iso-8601 + time
     date --rfc-3339=seconds
+    # date --rfc-3339=ns
+    # date --rfc-3339=date
+}
+
+echo_time () {
+    echo $(date --rfc-3339=s)
 }
 
 to_base64 () {
@@ -400,8 +407,23 @@ display_show_data () {
 }
 
 
+# docs
 # jekyll
 alias jekyll_me='bundle exec jekyll serve'
+
+wiki_run () {
+    cdwik
+    echo_time
+    # yarn develop
+    # GATSBY_EXPERIMENTAL_LAZY_DEVJS=true gatsby develop
+    GATSBY_EXPERIMENTAL_LAZY_DEVJS=true yarn develop
+    echo_time
+}
+
+wiki_clean_cache () {
+    cdwik
+    yarn clean
+}
 
 
 
@@ -439,3 +461,6 @@ alias man="info"
 
 
 folderize "ddd" "$DIR_DDD"
+
+
+

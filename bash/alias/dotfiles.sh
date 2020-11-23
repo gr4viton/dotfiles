@@ -52,6 +52,13 @@ init_dot () {
 
 DIR_DDDOT="${DIR_DDD}/dotfiles/"
 
+init_dot_monitors () {
+    app_name="linux_monitors"
+    config_
+    init_dot $app_name \
+        "${HOME}/.config/monitors.xml" \
+        "${DIR_DDDOT}/monitors/monitors.xml"
+}
 
 init_dot_nvim () {
     app_name="neovim"

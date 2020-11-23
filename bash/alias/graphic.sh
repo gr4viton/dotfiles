@@ -18,16 +18,20 @@ convert_via_ffmpeg () {
     local to="${2:?to-extension}"
     local in="${3:?First arg must be a $from file path}"
     local out="${4:-output.$to}"
-    local params="${5:-}"
+    shift; shift; shift; shift;
 
     echo ">>> Converting $from to $to"
     set -x
-    ffmpeg -i $in $params $out
+    ffmpeg -i "$in" "$out" "$@"
     set +x
 }
 
 convert_webm_to_gif () {
     convert_via_ffmpeg "webm" "gif" $1 $2 "-pix_fmt rgb24"
+}
+
+convert_webm_to_mp4 () {
+    convert_via_ffmpeg "webm" "mp4" $@ ""
 }
 
 convert_webp_to_png () {
