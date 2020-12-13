@@ -35,15 +35,17 @@ alias glogp='git log --stat --patch'
 alias glogfiles='git ls-files'
 
 # git
+
+glogd () {
+    glogdd | head -20
+}
+
 glogdd () {
     # git branch --sort=-committerdate
     # the same
     git for-each-ref --format='%(refname:short)' refs/heads/** --sort=-committerdate
 }
 
-glogd () {
-    glogdd | head -20
-}
 glogd_get () {
     num="${1:?number of line - first = 1}"
     sed -n "${num}p" <(glogdd)

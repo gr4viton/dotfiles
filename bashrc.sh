@@ -144,7 +144,25 @@ elif [[ "$DD_SELECTOR" == "ros" ]]; then
 
     )
 
-elif [[ "$DD_SELECTOR" == "min" || "$DD_SELECTOR" == "droid" ]]; then
+elif [[ "$DD_SELECTOR" == "droid" ]]; then
+
+    scripts=(
+        "ps1.sh"
+        "basic.sh"
+
+            # basic
+            "alias/app/ag.sh"
+            "alias/app/git.sh"
+            "alias/app/python.sh"
+            "alias/app/tmux.sh"
+            "alias/app/vim.sh"
+            "alias/app/android.sh"
+
+        "alias/office.sh"
+        "alias/connect.sh"
+    )
+
+elif [[ "$DD_SELECTOR" == "min" ]]; then
 
     scripts=(
         "ps1.sh"
