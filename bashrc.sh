@@ -44,9 +44,25 @@ if [[ "$HOSTNAME" == "dddell-latitude-5401" ]]; then
 elif [[ "$HOSTNAME" == "ubuntu" || "$HOSTNAME" == "rosbot" ]]; then
     DD_SELECTOR="ros"
     USER_DD="ubuntu"
+elif [[ "$HOSTNAME" == "localhost" ]]; then
+    DD_SELECTOR="droid"
+    USER_DD="u0_a304"
+
 else
     DD_SELECTOR="full"
     USER_DD="dd"
+fi
+
+if [[ "$DD_SELECTOR" == "droid" ]]; then
+	HOME_DD="/data/data/com.termux/files/home/"
+	HOME_ROOT="/root/"
+	# deprecated:
+	# $home -> HOME_DD
+	# $user -> USER_DD
+	# $home_root -> HOME_ROOT
+else
+	HOME_DD="/home/${USER_DD}/"
+	HOME_ROOT="/root/"
 fi
 
 echo "Sourcing [$DD_SELECTOR script] files from $DIR_LOADIT_SCRIPT:"
@@ -128,7 +144,7 @@ elif [[ "$DD_SELECTOR" == "ros" ]]; then
 
     )
 
-elif [[ "$DD_SELECTOR" == "min" ]]; then
+elif [[ "$DD_SELECTOR" == "min" || "$DD_SELECTOR" == "droid" ]]; then
 
     scripts=(
         "ps1.sh"
@@ -167,12 +183,6 @@ done
 
 # computer specific
 
-# deprecated:
-# $home -> HOME_DD
-# $user -> USER_DD
-# $home_root -> HOME_ROOT
-HOME_DD="/home/${USER_DD}/"
-HOME_ROOT="/root/"
 
 rcbash="${HOME_DD}.bashrc"
 rcbash_root="${HOME_ROOT}.bashrc"
@@ -180,7 +190,7 @@ rcbash_root="${HOME_ROOT}.bashrc"
 src () {
     file="${1:-.bashrc}"
     if [[ "$file" == ".bashrc" ]]; then
-        source "${HOME_DD}.bashrc" ;
+        source $rcbash;
     else
         file=$(ag --sh -l "$@" ${DIR_DDD})
         echo "source $file"
@@ -190,7 +200,8 @@ src () {
 vrc () {
     file="${1:-.bashrc}"
     if [[ "$file" == ".bashrc" ]]; then
-        vim "${DIR_DDD}bashrc.sh" "${rcbash}" ;
+        # vim "${DIR_DDD}bashrc.sh" "${rcbash}" ;
+        vim "${DIR_DDD}bashrc.sh" 
     else
         file=$(ag --sh -l "$@" ${DIR_DDD})
         echo "vim $file"
