@@ -156,10 +156,11 @@ elif [[ "$DD_SELECTOR" == "droid" ]]; then
             "alias/app/python.sh"
             "alias/app/tmux.sh"
             "alias/app/vim.sh"
-            "alias/app/android.sh"
 
         "alias/office.sh"
         "alias/connect.sh"
+	
+        "alias/android.sh"
     )
 
 elif [[ "$DD_SELECTOR" == "min" ]]; then
