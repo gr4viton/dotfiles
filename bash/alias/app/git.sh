@@ -268,11 +268,18 @@ git_remove_from_whole_history_file () {
     git filter-branch --index-filter "git rm --cached --ignore-unmatch $file_name" HEAD
 }
 
-git_remote_address_gitlab () {
+git_remote_url_ssh_gitlab () {
     # pass: gr4viton.gitlab.io
     # get: git@gitlab.com:gr4viton/gr4viton.gitlab.io.git
     echo "git@gitlab.com:gr4viton/$1.git"
 }
-git_remote_address_github () {
+git_remote_url_ssh_github () {
     echo "git@github.com:gr4viton/$1.git"
+}
+
+git_clone_gitlab () {
+    git clone $(git_remote_url_ssh_gitlab $1)
+}
+git_clone_github () {
+    git clone $(git_remote_url_ssh_github $1)
 }
