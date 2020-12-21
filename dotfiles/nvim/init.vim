@@ -209,35 +209,29 @@ endfunction
 
 map <F6> :call SaveEspWebrepl()<CR>
 
-:set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
+" Martin-kokos setup
+
+"" Options
+syntax on
+filetype plugin indent on
+set smartindent
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set laststatus=2
+set hlsearch
+
+set pastetoggle=<F2>
+
+" :set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 ":colorscheme slate
 :syntax on
 ":set number
 "
 
-" Trailing whitespaces
-highlight ExtraWhitespace ctermbg=red guibg=red
-
-function! <SID>StripTrailingWhitespaces()
-    let l = line(".")
-    let c = col(".")
-    %s/\s\+$//e
-    call cursor(l, c)
-endfun
-
-autocmd BufWritePre *.py :call <SID>StripTrailingWhitespaces()
-autocmd BufWritePre *.sh :call <SID>StripTrailingWhitespaces()
-autocmd BufWritePre *.md :call <SID>StripTrailingWhitespaces()
-autocmd BufWritePre *.yaml :call <SID>StripTrailingWhitespaces()
-autocmd BufWritePre *.yml :call <SID>StripTrailingWhitespaces()
-autocmd BufWritePre Dockerfile.* :call <SID>StripTrailingWhitespaces()
 
 " turn on line wrapping
 set wrap
-
-" automatically wrap gitcommit to 72 chars = coala ready
-au FileType gitcommit set tw=72
-autocmd FileType yaml,yml,md setlocal ts=2 sts=2 sw=2 expandtab
 
 function! HostnameIs(hostname)
     " matches hostname with passed string
@@ -253,21 +247,6 @@ nmap cr  <Plug>Coerce
 nmap gcr <Plug>Coerce
 
 "nnoremap <F6> :GundoToggle<CR>
-
-" Martin-kokos setup
-
-"" Options
-syntax on
-filetype plugin indent on
-set smartindent
-set tabstop=4
-set shiftwidth=4
-set expandtab
-set laststatus=2
-set hlsearch
-
-set pastetoggle=<F2>
-
 
 "" visual mode with mouse - allows selecting via mouse in one pane only
 " https://unix.stackexchange.com/a/50735
@@ -350,7 +329,9 @@ nnoremap gR gD:%s/<C-R>///gc<left><left><left>
 cabbrev afo :Autoformat
 let g:formatdef_black_120s = '"black -q -S -l 120 ".(&textwidth ? "-l".&textwidth : "")." -"'
 let g:formatdef_black_120 = '"black -q -l 120 ".(&textwidth ? "-l".&textwidth : "")." -"'
+let g:formatdef_black_79 = '"black -q -l 79 ".(&textwidth ? "-l".&textwidth : "")." -"'
 let g:formatters_python = ['black_120s']
+let g:formatters_python = ['black_79']
 
 com! Jsnp %!python -m json.tool
 com! Jsn %!jq .
@@ -502,16 +483,59 @@ nmap <F8> :TagbarToggle<CR>
 " esc delay
 set timeoutlen=1000 ttimeoutlen=0
 
+"
+" Trailing whitespaces
+highlight ExtraWhitespace ctermbg=red guibg=red
+
+function! <SID>StripTrailingWhitespaces()
+    let l = line(".")
+    let c = col(".")
+    %s/\s\+$//e
+    call cursor(l, c)
+endfun
+
+autocmd BufWritePre *.py :call <SID>StripTrailingWhitespaces()
+autocmd BufWritePre *.sh :call <SID>StripTrailingWhitespaces()
+autocmd BufWritePre *.md :call <SID>StripTrailingWhitespaces()
+autocmd BufWritePre *.yaml :call <SID>StripTrailingWhitespaces()
+autocmd BufWritePre *.yml :call <SID>StripTrailingWhitespaces()
+autocmd BufWritePre Dockerfile.* :call <SID>StripTrailingWhitespaces()
+" automatically wrap gitcommit to 72 chars = coala ready
+au FileType gitcommit set tw=72
+
+autocmd FileType yaml,yml,md,markdown setlocal ts=2 sts=2 sw=2 expandtab
+
+""""""""""""""""""""""""
+
+" typescript syntax highlighting
+" for expo development
+
+" dark red
+hi tsxTagName guifg=#E06C75
+hi tsxComponentName guifg=#E06C75
+hi tsxCloseComponentName guifg=#E06C75
+
+" orange
+hi tsxCloseString guifg=#F99575
+hi tsxCloseTag guifg=#F99575
+hi tsxCloseTagName guifg=#F99575
+hi tsxAttributeBraces guifg=#F99575
+hi tsxEqual guifg=#F99575
+
+" yellow
+hi tsxAttrib guifg=#F8BD7F cterm=italic
+
+" set filetypes as typescriptreact
+" autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript
+
+augroup SyntaxSettings
+    autocmd!
+    autocmd BufNewFile,BufRead *.tsx set filetype=typescript
+augroup END
+""""""""""""""""""""""""
+
 " load plug_coc.vim, searching it in "all vim places"
 " runtime plug_coc.vim
-
-
-
-
-
-
-
-
 
 
 

@@ -48,6 +48,13 @@ Plug 'tpope/vim-vinegar'
 Plug 'vim-scripts/indentpython.vim'
 Plug 'wincent/command-t'
 
+Plug 'gabrielelana/vim-markdown'
+
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
+Plug 'mxw/vim-jsx'
+Plug 'pangloss/vim-javascript'
+
 " Plug 'Valloric/YouCompleteMe'
 " Plug 'ambv/black'
 " Plug 'davidhalter/jedi-vim'

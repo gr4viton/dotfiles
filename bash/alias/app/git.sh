@@ -59,7 +59,7 @@ gic () {
     gci
 }
 
-gi_delete_merged () {
+git_delete_merged_branches () {
     git checkout master && git branch -d $(git branch --merged | tr '*' ' ' | tr 'master' ' ')
 }
 alias gloghash='git log --pretty=format:"%h %s"'
@@ -74,6 +74,9 @@ alias gir="git rebase"
 giri () {  # git rebase
     git rebase --interactive HEAD~$1
 }
+giri_root () {
+    git rebase -i --root
+}
 
 gir_conflict_files () {
     git diff --name-only --diff-filter=U
@@ -82,6 +85,9 @@ vigir_conflict_files () {
     vim $(git diff --name-only | uniq)
 }
 
+gir_onto_commit () {
+    git rebase --onto $1
+}
 vigit_rebase_conflict2 () {
     vimo $(gir_conflict_files)
 }
@@ -168,6 +174,12 @@ git_rebase_interactive_till_master() {
     git rebase -i $first_common_ancestor
 }
 
+git_override_remote_master_with_local_master () {
+    # be sure the remote master is not needed - as it will be overriden
+    git branch --set-upstream-to=origin/master master
+    gpf
+}
+
 # autocomplete
 git_autocomplete_rc="/usr/share/bash-completion/completions/git"
 if [[ -f $git_autocomplete_rc ]]; then
@@ -232,3 +244,35 @@ git_mv_snake_case_to_dash_case () {
     for file in ./* ; do git mv "$file" "$(echo $file|sed -e 's/_/-/g')"; done
 }
 
+git_remote_list () {
+    git remote -v
+}
+git_remote_add_origin () {
+    # remote_name = origin
+    git remote add origin $@
+    git_remote_list
+}
+git_remote_rm_origin () {
+    git_remote_list
+    echo "> removing origin"
+    git remote rm origin
+    git_remote_list
+}
+
+git_push_upstream_origin_master () {
+    git push --set-upstream origin master
+}
+
+git_remove_from_whole_history_file () {
+    file_name="${1:?file name needed}"
+    git filter-branch --index-filter "git rm --cached --ignore-unmatch $file_name" HEAD
+}
+
+git_remote_address_gitlab () {
+    # pass: gr4viton.gitlab.io
+    # get: git@gitlab.com:gr4viton/gr4viton.gitlab.io.git
+    echo "git@gitlab.com:gr4viton/$1.git"
+}
+git_remote_address_github () {
+    echo "git@github.com:gr4viton/$1.git"
+}

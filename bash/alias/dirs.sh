@@ -178,9 +178,14 @@ gr4_folderize "nasvideo" "${dirnas}video/"
 gr4_folderize "nashomes" "${dirnas}homes/"
 
 
+# projects
+gr4_folderize "component" "/srv/dd/component/"
+gr4_folderize "songiton" "${dcomponent}/songiton/fastapi"
+
 # project songinator
 dirsonginator='/srv/songinator/'
 alias cdsonginator='cd $dirsonginator'
+
 
 # project centroid
 dir_datagrab='/srv/centroid/datagrab/'

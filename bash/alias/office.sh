@@ -206,6 +206,9 @@ kchrome () {
     killit2 chromium-browser
     killit2 chrome
 }
+kkodi () {
+    killit2 kodi
+}
 alias kvlc="killit2 vlc"
 alias kpycharm="killit pycharm"
 alias kblender="killit blender"
@@ -298,6 +301,9 @@ env_clean_pip () {
 	unset PYPI_USERNAME
 }
 alias unset_pip_extras="env_clean_pip"
+pypi_unset_kiwi () {
+    env_clean_pip
+}
 
 difff () {
     diff -u $@ | ydiff -s
@@ -463,4 +469,52 @@ alias man="info"
 folderize "ddd" "$DIR_DDD"
 
 
+### web dev blog
+# pelican
 
+pelic_import () {
+    pim="/home/dd/venvs/gr4viton.gitlab.io-Gx8cGBko/bin/pelican-import"
+    # export="../export/all_gr4vitonamppow3r.WordPress.2020-02-28.xml"
+    export_file="../export/export.xml"
+    # pelican-import --wpfile ../export/all_gr4vitonamppow3r.WordPress.2020-02-28.xml --wp-attach -m markdown --dir-page --dir-cat -o export5
+    # out="export6"
+    out="content"
+
+    pictures="--wp-attach"  # if you want the pictures to be exported
+    pictures=""
+
+    # export SITEURL="http://www.gr4viton.cz"
+
+    # kwargs2="--dir-page --dir-cat --wp-custpost"
+    kwargs="--wpfile $export_file -m markdown -o $out $pictures"
+
+    # normal
+    pipenv run pelican-import $kwargs
+    # # with pudb
+    # pipenv run python -m pudb.run $pim $kwargs
+}
+
+pelic_build_ () {
+    pelican content
+}
+
+pelic_build () {
+    poetry run pelican content
+}
+pelic_run () {
+    echo "http://localhost:8000/public/"
+    poetry run pelican -lr --ignore-cache
+}
+
+pelic_run_ () {
+    echo "http://localhost:8000/public/"
+    pelican -lr --ignore-cache
+}
+
+pelic_plugins () {
+    poetry run pelican-plugins
+}
+
+pelic_install () {
+    poetry run python -m pip install $@
+}

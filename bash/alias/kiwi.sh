@@ -544,3 +544,13 @@ EOF
 okta_gitlab_login () {
     xdg-open $KIWI_OKTA_LOGIN_URL
 }
+
+pip_search_versions_kiwi () {
+    pip_search_versions $KW_PYPI_URL $@
+}
+pip_search_versions_pc () {
+    pip_search_versions_kiwi kw.provider-clients $@
+}
+pip_search_versions_pc_10 () {
+    pip_search_versions_pc 10
+}

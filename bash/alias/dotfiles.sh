@@ -53,6 +53,7 @@ init_dot () {
 DIR_DDDOT="${DIR_DDD}/dotfiles/"
 
 init_dot_monitors () {
+    # if the update of the setup is needed - use this: https://askubuntu.com/a/716677
     app_name="linux_monitors"
     config_
     init_dot $app_name \

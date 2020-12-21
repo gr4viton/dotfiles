@@ -153,3 +153,45 @@ alias black120_str="black -l 120 -S"
 
 alias blacks="black120_str"
 
+_pip_parse_versions () {
+    # get stderr out from pip install versions (with legacy-resolver
+    # and output only the package versions one per line
+    PYSRC=$(cat <<EOF
+import click
+
+@click.command()
+@click.argument("out")
+@click.argument("last_count", type=int, required=False)
+def main(out, last_count):
+    lines = out.splitlines()
+    version_line = None
+    txt = "Could not find a version"
+    for line in lines:
+        if txt in line:
+            version_line = line
+            break
+    txt = "(from versions: "
+    # remove trailing ")"
+    versions_txt = version_line[version_line.index(txt)+len(txt):-1]
+    versions = versions_txt.split(", ")
+    if last_count:
+        versions = versions[-last_count:]
+    for ver in versions:
+        print(ver)
+
+main()
+EOF
+)
+    echo_py_src "$PYSRC" "$@"
+}
+
+pip_search_versions () {
+    extra_index_url=$1
+    package=$2
+    last_count="${3:-0}"
+    # output versions of a project one per line
+    # the pip search is broken :(
+    pip_stderr=$(pip install $package==BAD_PIP --use-deprecated=legacy-resolver --extra-index-url $extra_index_url 2>& 1 > /dev/null)
+    _pip_parse_versions "$pip_stderr" $last_count
+}
+

@@ -37,12 +37,12 @@ ssh_nas () {
 	ssh gr4viton@192.168.0.118
 }
 ssh_rpi () {
-	ssh pi@192.168.0.110
+	ssh pi@192.168.0.150
 	# ssh pi@192.168.0.105
 }
 
 ssh_s8 () {
-    ssh 192.168.0.108 -p 8022
+    ssh 192.168.0.120 -p 8022
 }
 
 ssh_ros () {
@@ -202,7 +202,7 @@ rsync_to_s8 () {
     # last=${@:$#} # last parameter
     last="${!#}"   # last param
     # other=${*%${!#}} # all parameters except the last - works without bash
-    rsync $_basic_rsync_kwargs "${@:1:$#-1}" 192.168.0.108:$out -e 'ssh -p 8022' --rsync-path=/data/data/com.termux/files/usr/bin/rsync
+    rsync $_basic_rsync_kwargs "${@:1:$#-1}" 192.168.0.120:$out -e 'ssh -p 8022' --rsync-path=/data/data/com.termux/files/usr/bin/rsync
 }
 
 # nas
@@ -235,6 +235,27 @@ else
 fi
 }
 
+rsync_from_nas () {
+    last="${@:$#}" # last parameter
+    other="${*%${!#}}" # all parameters except the last
+    remote_files="$other"
+    local_dir="$last"
+
+    set -x
+    rsync $_basic_rsync_kwargs "gr4viton@192.168.0.118:$remote_files" $local_dir --rsync-path=/opt/bin/rsync
+    set +x
+}
+
+
+rsync_from_rpi_favourites () {
+    remote_files="/home/pi/.kodi/userdata/favourites.xml"
+    local_dir="/home/dd/.kodi/userdata/"
+
+    set -x
+    rsync $_basic_rsync_kwargs "pi@192.168.0.150:$remote_files" $local_dir
+    set +x
+}
+
 rsync_to_nas_zip_it () {
     nas_rsync_cp -C "$@"
 }
@@ -250,6 +271,10 @@ rsync_dnz () {
 
 alias rsync_progress="rsync -a --info=progress2"
 
+rsync_basic () {
+    rsync $_basic_rsync_kwargs $@
+}
+
 
 rsync_to_l5401 () {
     last=${@:$#} # last parameter
@@ -257,7 +282,7 @@ rsync_to_l5401 () {
     in=$other
     out=$last
 
-    address="dd@192.168.0.110"
+    address="dd@192.168.0.199"
     # address='dd@[fe80::65bd:f19:c882:8b95%enx00e04c41b085]'
     # rsync -a --safe-links --info=progress2 $in dd@192.168.0.110:$out # --rsync-path=/opt/bin/rsync
     # rsync -va --ignore-existing --safe-links --info=progress2 -6  $in 'dd@[fe80::65bd:f19:c882:8b95%enx00e04c41b085]':$out # --rsync-path=/opt/bin/rsync
@@ -276,4 +301,18 @@ rsync_to_l5401 () {
 
 ssh_l5401 () {
     ssh -6 dd@fe80::65bd:f19:c882:8b95%enx00e04c41b085
+}
+
+mount_camera () {
+	gphotofs /media/camera/
+}
+umount_camera () {
+	gphotofs -u /media/camera/
+}
+
+mount_android () {
+	go-mtpfs /media/android/
+}
+umount_android () {
+	go-mtpfs -u /media/android/
 }

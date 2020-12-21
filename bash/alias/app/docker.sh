@@ -201,10 +201,19 @@ do_cat_build () {
     do_build $file ${@:2}
 }
 
-do_redis_flush () {
-    image_name=$1
-    container_id=$(docker_get_container_id $1)
-    docker exec -it $container_id redis-cli FLUSHALL
+do_redis_cli () {
+    image_name=redis
+    container_id=$(docker_get_container_id $image_name)
+    docker exec -it $container_id redis-cli "$@"
+}
+
+
+do_redis_flush_all () {
+    do_redis_cli FLUSHALL
+}
+
+do_redis_keys () {
+    do_redis_cli "KEYS *"
 }
 
 
