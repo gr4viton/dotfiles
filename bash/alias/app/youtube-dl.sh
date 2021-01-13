@@ -1,4 +1,4 @@
-alias youtube-dl="/srv/dd/app/youtube-dl/bin/youtube-dl"
+# alias youtube-dl="/srv/dd/app/youtube-dl/bin/youtube-dl"
 
 dirydlb="$HOME/DATA/DNz/batch.txt"
 

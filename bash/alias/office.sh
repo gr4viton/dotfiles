@@ -391,6 +391,19 @@ suspend_now () {
 
 alias sus="suspend_now"
 
+date_seconds () {
+    date --utc --rfc-3339=seconds
+}
+
+file_uptime_log="$dirddd/uptime.log"
+
+reboot_now () {
+    echo "$(date_seconds) | $(uptime -p) | $(uptime)" >> $file_uptime_log
+    echo "> logged uptime to $file_uptime_log"
+    echo "> gonna reboot now"
+    sudo reboot now
+}
+
 treep () {
     # tree with python cache folder ignored
     tree -I '__pycache__' $@
@@ -517,4 +530,86 @@ pelic_plugins () {
 
 pelic_install () {
     poetry run python -m pip install $@
+}
+
+kde_create_and_use_local_theme_from_breezedark () {
+    theme_name_current="org.kde.breezedark.desktop"
+    theme_title_current="Breeze"
+
+    kde_create_and_use_local_theme_ $theme_name_current $theme_title_current
+}
+
+kde_get_themes_local_folder () {
+    echo "/home/${USER}/.local/share/plasma/look-and-feel/"
+}
+
+kde_get_theme_local_folder () {
+    theme_name="${1:-org.kde.breeze_dd.desktop}"
+    echo "$(kde_get_themes_local_folder)${theme_name}"
+}
+
+kde_create_and_use_local_theme_ () {
+    theme_name_current="${1:-org.kde.breezedark.desktop}"
+    theme_title_current="${2:-Breeze}"  # not full title because in other languages the dark is not "dark"
+
+    theme_name_modified="${theme_name_current}_${USER}"
+    theme_title_modified="${theme_title_current}_${USER}"
+    dir_theme_os="/usr/share/plasma/look-and-feel/${theme_name_current}/"
+    dir_theme_local=$(kde_get_theme_local_folder $theme_name_modified)
+
+    echo "> creating new local theme ($theme_name_modified) folder ${dir_theme_local}"
+    mkdir -p $dir_theme_local
+    rm -df $dir_theme_local
+
+    echo "> copy the global plasma theme to the new location"
+    cp $dir_theme_os $dir_theme_local
+    ll $dir_theme_local
+
+    echo "> rename the theme in metadata files"
+    PYSRC=$(cat <<EOF
+import click
+import os
+
+@click.command()
+@click.argument("word_old")
+@click.argument("word_new")
+@click.argument("dir_theme_local")
+def main(**kwargs):
+    word_old = kwargs["word_old"]
+    word_new = kwargs["word_new"]
+    folder = kwargs["dir_theme_local"]
+    fnames = ["metadata.json", "metadata.desktop"]
+
+    for fname in fnames:
+        fpath = os.path.join(folder, fname)
+
+        with open(fpath, "r") as fil:
+            dat = fil.read()
+
+        dat = dat.replace(word_new, word_old)  # to be indempotent
+        dat = dat.replace(word_old, word_new)
+
+        with open(fpath, "w") as fil:
+            fil.write(dat)
+
+        print(f"> changed {word_old} to {word_new} in {fname}")
+
+main()
+EOF
+)
+
+
+    echo_py_src "$PYSRC" $theme_title_current $theme_title_modified $dir_theme_local
+    echo_py_src "$PYSRC" $theme_name_current $theme_name_modified $dir_theme_local
+
+    # echo "> selecting modified theme $theme_name_modified"
+    # lookandfeeltool -a $theme_name_modified  # usable only for global themes :big_sad:
+    echo "> now select the modified theme via the plasma menus"
+}
+
+kde_edit_local_theme () {
+    theme_name=$1
+    dir_theme_local=$(kde_get_theme_local_folder $theme_name)
+    cd $dir_theme_local
+    viss
 }

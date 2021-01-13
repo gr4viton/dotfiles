@@ -280,6 +280,7 @@ git_remote_url_ssh_github () {
 git_clone_gitlab () {
     git clone $(git_remote_url_ssh_gitlab $1)
 }
+
 git_clone_github () {
     git clone $(git_remote_url_ssh_github $1)
 }

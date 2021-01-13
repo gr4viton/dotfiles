@@ -15,3 +15,9 @@ apt_installed () {
     apt list --installed 2>/dev/null | grep $1
 }
 
+
+ubuntu_version () {
+    set -x
+    lsb_release -a
+    set +x
+}

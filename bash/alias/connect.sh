@@ -42,6 +42,8 @@ ssh_rpi () {
 }
 
 ssh_s8 () {
+    # p 8022 default termux ssh port
+    # https://wiki.termux.com/wiki/Remote_Access
     ssh 192.168.0.120 -p 8022
 }
 
