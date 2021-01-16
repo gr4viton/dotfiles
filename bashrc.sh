@@ -47,7 +47,9 @@ elif [[ "$HOSTNAME" == "ubuntu" || "$HOSTNAME" == "rosbot" ]]; then
 elif [[ "$HOSTNAME" == "localhost" ]]; then
     DD_SELECTOR="droid"
     USER_DD="u0_a304"
-
+elif [[ "$HOSTNAME" == "gr4retropie" ]]; then
+    DD_SELECTOR="retro_kodi"
+    USER_DD="pi"
 else
     DD_SELECTOR="full"
     USER_DD="dd"
@@ -161,6 +163,25 @@ elif [[ "$DD_SELECTOR" == "droid" ]]; then
         "alias/connect.sh"
 	
         "alias/android.sh"
+    )
+
+elif [[ "$DD_SELECTOR" == "retro_kodi" ]]; then
+
+    scripts=(
+        "ps1.sh"
+        "basic.sh"
+
+            # basic
+            "alias/app/ag.sh"
+            "alias/app/git.sh"
+            "alias/app/python.sh"
+            "alias/app/tmux.sh"
+            "alias/app/vim.sh"
+
+        "alias/office.sh"
+        "alias/connect.sh"
+	
+        "alias/retropi.sh"
     )
 
 elif [[ "$DD_SELECTOR" == "min" ]]; then
