@@ -544,17 +544,30 @@ kde_get_themes_local_folder () {
 }
 
 kde_get_theme_local_folder () {
-    theme_name="${1:-org.kde.breeze_dd.desktop}"
+    theme_name="${1:-org.kde.breezedark.desktop_dd}"
     echo "$(kde_get_themes_local_folder)${theme_name}"
+}
+cd_kde_theme_local () {
+    theme_name=$1
+    dir_theme_local=$(kde_get_theme_local_folder $theme_name)
+    echo "$dir_theme_local"
+    cd $dir_theme_local
+
+}
+dir_kde_theme_global="/usr/share/plasma/look-and-feel"
+
+cd_kde_theme_global () {
+    cd $dir_kde_theme_global
 }
 
 kde_create_and_use_local_theme_ () {
+    # viz https://www.reddit.com/r/kde/comments/9j57z2/fixing_the_awful_volumebrightness_osd_size/
     theme_name_current="${1:-org.kde.breezedark.desktop}"
     theme_title_current="${2:-Breeze}"  # not full title because in other languages the dark is not "dark"
 
     theme_name_modified="${theme_name_current}_${USER}"
     theme_title_modified="${theme_title_current}_${USER}"
-    dir_theme_os="/usr/share/plasma/look-and-feel/${theme_name_current}/"
+    dir_theme_os="${dir_kde_theme_global}/${theme_name_current}/"
     dir_theme_local=$(kde_get_theme_local_folder $theme_name_modified)
 
     echo "> creating new local theme ($theme_name_modified) folder ${dir_theme_local}"
@@ -607,9 +620,8 @@ EOF
     echo "> now select the modified theme via the plasma menus"
 }
 
+
 kde_edit_local_theme () {
-    theme_name=$1
-    dir_theme_local=$(kde_get_theme_local_folder $theme_name)
-    cd $dir_theme_local
+    cd_kde_theme_local
     viss
 }

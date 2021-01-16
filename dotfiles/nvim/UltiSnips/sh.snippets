@@ -1,0 +1,20 @@
+snippet pysh "python echo from bash" b
+echo_py_example () {
+    # echoes the first argument + does not accept others
+    # $ echo_py_example 'ahoj'
+    PYSRC=$(cat <<EOF
+import click
+
+@click.command()
+@click.argument("arg1")
+def main(**kwargs):
+    print(kwargs["arg1"])
+
+main()
+EOF
+)
+    echo_py_src "$PYSRC" $@
+}
+
+endsnippet
+
