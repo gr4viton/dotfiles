@@ -39,24 +39,6 @@ ssh_l5401 () {
     ssh -6 dd@fe80::65bd:f19:c882:8b95%enx00e04c41b085
 }
 
-ssh_nas () {
-	ssh gr4viton@192.168.0.118
-}
-ssh_rpi () {
-	ssh pi@192.168.0.150
-	# ssh pi@192.168.0.105
-}
-
-ssh_s8 () {
-    # p 8022 default termux ssh port
-    # https://wiki.termux.com/wiki/Remote_Access
-    ssh 192.168.0.120 -p 8022
-}
-
-ssh_ros () {
-    ssh ubuntu@192.168.0.190
-}
-
 mosh_rpi () {
 	mosh pi@192.168.0.105
 }

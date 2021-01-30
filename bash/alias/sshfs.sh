@@ -115,4 +115,3 @@ sshfs_omatic () {
 sshfs_omatic "s8" "$con_userip_s8" "/mnt/sshfs/s8"
 sshfs_omatic "retrokodi" "$con_userip_retrokodi" "/mnt/sshfs/retrokodi"
 
-

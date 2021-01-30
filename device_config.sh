@@ -52,10 +52,7 @@ device_omatic () {
 
 
 # retrokodi - rpi with retropie and kodi
-device_omatic "retrokodi" "pi" "192.168.0.150" "" "/mnt/sshfs/retrokodi"
-
-# s8 = android samsung s8
-device_omatic "s8" "u0_a304" "192.168.0.120"
+device_omatic "retrokodi" "pi" "192.168.0.150"
 
 # ros = rpi with ROS
 device_omatic "ros" "pi" "192.168.0.190"
@@ -65,3 +62,10 @@ device_omatic "nas" "gr4viton" "192.168.0.118"
 
 # dell54 - dell l5401
 device_omatic "dell54" "dd" "192.168.0.199"
+
+# smartphones
+  # p 8022 default termux ssh port
+  # https://wiki.termux.com/wiki/Remote_Access
+
+## s8 = android samsung s8
+device_omatic "s8" "u0_a304" "192.168.0.120" "-p 8022"

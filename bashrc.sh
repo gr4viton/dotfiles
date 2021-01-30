@@ -38,7 +38,9 @@ loadit_script() {
 
 HOSTNAME=$(hostname)
 
-source ./device_config.sh
+echo "${DIR_DDD}/device_config.sh"
+loadit "Sourcing ${DIR_DDD}/device_config.sh"
+
 
 if [[ "$HOSTNAME" == "dddell-latitude-5401" ]]; then
     DD_SELECTOR="full"
