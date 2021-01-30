@@ -85,6 +85,8 @@ folderize () {
 
 alias gr4_folderize="folderize"
 
+folderize "ddd" "$DIR_DDD"
+
 # MV = move
 
 gr4_mkdir_move () {
@@ -395,7 +397,7 @@ date_seconds () {
     date --utc --rfc-3339=seconds
 }
 
-file_uptime_log="$dirddd/uptime.log"
+file_uptime_log="${dirddd}/uptime.log"
 
 reboot_now () {
     echo "$(date_seconds) | $(uptime -p) | $(uptime)" >> $file_uptime_log
@@ -478,8 +480,6 @@ alias syncall='gr4log_sync'
 
 alias man="info"
 
-
-folderize "ddd" "$DIR_DDD"
 
 
 ### web dev blog

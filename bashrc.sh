@@ -38,6 +38,8 @@ loadit_script() {
 
 HOSTNAME=$(hostname)
 
+source ./device_config.sh
+
 if [[ "$HOSTNAME" == "dddell-latitude-5401" ]]; then
     DD_SELECTOR="full"
     USER_DD="dd"
@@ -46,10 +48,10 @@ elif [[ "$HOSTNAME" == "ubuntu" || "$HOSTNAME" == "rosbot" ]]; then
     USER_DD="ubuntu"
 elif [[ "$HOSTNAME" == "localhost" ]]; then
     DD_SELECTOR="droid"
-    USER_DD="u0_a304"
+    USER_DD=$con_user_s8
 elif [[ "$HOSTNAME" == "gr4retropie" ]]; then
     DD_SELECTOR="retro_kodi"
-    USER_DD="pi"
+    USER_DD=$con_user_rpi
 else
     DD_SELECTOR="full"
     USER_DD="dd"
@@ -112,6 +114,9 @@ if [[ "$DD_SELECTOR" == "full" ]]; then
         "alias/esp32.sh"
         "alias/hw.sh"
         "alias/connect.sh"
+        "alias/sshfs.sh"
+        "alias/ssh.sh"
+        "alias/ftp.sh"
         "alias/dell.sh"
         "alias/dirs.sh"
         "alias/kiwi.sh"
@@ -140,6 +145,9 @@ elif [[ "$DD_SELECTOR" == "ros" ]]; then
 
         "alias/office.sh"
         "alias/connect.sh"
+        "alias/sshfs.sh"
+        "alias/ssh.sh"
+        "alias/ftp.sh"
 
             # rosbot
             "alias/project/ros_bot.sh"
@@ -161,7 +169,10 @@ elif [[ "$DD_SELECTOR" == "droid" ]]; then
 
         "alias/office.sh"
         "alias/connect.sh"
-	
+        "alias/sshfs.sh"
+        "alias/ssh.sh"
+        "alias/ftp.sh"
+
         "alias/android.sh"
     )
 
@@ -180,7 +191,10 @@ elif [[ "$DD_SELECTOR" == "retro_kodi" ]]; then
 
         "alias/office.sh"
         "alias/connect.sh"
-	
+        "alias/sshfs.sh"
+        "alias/ssh.sh"
+        "alias/ftp.sh"
+
         "alias/retropi.sh"
     )
 
@@ -200,6 +214,9 @@ elif [[ "$DD_SELECTOR" == "min" ]]; then
 
         "alias/office.sh"
         "alias/connect.sh"
+        "alias/sshfs.sh"
+        "alias/ssh.sh"
+        "alias/ftp.sh"
     )
 
 fi
@@ -241,7 +258,7 @@ vrc () {
     file="${1:-.bashrc}"
     if [[ "$file" == ".bashrc" ]]; then
         # vim "${DIR_DDD}bashrc.sh" "${rcbash}" ;
-        vim "${DIR_DDD}bashrc.sh" 
+        vim "${DIR_DDD}bashrc.sh"
     else
         file=$(ag --sh -l "$@" ${DIR_DDD})
         echo "vim $file"

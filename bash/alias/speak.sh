@@ -40,3 +40,8 @@ isay() {
     say I say
     say $*
 }
+
+
+aplay_test () {
+    aplay /srv/dd/component/zizala/data/dd/bumbpa__dd.wav
+}
