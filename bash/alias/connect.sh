@@ -145,11 +145,15 @@ rsync_from_nas () {
 
 rsync_from_rpi_favourites () {
     remote_files="/home/pi/.kodi/userdata/favourites.xml"
-    local_dir="/home/dd/.kodi/userdata/"
+    local_dir=$1
 
     set -x
     rsync $_basic_rsync_kwargs "pi@192.168.0.150:$remote_files" $local_dir
     set +x
+}
+rsync_from_rpi_favourites_to_linux () {
+    local_dir="/home/dd/.kodi/userdata/"
+    rsync_from_rpi_favourites $local_dir
 }
 
 rsync_to_nas_zip_it () {
