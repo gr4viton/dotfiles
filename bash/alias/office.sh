@@ -81,6 +81,7 @@ folderize () {
     export d${abbrev}="$folder"
     which > /dev/null 2>&1 cd${abbrev} || alias cd${abbrev}="cd \"$folder\""
     which > /dev/null 2>&1 ls${abbrev} || alias lll${abbrev}o="lla \"$folder\""
+
 }
 
 alias gr4_folderize="folderize"

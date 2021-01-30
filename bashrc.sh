@@ -38,8 +38,8 @@ loadit_script() {
 
 HOSTNAME=$(hostname)
 
-echo "${DIR_DDD}/device_config.sh"
-loadit "Sourcing ${DIR_DDD}/device_config.sh"
+echo "Sourcing ${DIR_DDD}/device_config.sh"
+loadit "${DIR_DDD}/device_config.sh"
 
 
 if [[ "$HOSTNAME" == "dddell-latitude-5401" ]]; then
@@ -50,7 +50,10 @@ elif [[ "$HOSTNAME" == "ubuntu" || "$HOSTNAME" == "rosbot" ]]; then
     USER_DD="ubuntu"
 elif [[ "$HOSTNAME" == "localhost" ]]; then
     DD_SELECTOR="droid"
+    # add decision to distinguish between androids
+    # https://www.reddit.com/r/termux/comments/ctl5gj/how_to_uniquely_identify_a_termux_device/
     USER_DD=$con_user_s8
+    USER_DD=$con_user_s20
 elif [[ "$HOSTNAME" == "gr4retropie" ]]; then
     DD_SELECTOR="retro_kodi"
     USER_DD=$con_user_rpi

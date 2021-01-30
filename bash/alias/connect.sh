@@ -73,6 +73,34 @@ rsync_to_s8 () {
     rsync $_basic_rsync_kwargs "${@:1:$#-1}" 192.168.0.120:$out -e 'ssh -p 8022' --rsync-path=/data/data/com.termux/files/usr/bin/rsync
 }
 
+rsync_dir_from_s8 () {
+    remote_path="$1"
+    local_path="$2"
+
+    rsync -a $_basic_rsync_kwargs $con_userip_s8:$remote_path $local_path -e 'ssh -p 8022' --rsync-path=/data/data/com.termux/files/usr/bin/rsync
+}
+# con_rsyncpath_s8="/data/data/com.termux/files/usr/bin/rsync"
+dev_s8_dhome="/data/data/com.termux/files/home/"
+dev_s8_dall="${dev_s8_dhome}/storage/shared/_ALL"
+
+backup_dir_all_from_s8 () { rsync_dir_from_s8 "${dev_s8_dall}" "$HOME/DATA/s8/"; }
+
+rsync_basic () {
+    set -x
+    rsync $_basic_rsync_kwargs "$@"
+    set +x
+}
+
+rsync_from_s8__ () {
+    local_path=$1
+    remote_path=$2
+    rsyncpath_cmd="--rsync-path=${con_rsyncpath_s8}"
+    rsync_basic $con_userpi_s8:$remote_path $local_path -e $(echo "ssh -p $con_sshport_s8") $rsyncpath_cmd
+}
+
+# rsync_from_s8_home () { rsync_from_s8 $1 "${dev_s8_dhome}${2}"; }
+# rsync_from_s8_all () { rsync_from_s8 $1 "${dev_s8_dall}${2}"; }
+
 # nas
 rsync_to_nas() {
 __usage="

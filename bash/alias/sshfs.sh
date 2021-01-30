@@ -33,17 +33,24 @@ done
 
 sshfs_mount () {
     user_ip=${1:?user_ip}
-    mnt_path=${2:?mount_path}
+    remote_path="${2:?remote_path}"
+    mnt_path=${3:?mount_path}
+    port="${4:-}"
+
     if [ ! -d $mnt_path ]; then
         sudo mkdir -p $mnt_path
     fi
     echo ">>> mounting"
-    echo "   remote filesystem: $user_ip"
+    echo "   remote filesystem: $user_ip $port"
     echo "        via sshfs to: $mnt_path"
+
+    port_cmd="-p $port"
+    [ -z "$port" ] && port_cmd=""
+
 	sshfs_options="-o allow_other,default_permissions,IdentityFile=~/.ssh/id_rsa"
 	sshfs_options="reconnect,ServerAliveInterval=15,ServerAliveCountMax=3,allow_other,default_permissions,IdentityFile=~/.ssh/id_rsa"
 
-    sudo sshfs -o $sshfs_options $user_ip:/ $mnt_path || return
+    sudo sshfs -o $sshfs_options $user_ip:$remote_path $mnt_path $port_cmd || return
 	# sshfs_post_mount $key
 }
 
@@ -73,8 +80,8 @@ sshfs_post_mount () {
 }
 
 sshfs_umount () {
-    key=${1:?key in the_config.connect.ssh}
-    mnt_path=$(sshfs_mount_path $key)
+    # key=${1:?key in the_config.connect.ssh}
+    # mnt_path=$(sshfs_mount_path $key)
     sudo umount $mnt_path
 }
 
@@ -97,13 +104,16 @@ sshfs_mount_retrokodi_lubricus () {
 sshfs_omatic () {
     local name="$1"
     local userip="$2"
-    local mount_path="$3"
+    local remote_path="$3"
+    local mount_path="$4"
+    local port="$5"
+    local info="$6"
     shift
     shift
     shift
 
     # sshfs filesystem
-    which > /dev/null 2>&1 ${name}_mount_sshfs || alias ${name}_mount_sshfs="sshfs_mount \"$userip\" $mount_path"
+    which > /dev/null 2>&1 ${name}_mount_sshfs || alias ${name}_mount_sshfs="echo $info; sshfs_mount $userip $remote_path $mount_path $port"
     which > /dev/null 2>&1 ${name}_umount_sshfs || alias ${name}_umount_sshfs="sshfs_umount $mount_path"
 
     # post mount
@@ -111,7 +121,8 @@ sshfs_omatic () {
     # post umount
     # unalias folderize after umount
 }
+
 # LOCAL CONFIG
-sshfs_omatic "s8" "$con_userip_s8" "/mnt/sshfs/s8"
-sshfs_omatic "retrokodi" "$con_userip_retrokodi" "/mnt/sshfs/retrokodi"
+sshfs_omatic "s8" "$con_userip_s8" "/data/data/com.termux/files/home/" "/mnt/sshfs/s8" "$con_sshport_s8" "be sure the device is running ssh daemon - in termux run 'sshd'"
+sshfs_omatic "retrokodi" "$con_userip_retrokodi" "/" "/mnt/sshfs/retrokodi"
 

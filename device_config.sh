@@ -7,8 +7,7 @@ device_omatic () {
     # $1 = abbreviation used for the device aliases
     # $2 = device username
     # $3 = device ip
-    # $4 = ssh_params
-    # $5 = sshfs_params
+    # $4 = ssh_port
     #
     # con_ip_{name}
     # con_user_{name}
@@ -26,6 +25,7 @@ device_omatic () {
     local name="${1:?Device name abbreviation}"
     local user="${2:?Device username}"
     local ip="${3:?Device ip address}"
+    local port="${4:-}"
     shift
     shift
     shift
@@ -33,21 +33,19 @@ device_omatic () {
     export con_ip_${name}="$ip"
     export con_user_${name}="$user"
 
-    local userip="${user}@{$ip}"
+    local userip="${user}@${ip}"
     export con_userip_${name}="$userip"
+    export con_sshport_${name}="$port"
+
+    port_cmd="-p $port"
+    [ -z "$port" ] && port_cmd=""
 
     # ssh connection
-    # ssh_params="-p 8022"
-    which > /dev/null 2>&1 ssh_${name} || alias ssh_${name}="ssh \"$userip\" \"$@\""
+    # ssh_params example "-p 8022"
+    which > /dev/null 2>&1 ssh_${name} || alias ssh_${name}="ssh \"$userip\" \"$port_cmd\" \"$@\""
 
     # mosh ssh connection
     # which > /dev/null 2>&1 mosh_${name} || alias ssh_${name}="ssh \"$userip\" $ssh_params"
-
-    #export dir${name}="$folder"
-    #export d${name}="$folder"
-    ##
-    #which > /dev/null 2>&1 cd${name} || alias cd${name}="cd \"$folder\""
-    #which > /dev/null 2>&1 ls${name} || alias lll${name}o="lla \"$folder\""
 }
 
 
@@ -68,4 +66,9 @@ device_omatic "dell54" "dd" "192.168.0.199"
   # https://wiki.termux.com/wiki/Remote_Access
 
 ## s8 = android samsung s8
-device_omatic "s8" "u0_a304" "192.168.0.120" "-p 8022"
+# device_omatic "s8" "u0_a304" "192.168.0.120" "8022"
+# in Pv
+device_omatic "s8" "u0_a304" "192.168.0.110" "8022"
+
+## s20 = android samsung s20 fe
+device_omatic "s20" "u0_a396" "192.168.0.124" "8022"
