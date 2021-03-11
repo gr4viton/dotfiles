@@ -87,6 +87,14 @@ init_dot_nvim () {
 
 }
 
+init_dot_autokey () {
+    app_name="autokey"
+    config_dir="${HOME}/.config/autokey/"
+    init_dot $app_name \
+        "${config_dir}/data/gr4viton" \
+        "${DIR_DDDOT}/autokey_data/data/gr4viton"
+}
+
 init_dot_tmux () {
     app_name="tmux"
     config_dir="${HOME}"
@@ -110,12 +118,6 @@ _init_dot_urxvt () {
 
     urxvt_to2=$dotfiles"urxvt/.Xdefaults"
     urxvt_from2=$home".Xdefaults"
-}
-
-_init_dot_autokey () {
-    echo "NOT IMPLEMENTED YET"
-    autokey_sys="${home}.config/autokey/data/"
-    autokey_my="${dotfiles}/autokey_data/"
 }
 
 _init_dot_mate_panel () {
