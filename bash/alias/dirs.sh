@@ -100,6 +100,9 @@ gr4_folderize_kiwi $dirda "bb" "black-box" "" "" "" "" "kw/black_box"
 gr4_folderize_kiwi $dirda "cron" "cronos" "" "" "" "" "kw/cronos"
 # gr4_folderize "bb" "${dirbb}/proton"
 
+# kw.refunderino
+gr4_folderize_kiwi $dirda "refr" "refunderino" "" "" "" "" "kw/crefunderino"
+
 # kw.configuru
 gr4_folderize_kiwi $dirda "conf" "configuru" "" "" "" "" "kw/configuru"
 
@@ -200,6 +203,22 @@ export SIGROK_FIRMWARE_DIR='/home/dd/DATA/dev/log_analyzer/fw'
 # mount windows C, D
 alias cdC='cd /mnt/C'
 alias cdD='cd /mnt/D'
+
+
+# sweethome3d
+folderize "sh3d" "/home/dd/DATA/barak/model/sweethome3d/"
+
+sh3d_to_endora () {
+    # not tested on creation
+    echo "> mounting ftp endora"
+    mount_ftp_endora_gr4viton
+    folder="${1?:subfolder in export folder}"
+    ls $folder
+    whole_path="~/DATA/barak/model/sweethome3d/export/$folder/krajni/"
+    mounted_ftp_path="/media/ftp/gr4viton.cz/gr4viton.cz/web/ALL/barak/export"
+    echo "> gonna copy export from $whole_path to $mounted_ftp_path"
+    cp $whole_path $mounted_ftp_path
+}
 
 
 # gr4log

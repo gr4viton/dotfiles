@@ -175,12 +175,21 @@ or this
 $ curl -fsSL https://get.docker.com -o get-docker.sh
 $ sudo sh get-docker.sh
 # after install you need to add your user to docker user group
-$ sudo usermod -aG docker your-user
+$ sudo usermod -aG docker <your-user>
 
 
 to remove
 $ sudo apt-get purge docker-ce
 $ sudo rm -rf /var/lib/docker
+
+
+# if you get
+# docker-credential-secretservice not installed or not available in PATH
+# on docker build
+# you can fix it via
+$ sudo apt install golang-docker-credential-helpers
+# viz https://github.com/pgRouting/docker-pgrouting/issues/11
+
 EOF
 )
 

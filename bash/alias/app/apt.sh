@@ -1,3 +1,4 @@
+# __apt__
 # apt
 
 # https://askubuntu.com/questions/5980/how-do-i-free-up-disk-space
@@ -20,4 +21,18 @@ ubuntu_version () {
     set -x
     lsb_release -a
     set +x
+}
+
+apt_history_full () {
+    tac /var/log/apt/history.log
+}
+
+apt_history () {
+    lines="${1:-100}"
+    txt=$(apt_history_full) | grep Install
+    if [[ ! -z $lines ]]; then
+        echo "$txt" | head --lines=$lines
+    else
+        echo "$txt"
+    fi
 }

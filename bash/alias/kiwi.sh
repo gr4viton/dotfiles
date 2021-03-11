@@ -103,7 +103,7 @@ pc_reqs_bump () {
 
 do_ext_build () {
     extension=${1:?extension with a dot, eg. .yaml or .dev.yaml}
-    do_build "docker-compose${extension}"
+    _do_build "docker-compose${extension}"
 }
 
 
@@ -134,9 +134,9 @@ do_ext_up () {
 bb_dcf_dev='docker-compose.dev.yml'
 bb_dcf_pudb='docker-compose.pudb.yml'
 
-bb_do_dev_build () { do_build $bb_dcf_dev ; }
+bb_do_dev_build () { _do_build $bb_dcf_dev ; }
 bb_do_dev_up () { do_up $bb_dcf_dev ; }
-bb_do_pudb_build () { do_build $bb_dcf_pudb ; }
+bb_do_pudb_build () { _do_build $bb_dcf_pudb ; }
 bb_do_pudb_up () { do_up $bb_dcf_pudb ; }
 
 do_pudb_yml_build () { do_ext_build ".pudb.yml" ; }

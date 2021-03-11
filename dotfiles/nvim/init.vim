@@ -177,6 +177,27 @@ nnoremap <A-J> <C-W><down>
 nnoremap <A-L> <C-W><right>
 nnoremap <A-H> <C-W><left>
 
+
+" clipboard
+"    Set it to unnamed to use * (PRIMARY, on select)
+"    Set it to unnamedplus to use + (CLIPBOARD, ^C)
+" viz https://vi.stackexchange.com/a/96
+" set clipboard "unnamedplus"
+
+" let g:clipboard = {
+"       \   'name': 'myClipboard',
+"       \   'copy': {
+"       \      '+': 'tmux load-buffer -',
+"       \      '*': 'tmux load-buffer -',
+"       \    },
+"       \   'paste': {
+"       \      '+': 'tmux save-buffer -',
+"       \      '*': 'tmux save-buffer -',
+"       \   },
+"       \   'cache_enabled': 1,
+"       \ }
+
+
 " visual with -alt
 nnoremap <A-v> <C-v>
 
@@ -331,7 +352,7 @@ let g:formatdef_black_120s = '"black -q -S -l 120 ".(&textwidth ? "-l".&textwidt
 let g:formatdef_black_120 = '"black -q -l 120 ".(&textwidth ? "-l".&textwidth : "")." -"'
 let g:formatdef_black_79 = '"black -q -l 79 ".(&textwidth ? "-l".&textwidth : "")." -"'
 let g:formatters_python = ['black_120s']
-let g:formatters_python = ['black_79']
+" let g:formatters_python = ['black_79']
 
 com! Jsnp %!python -m json.tool
 com! Jsn %!jq .

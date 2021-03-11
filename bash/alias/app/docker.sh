@@ -8,7 +8,7 @@
 #    - i used it: /var/lib/docker is a symlink to /srv/docker
 # - edit /etc/default/docker (debian path)
 
-do_build () {
+_do_build () {
     set -x
     time docker-compose -f $1 build ${@:2}
     set +x
@@ -67,8 +67,8 @@ docker_inspect_bag_ip() { docker inspect $(docker ps | grep dev_app | awk '{prin
 docker_attach_bag_old() { docker attach $(docker ps | grep autobaggage_app | awk '{print $1}'); }
 docker_inspect_bag_old() { docker inspect $(docker ps | grep autobaggage_app | awk '{print $1}'); }
 
-alias docker_ps="ps -aux | grep 'docker' --color=always | sort -k10"
-alias docker_ps2='docker ps'
+alias docker_ps_in_os="ps -aux | grep 'docker' --color=always | sort -k10"
+alias docker_ps='docker ps'
 
 alias _docker_stop='sudo service docker stop'
 alias docker_stop='echo "After pwd input the docker will stop - may take dozen seconds or so... WAIT!"; _docker_stop'
@@ -158,16 +158,16 @@ vido_compose_yml_all () {
     vimo $(do_compose_yml_all $@)
 }
 
-# do_build__from_regex () {
+# _do_build__from_regex () {
 #     txt="${1:?regex in docker-compose file}"
 #     file=$(do_compose_yml_from_regex $1 $@)
-#     do_build $file
+#     _do_build $file
 # }
 
-# do_build_cat () {
+# _do_build_cat () {
 #     category="${1?category: dev, pudb, prod, dev_local}"
 #     regex=$(do_regex_from_category $category)
-#     do_build__from_regex $regex ${@:2}
+#     _do_build__from_regex $regex ${@:2}
 # }
 
 # do_up__from_regex () {
@@ -198,7 +198,7 @@ do_cat_build () {
     echo "category inner regex: \"$regex\""
     file=$(do_compose_yml_from_regex $regex)
     echo "file selected: \"$file\""
-    do_build $file ${@:2}
+    _do_build $file ${@:2}
 }
 
 do_redis_cli () {

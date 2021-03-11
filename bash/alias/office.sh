@@ -205,10 +205,14 @@ killit2 () {
 
 alias kdota="killit dota2"
 alias kfire="killit firefox"
+alias kfi="killit firefox"
+
+alias ksteam="killit steam"
 kchrome () {
     killit2 chromium-browser
     killit2 chrome
 }
+alias kch="kchrome"
 kkodi () {
     killit2 kodi
 }
@@ -626,3 +630,27 @@ kde_edit_local_theme () {
     cd_kde_theme_local
     viss
 }
+
+wiki_markdown_check () {
+    d_full_wiki="/srv/kiwi/repo/used/handbook/"
+    mdl --config ".markdownlint-loose.yml" --rules "$d_full_wiki/src/utils/markdown-lint-rules.js" ${d_full_wiki}.
+}
+wiki_markdown_here () {
+    mdl --config ".markdownlint-loose.yml" --rules "src/utils/markdown-lint-rules.js" . $@
+}
+
+
+
+# du sh
+ag_size () {
+    # show size of the files - searched via ag
+    # du -sh $(ag -g ".json") | sort -k1 -h
+    dush $(ag "$@")
+}
+
+dush () {
+    # echo the size of selected files - and sort them by their size
+    du -sh "$@" | sort -k1 -h
+}
+
+
