@@ -1,0 +1,31 @@
+{
+    "type": "script",
+    "description": "redo",
+    "store": {},
+    "modes": [
+        3
+    ],
+    "usageCount": 40,
+    "prompt": false,
+    "omitTrigger": false,
+    "showInTrayMenu": false,
+    "abbreviation": {
+        "abbreviations": [],
+        "backspace": true,
+        "ignoreCase": false,
+        "immediate": false,
+        "triggerInside": false,
+        "wordChars": "[\\w]"
+    },
+    "hotkey": {
+        "modifiers": [
+            "<ctrl>",
+            "<shift>"
+        ],
+        "hotKey": "z"
+    },
+    "filter": {
+        "regex": "sun-awt-X11-XFramePeer.com-eteks-sweethome3d-SweetHome3D",
+        "isRecursive": false
+    }
+}

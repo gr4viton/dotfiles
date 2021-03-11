@@ -1,0 +1,28 @@
+{
+    "type": "script",
+    "description": "background_move_right",
+    "store": {},
+    "modes": [
+        3
+    ],
+    "usageCount": 16,
+    "prompt": false,
+    "omitTrigger": false,
+    "showInTrayMenu": false,
+    "abbreviation": {
+        "abbreviations": [],
+        "backspace": true,
+        "ignoreCase": false,
+        "immediate": false,
+        "triggerInside": false,
+        "wordChars": "[\\w]"
+    },
+    "hotkey": {
+        "modifiers": [],
+        "hotKey": "l"
+    },
+    "filter": {
+        "regex": "sun-awt-X11-XFramePeer.com-eteks-sweethome3d-SweetHome3D",
+        "isRecursive": false
+    }
+}

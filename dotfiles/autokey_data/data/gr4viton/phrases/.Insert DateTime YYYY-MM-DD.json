@@ -1,0 +1,31 @@
+{
+    "usageCount": 102, 
+    "omitTrigger": false, 
+    "prompt": false, 
+    "description": "Insert DateTime YYYY-MM-DD", 
+    "abbreviation": {
+        "wordChars": "[\\w]", 
+        "abbreviations": [], 
+        "immediate": false, 
+        "ignoreCase": false, 
+        "backspace": true, 
+        "triggerInside": false
+    }, 
+    "hotkey": {
+        "hotKey": "[", 
+        "modifiers": [
+            "<ctrl>", 
+            "<shift>"
+        ]
+    }, 
+    "modes": [
+        3
+    ], 
+    "showInTrayMenu": false, 
+    "filter": {
+        "regex": null, 
+        "isRecursive": false
+    }, 
+    "type": "script", 
+    "store": {}
+}
