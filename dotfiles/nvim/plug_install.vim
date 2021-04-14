@@ -26,7 +26,7 @@ Plug 'jistr/vim-nerdtree-tabs'
 Plug 'majutsushi/tagbar'
 Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins', 'for': 'python' }
 Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/syntastic' 
+" Plug 'scrooloose/syntastic'  " syntax
 Plug 'shumphrey/fugitive-gitlab.vim'  
 Plug 'sjl/gundo.vim'
 Plug 'tmhedberg/SimpylFold'

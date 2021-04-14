@@ -1,4 +1,6 @@
 #!/bin/bash
+# __git__
+
 # git
 alias git_initial_setup='git config --global pull.rebase true; git config --global alias.pushf "push --force-with-lease"'
 # alias gdiff='git diff --color-words'
@@ -19,7 +21,7 @@ gpl () {
 }
 alias gpull_rebase='gpl'
 gpf () {
-    ddate
+    date_rfc_3339
     git push --force-with-lease
 }
 

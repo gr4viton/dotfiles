@@ -5,7 +5,9 @@ alias mux='tmuxp'
 alias muxl='tmuxp load'
 
 dirtmuxp="/home/dd/.tmuxp/"
-muxe() {
+
+muxe () {
+    # open one or multiple tmuxp config files
     paths=""
     for name in "$@"; do
         paths=$paths"$dirtmuxp/$name.yml "
@@ -14,18 +16,27 @@ muxe() {
     vimo $paths
 }
 
-muxe_all() {
+muxe_all () {
     cd $dirtmuxp
     vim *.yml
 }
 
-muxecd() {
+muxecd () {
     cd $dirtmuxp
     muxe $1
 }
 
+mux_new_dd_config () {
+    name="${1:?Tmux config file name}"
+    file_path="$dirtmuxp/$name.yml"
+    default_config_file="$dirtmuxp/default_dd.yml"
+    echo "> creating new tmux config in $file_path"
+    cp $default_config_file $file_path
+    muxe $name
+}
 
-mux_create() {
+
+tmux_session_create_or_attach() {
     nam=${1:?Tmux session name}
     session_names=$(tmux ls -F "#S")
     match=$(echo $session_names | grep $nam)
@@ -41,10 +52,12 @@ mux_create() {
     fi
 }
 
-mux_new_session() {
+tmux_session_new() {
     nam=${1:?Tmux session name}
     tmux new -s $nam
 }
+
+# tmuxp session creation start functions
 
 muxl_base () {
     # commands to be ran as starting command of every mux
@@ -52,10 +65,12 @@ muxl_base () {
 }
 
 muxl_base_da () {
+    # da = data and automation = kiwi
     muxl_base
 }
 
 muxl_base_dd () {
+    # dd = me
     muxl_base
     unset_pip_env
     gitlab_iam_gr4viton

@@ -208,16 +208,33 @@ alias cdD='cd /mnt/D'
 # sweethome3d
 folderize "sh3d" "/home/dd/DATA/barak/model/sweethome3d/"
 
+# __pyhovel
+folderize "hovel" "/srv/dd/component/pyhovel"
+
 sh3d_to_endora () {
     # not tested on creation
-    echo "> mounting ftp endora"
-    mount_ftp_endora_gr4viton
-    folder="${1?:subfolder in export folder}"
+
+    only_copy=${3?:insert any value to skip the ftp mounting}
+    if [[ -z "$only_copy" ]]; then
+        echo "> mounting ftp endora"
+        password="${1?:password for the ftp}"
+        mount_ftp_endora_gr4viton $password
+    else
+        echo "> skipping the ftp mounting"
+    fi
+
+    sub_folder="${2?:subfolder in export folder}"
+    whole_path="/home/$USER/DATA/barak/model/sweethome3d/export/$sub_folder"
+
+    # folder=$(dirname "$whole_path")
+    folder=$whole_path
+    echo "> ls $folder"
     ls $folder
-    whole_path="~/DATA/barak/model/sweethome3d/export/$folder/krajni/"
-    mounted_ftp_path="/media/ftp/gr4viton.cz/gr4viton.cz/web/ALL/barak/export"
-    echo "> gonna copy export from $whole_path to $mounted_ftp_path"
-    cp $whole_path $mounted_ftp_path
+    mounted_ftp_path="/media/ftp/gr4viton.cz/gr4viton.cz/web/ALL/barak/exports/krajni/"
+    echo "> gonna copy export "
+    echo "    from: $whole_path"
+    echo "      to: $mounted_ftp_path"
+    cp "$whole_path"/* "$mounted_ftp_path"
 }
 
 

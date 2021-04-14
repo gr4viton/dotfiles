@@ -9,5 +9,8 @@ endora_me () {
 gr4_folderize endora_gr4viton "/media/ftp/gr4viton.cz/"
 
 
-alias mount_ftp_endora_gr4viton="mount_ftp sasanka.endora.cz $direndora_gr4viton gr4viton"
+mount_ftp_endora_gr4viton () {
+    password="${1:?password}"
+    mount_ftp sasanka.endora.cz $direndora_gr4viton gr4viton $password
 
+}

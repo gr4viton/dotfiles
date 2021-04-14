@@ -12,7 +12,8 @@ ydlbb () {
     cd $(dirname $dirydlb)
     cd ydlbb
     set -x
-    ydl --username $YDL_USER --password $YDL_PWD $@
+    # ydl --username $YDL_USER --password $YDL_PWD $@
+    ydl $@
     set +x
 }
 
@@ -21,4 +22,6 @@ alias yyy="ydlbb"
 alias cdydlb="cd $HOME/DATA/DNz/"
 alias viydlb="vim $dirydlb $dirydlb.old"
 
-
+ydl_upgrade () {
+    pip3 install --upgrade youtube-dl
+}

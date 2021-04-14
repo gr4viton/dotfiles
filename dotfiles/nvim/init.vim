@@ -4,6 +4,11 @@
 " then you have to set ycm folder for saving the ctags (auto-complete)
 "
 " but then again i may switch to coc.vim instead of YouCompleteMe ? 
+"
+if exists('g:vscode')
+    " VSCode extension
+else
+    " ordinary neovim
 
 set nocompatible              " be iMproved, required
 " filetype off                  " required
@@ -351,8 +356,8 @@ cabbrev afo :Autoformat
 let g:formatdef_black_120s = '"black -q -S -l 120 ".(&textwidth ? "-l".&textwidth : "")." -"'
 let g:formatdef_black_120 = '"black -q -l 120 ".(&textwidth ? "-l".&textwidth : "")." -"'
 let g:formatdef_black_79 = '"black -q -l 79 ".(&textwidth ? "-l".&textwidth : "")." -"'
-let g:formatters_python = ['black_120s']
-" let g:formatters_python = ['black_79']
+" let g:formatters_python = ['black_120s']
+let g:formatters_python = ['black_79']
 
 com! Jsnp %!python -m json.tool
 com! Jsn %!jq .
@@ -364,9 +369,13 @@ com! Jsn %!jq .
 " let g:ycm_server_log_level = 'debug'
 
 """ scrooloose/syntastic
-let g:syntastic_python_pylint_post_args="--max-line-length=120"
-let g:syntastic_python_flake8_args='--ignore=E501,E225'
-let g:syntastic_quiet_messages = { "regex": 'missing-docstring\|no-member\|too-many-instance-attributes\|import-error\|unused-argument\|protected-access\|no-name-in-module\|too-few-public-methods\|unsubscriptable-object' }
+" let g:syntastic_python_pylint_post_args="--max-line-length=120"
+" let g:syntastic_python_flake8_args='--ignore=E501,E225'
+" let g:syntastic_quiet_messages = { "regex": 'missing-docstring\|no-member\|too-many-instance-attributes\|import-error\|unused-argument\|protected-access\|no-name-in-module\|too-few-public-methods\|unsubscriptable-object' }
+" let g:syntastic_always_populate_loc_list = 0
+" let g:syntastic_auto_loc_list = 0
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 1
 
 " set statusline+=%#warningmsg#
 " set statusline+=%{SyntasticStatuslineFlag()}
@@ -374,10 +383,6 @@ let g:syntastic_quiet_messages = { "regex": 'missing-docstring\|no-member\|too-m
 
 " let g:syntastic_python_checkers = ['pylint']
 
-let g:syntastic_always_populate_loc_list = 0
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 1
 
 """""""" # outdated
 " # plug amv/black
@@ -391,9 +396,12 @@ set undofile
 set undodir=~/.vim/undodir
 
 " xmllint external prog for xml pretty formatting - use gg=G
-au FileType xml setlocal equalprg=xmllint\ --format\ --recover\ -\ 2>/dev/null
+" au FileType xml setlocal equalprg=xmllint\ --format\ --recover\ -\ 2>/dev/null
+au FileType xml exe ":silent %!xmllint --format --recover - 2>/dev/null"
 "set xml_format="xmllint --format -"
+" sudo apt install libxml2-utils
 cabbrev xml_format :xmllint --format -
+cabbrev Xml :xmllint --format -
 
 " set pwd
 " globally
@@ -486,11 +494,37 @@ autocmd BufEnter *.md exe 'noremap <F6> :! chromium-browser %:p<CR>'
 " goto
 " https://github.com/numirias/semshi#highlights
 " 
-function! MyCustomHighlights()
+function! SemshiSyntaxHigh()
     hi semshiSelected      ctermfg=231 guifg=#ffffff ctermbg=DarkGray guibg=#d7005f
 
 endfunction
-autocmd FileType python call MyCustomHighlights()
+autocmd FileType python call SemshiSyntaxHigh()
+autocmd ColorScheme * call SemshiSyntaxHigh()
+
+hi semshiSelected      ctermfg=231 guifg=#ffffff ctermbg=DarkGray guibg=#d7005f
+" hi semshiSelected      ctermfg=231 guifg=#ffffff ctermbg=DarkGray guibg=#d7005f
+
+
+" leader key
+let mapleader = ";"
+
+nmap <silent> <leader>rr :Semshi rename<CR>
+
+nmap <silent> <Tab> :Semshi goto name next<CR>
+nmap <silent> <S-Tab> :Semshi goto name prev<CR>
+
+nmap <silent> <leader>c :Semshi goto class next<CR>
+nmap <silent> <leader>C :Semshi goto class prev<CR>
+
+nmap <silent> <leader>f :Semshi goto function next<CR>
+nmap <silent> <leader>F :Semshi goto function prev<CR>
+
+nmap <silent> <leader>gu :Semshi goto unresolved first<CR>
+nmap <silent> <leader>gp :Semshi goto parameterUnused first<CR>
+
+nmap <silent> <leader>ee :Semshi error<CR>
+nmap <silent> <leader>ge :Semshi goto error<CR>
+
 
 " py files f-string not syntax error any more
 let g:pymode_python = 'python3'
@@ -562,4 +596,4 @@ augroup END
 
 
 
-
+endif

@@ -24,12 +24,19 @@ extract () {
 
 
 
-ddate () {
+date_rfc_3339 () {
     # date in rfc-3339 format
     # it's like iso-8601 + time
     date --rfc-3339=seconds
     # date --rfc-3339=ns
     # date --rfc-3339=date
+}
+date_seconds () {
+    date --utc --rfc-3339=seconds
+}
+
+date_rfc_3339_date () {
+    date --rfc-3339=date
 }
 
 echo_time () {
@@ -398,9 +405,6 @@ suspend_now () {
 
 alias sus="suspend_now"
 
-date_seconds () {
-    date --utc --rfc-3339=seconds
-}
 
 file_uptime_log="${dirddd}/uptime.log"
 
@@ -654,3 +658,7 @@ dush () {
 }
 
 
+
+# bash variable in path tab completion
+# from: https://askubuntu.com/questions/70750/how-to-get-bash-to-stop-escaping-during-tab-completion
+shopt -s direxpand
