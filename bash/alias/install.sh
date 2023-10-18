@@ -1,4 +1,5 @@
 #!/bin/sh
+# __install__
 # instal multitude of apps
 
 loadit_script "alias/install/screensaver.sh"
@@ -10,6 +11,14 @@ inst_kivy_apk () {
 inst_pipenv () {
     pip install pipenv
     # run via `python -m pipenv`
+}
+
+inst_tizonia () {
+    echo ">>> spotify cli = tizonia"
+    curl -kL https://goo.gl/Vu8qGR | bash
+}
+tizonia_update () {
+    inst_tizonia
 }
 
 inst_kivy_whole () {
@@ -327,6 +336,8 @@ echo "# SNAPS"
 echo ">>> spotify"
 sudo snap install spotify
 
+inst_tizonia
+
 
 setup_gnome
 setup_ssh
@@ -499,3 +510,36 @@ uninst_displaylink_driver () {
     sudo displaylink-installer uninstall
 }
 
+
+install_wine_and_lutris () {
+    # follow https://wiki.winehq.org/Ubuntu
+    # or https://linuxconfig.org/install-lutris-on-ubuntu-20-04-focal-fossa-linux
+
+    sudo dpkg --add-architecture i386
+    wget -nc https://dl.winehq.org/wine-builds/winehq.key
+    sudo apt-key add winehq.key
+    sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main'
+    sudo apt update
+    sudo apt install --install-recommends winehq-staging
+
+    # lutris
+    sudo add-apt-repository ppa:lutris-team/lutris
+    sudo apt update
+    sudo apt install lutris
+
+    # some fix on 2021-06-08 - from reddit and lutris forum - https://forums.lutris.net/t/lutris-doesnt-start-on-ubuntu-lts/11556/4
+    wget https://cdn.discordapp.com/attachments/538903130704838656/796102070825779250/dxvk_versions.json -P $HOME/.local/share/lutris/runtime/dxvk
+
+    # possibly
+    # some error - from https://www.reddit.com/r/wine_gaming/comments/m7ircp/mesaintel_warning_performance_support_disabled/
+     sysctl dev.i915.perf_stream_paranoid=0
+
+
+
+}
+
+uninstall_wine_and_lutris () {
+    sudo apt remove lutris
+    sudo apt purge lutris
+    rm -rf ~/.config/lutris ~/.local/share/lutris ~/.cache/lutris
+}

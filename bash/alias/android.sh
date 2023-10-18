@@ -33,7 +33,7 @@ termux_ydl_config () {
 
 	echo "youtube-dl $1"
 	vim "~/bin/termux-url-opener"
-	
+
 }
 
 
@@ -43,7 +43,7 @@ dir_songiton="~/dd/songiton"
 alias cdsongiton="cd $dir_songiton"
 
 rsync_dcim_pack () {
-	rsync -av --exclude ".thumbnails" --safe-links --ignore-existing --info=progress2 storage/dcim/packovic-let gr4viton@192.168.0.118:/volume1/video/foto/droid --rsync-path=/opt/bin/rsync
+	rsync -av --exclude ".thumbnails" --safe-links --ignore-existing --info=progress2 storage/dcim/packovic-let gr4viton@192.168.0.220:/volume1/video/foto/droid --rsync-path=/opt/bin/rsync
 }
 
 dirdcim="$HOME/storage/dcim/"
@@ -55,12 +55,12 @@ rsync_from_termux () {
 	echo "> syncing"
 	echo "  from $dirlocal"
 	echo "    to $dirremote"
-	remote_url="gr4viton@192.168.0.118:$dirremote"
+	remote_url="gr4viton@192.168.0.220:$dirremote"
 	rsync -av --exclude ".thumbnails" --safe-links --ignore-existing --info=progress2 $dirlocal $remote_url --rsync-path=/opt/bin/rsync
 }
 
 rsync_dcim () {
-    dirremote="/volume1/video/foto/droid" 
+    dirremote="/volume1/video/foto/droid"
     dirlocal="$HOME/storage/dcim/"
     rsync_from_termux $dirlocal $dirremote
 }

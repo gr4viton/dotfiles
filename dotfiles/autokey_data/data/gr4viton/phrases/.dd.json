@@ -11,7 +11,7 @@
     "showInTrayMenu": false,
     "abbreviation": {
         "abbreviations": [
-            "@@dd"
+            "!!dd"
         ],
         "backspace": true,
         "ignoreCase": false,

@@ -1,4 +1,6 @@
 # device configs
+## __ssh__
+## __device__
 # ip, usernames etc
 
 device_omatic () {
@@ -56,7 +58,8 @@ device_omatic "retrokodi" "pi" "192.168.0.150"
 device_omatic "ros" "pi" "192.168.0.190"
 
 # nas - synology DS218
-device_omatic "nas" "gr4viton" "192.168.0.118"
+# device_omatic "nas" "gr4viton" "192.168.0.118"
+device_omatic "nas" "gr4viton" "192.168.0.220"
 
 # dell54 - dell l5401
 device_omatic "dell54" "dd" "192.168.0.199"
@@ -72,3 +75,5 @@ device_omatic "s8" "u0_a304" "192.168.0.110" "8022"
 
 ## s20 = android samsung s20 fe
 device_omatic "s20" "u0_a396" "192.168.0.124" "8022"
+
+device_omatic "hass" "pi" "192.168.0.100" "8123"

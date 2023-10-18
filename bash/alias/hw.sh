@@ -57,3 +57,38 @@ if [[ $(apt_installed xcape) ]]; then
 xcape -e 'Control_L=Escape'
 fi
 
+
+plasma_start () {
+    kstart5 plasmashell
+}
+plasma_stop () {
+    kquitapp5 plasmashell
+}
+plasma_restart () {
+    kquitapp5 plasmashell && kstart5 plasmashell
+}
+
+
+# switch es-2024 zyxel
+# https://unix.stackexchange.com/a/65362
+zyxel_es2024_connect () {
+    echo "sudo apt install -y screen lrzsz"
+    echo "# for the tty setup"
+    echo "sudo stty -F /dev/ttyUSB0 -a"
+    echo "power cycle restart"
+    echo "press any key"
+    echo "> atlc"
+    echo "control-A :"
+    echo "exec !! sx binary.bin"
+    echo "> atgo"
+    # screen /dev/ttyUSB0 9600
+    screen /dev/ttyUSB0 9600,-parenb,-parodd,-cmspar,cs8,-hupcl,-cstopb
+}
+
+zyxel_tty_info () {
+    sudo stty -F /dev/ttyUSB0 -a
+}
+
+# zyxel_text () {
+
+# }

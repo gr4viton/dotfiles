@@ -7,6 +7,11 @@
 "
 if exists('g:vscode')
     " VSCode extension
+    set nocompatible              " be iMproved, required
+    set tabstop=4
+    set shiftwidth=4
+    filetype plugin indent on
+    set smartindent
 else
     " ordinary neovim
 
@@ -356,8 +361,8 @@ cabbrev afo :Autoformat
 let g:formatdef_black_120s = '"black -q -S -l 120 ".(&textwidth ? "-l".&textwidth : "")." -"'
 let g:formatdef_black_120 = '"black -q -l 120 ".(&textwidth ? "-l".&textwidth : "")." -"'
 let g:formatdef_black_79 = '"black -q -l 79 ".(&textwidth ? "-l".&textwidth : "")." -"'
-" let g:formatters_python = ['black_120s']
-let g:formatters_python = ['black_79']
+let g:formatters_python = ['black_120s']
+" let g:formatters_python = ['black_79']
 
 com! Jsnp %!python -m json.tool
 com! Jsn %!jq .
@@ -400,8 +405,10 @@ set undodir=~/.vim/undodir
 au FileType xml exe ":silent %!xmllint --format --recover - 2>/dev/null"
 "set xml_format="xmllint --format -"
 " sudo apt install libxml2-utils
-cabbrev xml_format :xmllint --format -
-cabbrev Xml :xmllint --format -
+cabbrev xml_format :!xmllint --format -
+"cabbrev Xml :!xmllint --format -
+cabbrev Xml :silent %!xmllint --encode UTF-8 --format -
+cabbrev isxml :set syntax=xml
 
 " set pwd
 " globally
@@ -466,8 +473,8 @@ let g:fugitive_gitlab_domains = ['https://gitlab.skypicker.com']
 " disable statusline git branch name
 let g:flagship_skip = 'fugitive#statusline\|FugitiveStatusline'
 
-cabbrev Gb Gbrowse
-cabbrev Gbl Gblame
+cabbrev Gb GBrowse
+cabbrev Gbl Git blame
 
 cabbrev mux Tmux
 

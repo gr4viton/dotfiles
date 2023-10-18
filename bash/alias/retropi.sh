@@ -50,9 +50,9 @@ alias retro_controls_test_js1="jstest /dev/input/js1"
 dirconf="/opt/retropie/configs/"
 alias retro_config_all="vim $dirconf/all/retroarch.cfg"
 
-alias nas_mount="sudo /sbin/mount.nfs 192.168.0.118:/volume1/video /media/nas/video/"
-alias nas_ssh="sudo ssh gr4viton@192.168.0.118"
-alias nas_ssh_shutdown="sudo ssh -t gr4viton@192.168.0.118 sudo shutdown -P now \"Goodbye cruel world! Turned of via ssh from rpi\""
+alias nas_mount="sudo /sbin/mount.nfs 192.168.0.220:/volume1/video /media/nas/video/"
+alias nas_ssh="sudo ssh gr4viton@192.168.0.220"
+alias nas_ssh_shutdown="sudo ssh -t gr4viton@192.168.0.220 sudo shutdown -P now \"Goodbye cruel world! Turned of via ssh from rpi\""
 alias killnas="nas_ssh_shutdown"
 
 killme ()      {

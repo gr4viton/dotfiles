@@ -1,3 +1,4 @@
+# __ros__
 # ROS robotic operating system
 
 ros_src_base () {

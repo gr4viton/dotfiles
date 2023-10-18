@@ -1,4 +1,6 @@
 #!/bin/bash
+# __connect__
+# __folderize
 folderize_from_file () {
     fil=${1?yaml file with config}
     base_path=${2?base path to which the folderizer config paths are relative to}
@@ -126,7 +128,7 @@ else
     remote_dir="$last"
 
     set -x
-    rsync $_basic_rsync_kwargs $local_files "gr4viton@192.168.0.118:$remote_dir" --rsync-path=/opt/bin/rsync
+    rsync $_basic_rsync_kwargs $local_files "gr4viton@192.168.0.220:$remote_dir" --rsync-path=/opt/bin/rsync
     set +x
 fi
 }
@@ -138,7 +140,7 @@ rsync_from_nas () {
     local_dir="$last"
 
     set -x
-    rsync $_basic_rsync_kwargs "gr4viton@192.168.0.118:$remote_files" $local_dir --rsync-path=/opt/bin/rsync
+    rsync $_basic_rsync_kwargs "gr4viton@192.168.0.220:$remote_files" $local_dir --rsync-path=/opt/bin/rsync
     set +x
 }
 

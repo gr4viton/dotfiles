@@ -14,7 +14,7 @@ connect:
       base_path: "/home/pi/"
     tapa:
       user: "gr4viton"
-      ip: "192.168.0.118"
+      ip: "192.168.0.220"
     retro:
       user: "pi"
       ip: "192.168.0.105"

@@ -4,7 +4,7 @@ shin_ip[octopi]="pi@192.168.0.111" # was 199
 
 shin_ip[centroid]="pi@10.8.0.39"
 shin_ip[retropie]="pi@192.168.0.150"
-shin_ip[tapa]="gr4viton@192.168.0.118"
+shin_ip[tapa]="gr4viton@192.168.0.220"
 # 164 = old rpi1
 # 163 = rpi3b+
 

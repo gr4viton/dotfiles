@@ -31,22 +31,22 @@ nas_mount () {
     local="${1:?local mount directory}"
     remote="${2:?remote dir in volume1}"
     set -x
-    sudo /sbin/mount.nfs 192.168.0.118:/volume1/$remote $local
+    sudo /sbin/mount.nfs 192.168.0.220:/volume1/$remote $local
     set +x
 echo ">>> $local"
     ll $local
 }
 nas_umount () {
     local="${1:?local mount directory}"
-# sudo /sbin/mount.nfs 192.168.0.118:/volume1/video $local
+# sudo /sbin/mount.nfs 192.168.0.220:/volume1/video $local
 sudo umount $local
 echo ">>> $local"
     ll $local
 }
 
 nas_mount_homes () {
-    echo "Probly won't work cuz the folder shared ips is not *"
-    showmount -e 192.168.0.118
+    # echo "Probly won't work cuz the folder shared ips is not *"
+    # showmount -e 192.168.0.220
 
     nas_mount $dirnashomes homes
 }
@@ -54,6 +54,14 @@ nas_mount_homes () {
 nas_umount_homes () {
     nas_umount $dirnashomes
 }
+
+nas_mount_photo () {
+    nas_mount $dirnasphoto photo
+}
+nas_umount_photo () {
+    nas_umount $dirnasphoto
+}
+
 
 nas_mount_video () {
     nas_mount $dirnasvideo video
@@ -66,5 +74,5 @@ nas_umount_video () {
 alias cdnas="cd $dirnas"
 alias cdnasvid="cd $dirnasvideo"
 # not this
-# sudo /sbin/mount.nfs -o username=gr4viton,password=* //192.168.0.118/volume1/video video
+# sudo /sbin/mount.nfs -o username=gr4viton,password=* //192.168.0.220/volume1/video video
 

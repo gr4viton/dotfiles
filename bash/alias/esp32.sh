@@ -1,3 +1,4 @@
+# __esp32__
 
 esp_info () {
     echo @@eof

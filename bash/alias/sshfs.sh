@@ -1,4 +1,4 @@
-# __sshfs - filesystem over sshfs
+# __sshfs__ - filesystem over sshfs
 
 # sshfs
 sshfs_mount_path () {

@@ -28,12 +28,16 @@ pip_compile_reqs () {
 
     echo "> running"
     echo "pipenv run pip-compile --output-file $out $in $extra_index_url_arg_safe"
-    # pipenv run pip-compile --output-file $out $in $extra_index_url_arg
+    pipenv run pip-compile --output-file $out $in $extra_index_url_arg
 
     # redact the pypi username and password
     sed -i "s|${pypi_username}|${pypi_username_redacted}|" $out
     sed -i "s|${pypi_password}|${pypi_password_redacted}|" $out
     sed -i "s|$extra_index_url_arg_safe||" $out
+
+    # the first line in requirements.txt with --extra-index-url should be also deleted
+    # as it should either contain real pypi credentials or they should be left blank!
+    # --extra-index-url https://<pypi_username>:<pypi_password>@pypi.skypicker.com/pypi
 
     echo ">>> calling git diff to see what new packages were compiled"
     git diff -- $out
@@ -55,6 +59,7 @@ Usage:
 
 EOF
     python_version_pipenv="$1"
+    echo "Python version: $1"
     shift  # in $@ are now all but the $1 arguments
     # all other arguments are used as requirement_files - passed without suffixes
 
@@ -74,7 +79,7 @@ Setup
 
 > creating python venv via 'pipenv $python_version_pipenv'
 EOF
-    pipenv $python_version_pipenv
+    PIPENV_DEFAULT_PYTHON_VERSION=$python_version_pipenv pipenv update
     pipenv run pip install pip-tools
     for reqs_stub in "$@"
     do
@@ -86,6 +91,10 @@ EOF
 pip_bump_reqs_kiwi () {
     URL=$PIP_EXTRA
     pip_bump_reqs $@ --extra-index-url $URL
+}
+
+pip_bump_reqs_bb () {
+    pip_bump_reqs 3.8 requirements/base
 }
 
 dir_pip_conf="$HOME/.config/pip/pip.conf"

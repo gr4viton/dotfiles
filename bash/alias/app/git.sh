@@ -20,6 +20,11 @@ gpl () {
     git pull --rebase origin master
 }
 alias gpull_rebase='gpl'
+
+gplcurrent_branch () {
+    git pull --rebase origin $(git_branch)
+}
+
 gpf () {
     date_rfc_3339
     git push --force-with-lease
@@ -87,8 +92,8 @@ vigir_conflict_files () {
     vim $(git diff --name-only | uniq)
 }
 
-gir_onto_commit () {
-    git rebase --onto $1
+gir_onto_commit_keeping_current_branch () {
+    git rebase --onto $1 --root=$(git_branch)
 }
 vigit_rebase_conflict2 () {
     vimo $(gir_conflict_files)

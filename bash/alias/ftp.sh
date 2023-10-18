@@ -1,3 +1,4 @@
+# __ftp__
 # ftp + ftpfs
 endora_me () {
     echo "Input user gr4viton, and pwd"

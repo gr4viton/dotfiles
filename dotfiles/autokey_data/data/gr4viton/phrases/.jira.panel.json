@@ -1,32 +1,32 @@
 {
-    "usageCount": 0, 
-    "omitTrigger": false, 
-    "prompt": false, 
-    "description": "jira.panel", 
-    "abbreviation": {
-        "wordChars": "[\\w]", 
-        "abbreviations": [
-            "panpan", 
-            "@@panel"
-        ], 
-        "immediate": true, 
-        "ignoreCase": false, 
-        "backspace": true, 
-        "triggerInside": false
-    }, 
-    "hotkey": {
-        "hotKey": null, 
-        "modifiers": []
-    }, 
+    "type": "phrase",
+    "description": "jira.panel",
     "modes": [
         1
-    ], 
-    "showInTrayMenu": false, 
-    "matchCase": false, 
+    ],
+    "usageCount": 0,
+    "prompt": false,
+    "omitTrigger": false,
+    "matchCase": false,
+    "showInTrayMenu": false,
+    "abbreviation": {
+        "abbreviations": [
+            "!!panel",
+            "panpan"
+        ],
+        "backspace": true,
+        "ignoreCase": false,
+        "immediate": true,
+        "triggerInside": false,
+        "wordChars": "[\\w]"
+    },
+    "hotkey": {
+        "modifiers": [],
+        "hotKey": null
+    },
     "filter": {
-        "regex": null, 
+        "regex": null,
         "isRecursive": false
-    }, 
-    "type": "phrase", 
+    },
     "sendMode": "kb"
 }

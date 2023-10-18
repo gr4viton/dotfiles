@@ -1,4 +1,4 @@
-
+# __docker__
 
 # Docker
 # docker stores its containers inside a directory
@@ -142,6 +142,24 @@ do_compose_yml_all () {
     echo $(do_compose_yml_dev_local $@)
     echo $(do_compose_yml_prod $@)
 }
+
+do_run_pip_freeze () {
+    # get all the installed python packages versions
+    docker-compose run app pip freeze
+}
+
+do_run_pip_compile () {
+    # get all the installed python packages versions
+    docker-compose run app "pip install pip-tools; pip-compile -i $1.in -r $1.txt"
+}
+
+do_run_tests () {
+    docker-compose run app pytest test/ "$@"
+    # you can pass -k argument to select concrete test files
+    # eg
+    # $ do_run_tests -k "ClassNameOne"
+}
+
 
 do_cat_compose () {
     category="${1?category: dev, pudb, debug, prod, dev_local}"

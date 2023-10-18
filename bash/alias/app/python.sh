@@ -92,24 +92,63 @@ make_python_venv () {
 export PYTHONDONTWRITEBYTECODE=1  # do not write pyc files when running python
 
 
-alias all_py='find . -type f -regextype sed -regex ".*\.py" -print0'
 
 # https://stackoverflow.com/questions/1583219/awk-sed-how-to-do-a-recursive-find-replace-of-a-string
-regex_all_py () {
+#
+alias all_md='find . -type f -regextype sed -regex ".*\.md" -print0'
+
+
+regex_all_markdown () {
+    find . -type f -regextype sed -regex ".*\.mdx*" -print0 | xargs -0 sed -i "$1"
+}
+regex_all_md () {
     echo "Do you want to execute this regex:"
-    echo $1
-    echo "On all the *.py files in this directory and subdirectories?:"
-    all_py
+    echo "$1"
+    echo "On all the *.md files in this directory and subdirectories?:"
+    all_md
 
     echo ""
     read -p "Do you really?" yn
 
     select yn in "Yes" "No"; do
         case $yn in
-            Yes ) all_py | xargs -0 sed -i $1; break;;
-            No ) exit;;
+            Yes) $(all_md) | xargs -0 sed -i "$1"; break;;
+            No) exit;;
         esac
+        echo ">>$yn<<"
     done
+}
+
+alias all_py='find . -type f -regextype sed -regex ".*\.py" -print0'
+
+regex_all_py () {
+    echo "Do you want to execute this regex:";
+    echo "$1";
+    echo "On all the *.py files in this directory and subdirectories?:";
+    files=$(all_py);
+    echo "$files"
+
+    echo "";
+    # echo "Do you really wanna? [y]es / [n]o";
+    printf 'Do you really wanna (y/n)? ';
+    read answer;
+
+    if [ "$answer" != "${answer#[Yy]}" ] ;
+    then # this grammar (the #[] operator) means that the variable $answer where any Y or y in 1st position will be dropped if they exist.
+        set -x;
+        # echo "$files" | xargs -0 sed -i "${1}";
+        find . -type f -regextype sed -regex ".*\.py" -print0 | xargs -0 sed -i "$1"
+        set +x;
+    else
+        echo No;
+    fi
+
+    # select yn in "y" "n"; do
+    #     case $yn in
+    #         y) all_py | xargs -0 sed -i "$1"; break;;
+    #         n) exit;;
+    #     esac
+    # done
 }
 
 

@@ -87,6 +87,8 @@ echo "Sourcing [$DD_SELECTOR script] files from $DIR_LOADIT_SCRIPT:"
 # basic stuff - colors, ll, cd.., grep, rm ...
 # source $DIR_DD/dotfiles/bash/basic.sh
 
+source "$HOME_DD/dd/dd_env"
+
 if [[ "$DD_SELECTOR" == "full" ]]; then
 
     scripts=(
@@ -111,8 +113,11 @@ if [[ "$DD_SELECTOR" == "full" ]]; then
             "alias/app/redis.sh"
             "alias/app/tldr.sh"
             "alias/app/youtube-dl.sh"
+            "alias/app/tizonia.sh"
+
 
         "alias/office.sh"
+        "alias/monitor.sh"
         "alias/centroid.sh"
         "alias/install.sh"
         "alias/speak.sh"
@@ -131,6 +136,9 @@ if [[ "$DD_SELECTOR" == "full" ]]; then
         "alias/game.sh"
         "alias/tags.sh"
         "alias/dotfiles.sh"
+
+            # laptop wr
+            "../../kiwi_alias.sh"
     )
 
 elif [[ "$DD_SELECTOR" == "ros" ]]; then

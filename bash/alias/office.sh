@@ -1,4 +1,5 @@
 #!/bin/bash
+# __office__
 
 # handy extract function for various archives
 extract () {
@@ -53,6 +54,11 @@ from_base64 () {
 
 
 # LL
+
+ltree () {
+    tree -L 2 -I "_*" $@
+}
+
 alias llpy="ll | grep '.*py$'"
 
 alias disc_usage="du"
@@ -185,7 +191,9 @@ countdown_test() {
 
 # DISK
 
-alias disk_show_space='df -h'
+disk_show_space () {
+    df -h | grep -v -E "/dev/loop.*"
+}
 alias disk_swap_show='swapon --show'
 alias disk_swap_show_ram='free -h'
 
@@ -203,16 +211,20 @@ assasinate () {
 }
 
 killit () {
-    sudo pkill $@
+    sudo pkill "$@"
 }
 killit2 () {
     # killall -9 $@
-    pkill -9 $@
+    pkill -9 "$@"
 }
 
 alias kdota="killit dota2"
-alias kfire="killit firefox"
+# alias kfire="killit firefox"
+alias kfire="kill `pidof firefox`"
+# alias kfire="kill -9 `pidof firefox`"
 alias kfi="killit firefox"
+
+alias kslack="kill `pidof slack`"
 
 alias ksteam="killit steam"
 kchrome () {
@@ -227,6 +239,9 @@ alias kvlc="killit2 vlc"
 alias kpycharm="killit pycharm"
 alias kblender="killit blender"
 alias kunity="killit unity"
+klutris () {
+    killit2 lutris
+}
 
 
 kswap () {
@@ -652,6 +667,10 @@ ag_size () {
     dush $(ag "$@")
 }
 
+agl () {
+    ag -l "$@"
+}
+
 dush () {
     # echo the size of selected files - and sort them by their size
     du -sh "$@" | sort -k1 -h
@@ -662,3 +681,50 @@ dush () {
 # bash variable in path tab completion
 # from: https://askubuntu.com/questions/70750/how-to-get-bash-to-stop-escaping-during-tab-completion
 shopt -s direxpand
+
+milkdrop () {
+    # projectm
+    sudo /fun/GAME/STEAM/steamapps/common/projectM/./projectM
+    # does not detect the audio output device :(
+    # info https://github.com/projectM-visualizer/projectm/issues/429
+}
+
+
+
+camunda () {
+    /srv/kiwi/apps/camunda-modeler-4.7.0-linux-x64/./camunda-modeler
+}
+
+netcheck_log () {
+    vim /srv/dd/app/netcheck/log/connection.log
+}
+
+netcheck_tail () {
+    tail -n 200 /srv/dd/app/netcheck/log/connection.log
+}
+
+audacity () {
+    # get rid of linux non-refreshing GUI bug
+    # viz https://forum.audacityteam.org/viewtopic.php?p=407260#p407260
+    # need to unset the GTK_IM_MODULE which might be by default GTK_IM_MODULE=xim which causes the problem
+    GTK_IM_MODULE= audacity
+    # you have to modify it in the application.desktop Exac statement
+    vim /usr/share/applications/audacity.desktop
+}
+
+
+# freecad
+
+cdfcmacros () {
+    cd /home/dd/.FreeCAD/Macro
+}
+
+# tree
+treepy () {
+    tree -P '*.py' --prune "$@"
+}
+
+lstreepy () {
+    treepy "$@"
+}
+

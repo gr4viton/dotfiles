@@ -1,4 +1,6 @@
 
+__game__
+
 # - https://www.reddit.com/r/Steam/comments/99fjzw/steam_proton_for_non_steam_applications/
 # - https://github.com/ValveSoftware/Proton/issues/260
 
@@ -35,3 +37,10 @@ wow () {
     wine /fun/game/wow/wow434/Wow.exe
 }
 
+
+proton_game_run () {
+#! /usr/bin/env sh
+export STEAM_COMPAT_DATA_PATH=~/.proton
+~/.steam/steam/steamapps/common/Proton\ 5.0/proton $@
+echo "# Put that somewhere in PATH, chmod +x it and then call proton run /path/to/game.exe"
+}

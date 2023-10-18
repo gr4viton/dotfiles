@@ -84,7 +84,9 @@ kcl_bash () {
 
 kcl_sh () {
     pod_name=$1  # eg black-box-7f6dc5956c-2fzmd
+    set -x
     kcl exec $(kcl_pod_get_first $pod_name) -- /bin/sh
+    set +x
 }
 
 
@@ -127,12 +129,13 @@ kcl_rollout_restart_deploy () {
     kcl rollout restart deploy $pod_namespace -n $pod_namespace
     set +x
 }
+
 kcl_redeploy () {
     kcl_rollout_restart_deploy $@
 }
 
 kcl_redeploy_all_gds () {
-    projects=( black-box schedule-changer configuru refundopedia gds-viewer gds-queue-handler master-switch vemark log-viewer )
+    projects=( black-box schedule-changer configuru refundopedia gds-viewer gds-queue-handler refunderino faust )
     for var in "${projects[@]}"
     do
       echo "redeploy for: ${var}"
@@ -140,25 +143,32 @@ kcl_redeploy_all_gds () {
     done
 }
 
+kcl_deployments () {
+    kubectl get deployment -A
+}
+
 kcl_deploy_undo () {
     name=$1
-    kcl rollout undo deployment $name
+    namespace=$name
+    kcl rollout undo deployment $name --namespace=$namespace
 }
 
 kcl_deployment_history () {
     name=$1
-    kcl rollout history deployment $name
+    namespace=$name
+    kcl rollout history deployment $name --namespace=$namespace
 }
 
 kcl_deployment_status () {
     name=$1
-    kcl rollout status -w deployment $name
+    kcl rollout status -w deployment $name --namespace=$namespace
 }
 
 kcl_deploy_revision () {
     name=$1
+    namespace=$name
     revision_number="${2?revision number}"
-    kcl rollout undo deployment --to-revision=$revision_number
+    kcl rollout undo deployment $name --to-revision=$revision_number --namespace=$namespace
 }
 
-
+source <(kubectl completion bash)
