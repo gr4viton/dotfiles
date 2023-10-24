@@ -194,6 +194,12 @@ source $git_autocomplete_rc
 fi
 
 
+git_cap () {
+    # just tried if it works
+    datt="$(date_rfc_3339_date)T00:$(date +'%M:%S')"; GIT_COMMITTER_DATE=$datt git commit --amend --date=$datt
+}
+
+
 # search in commits
 git_search () {
     set -x

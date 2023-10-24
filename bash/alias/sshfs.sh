@@ -68,6 +68,13 @@ sshfs_mount_s8 () {
     cd $dir_local
 }
 
+sshfs_mount_think () {
+    dir_local="/mnt/sshfs/think"
+    sshfs_mount $con_userip_think $dir_local
+    ll $dir_local
+    cd $dir_local
+}
+
 sshfs_post_mount () {
     key=${1:?key in the_config.connect.ssh}
     mnt_path=$(sshfs_mount_path $key)

@@ -54,6 +54,9 @@ device_omatic () {
 # retrokodi - rpi with retropie and kodi
 device_omatic "retrokodi" "pi" "192.168.0.150"
 
+# think - lap
+device_omatic "think" "dd" "192.168.0.217"
+
 # ros = rpi with ROS
 device_omatic "ros" "pi" "192.168.0.190"
 
