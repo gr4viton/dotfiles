@@ -12,8 +12,6 @@ gr4_folderize "xnas_stuff" "/media/nas/video/video/meme/trailery/old"
 
 alias psagent="ps -aux | grep 'cache\|probe\|eval' --color=always | sort - k11"
 
-# kiwi folders
-
 gr4_folderize "roms_local" "/media/dd/datasss/GAMESY/roms/"
 
 gr4_folderize "bkp" "/srv/_all/"
@@ -113,3 +111,5 @@ sh3d_to_endora () {
 logAutomateMe=$dirgr4log'LOG/dev/logAutomateMe.vim'
 dirkiwilog=$dirgr4log'LOG/work/kiwi/'
 
+gr4_folderize "dot" "$HOME/dd/dotfiles"
+gr4_folderize "dotkw" "$HOME/dd/dd-kw-dotfiles"
