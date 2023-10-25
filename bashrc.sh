@@ -5,10 +5,6 @@ if [ -z "$DIR_DD" ]; then
 fi
 DIR_DDD="$DIR_DD/dotfiles/"
 
-# .bashrc of gr4viton
-
-. "$DIR_DDD/../local_rc.sh"
-
 loadit() {
     script_path=$1
     if [ -f $script_path ]; then

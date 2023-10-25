@@ -46,7 +46,8 @@ Plug 'tpope/vim-tbone'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
 Plug 'vim-scripts/indentpython.vim'
-Plug 'wincent/command-t'
+" removed after lua rewrite
+" Plug 'wincent/command-t'
 
 Plug 'gabrielelana/vim-markdown'
 

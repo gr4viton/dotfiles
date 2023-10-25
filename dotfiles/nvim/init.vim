@@ -599,8 +599,9 @@ augroup END
 " load plug_coc.vim, searching it in "all vim places"
 " runtime plug_coc.vim
 
-
-
-
+" Command-t plugin - use lua
+" not tried
+" require('wincent.commandt').setup()
+" let g:CommandTPreferredImplementation='lua'
 
 endif

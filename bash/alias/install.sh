@@ -4,10 +4,20 @@
 
 loadit_script "alias/install/screensaver.sh"
 
+apt_repos_cd () {
+cd /etc/apt/
+}
+
+apt_repos_edit () {
+sudo vim /etc/apt/sources.list
+}
+
+
 inst_kivy_apk () {
 
     inst python-pip python3-pip build-essential git python python3 python-dev python3-dev libsdl2-dev  libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev zlib1g-dev ffmpeg gstreamer-1.0
 }
+
 inst_pipenv () {
     pip install pipenv
     # run via `python -m pipenv`
@@ -126,14 +136,20 @@ inst_neovim () {
 }
 
 inst_tmux () {
-    inst tmux
-inst xclip  # for system buffer tmux copy
-# tmux plugins
-mkdir -p ~/.tmux/plugins/tpm
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-
-inst urlview  # quick url open
+  # install terminal multiplexer + features
+  inst tmux
+  inst xclip  # for system buffer tmux copy
+  # tmux plugins
+  mkdir -p ~/.tmux/plugins/tpm
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+  inst urlview  # quick url open
 }
+
+inst_tmuxp () {
+  inst tmuxp
+}
+
+
 
 # install ALLLAALALALALALALLAL
 install_all () {
@@ -154,70 +170,7 @@ inst git make
 # inst exuberant-ctags  # unmaintained
 inst universal-ctags  # vim ctags
 
-
-echo $(cat << EOF
->>> docker-ce
-
-comuninty edition - you want that
-install docker from deb https://download.docker.com/linux/ubuntu/dists/bionic/pool/stable/amd64/"
-download containerd.io, docker-ce-cli, docker-ce
-
-# if you want to store containers elswhere you can create symlink
-# so i have /srv/docker as a storage now
-$ sudo mkdir /var/lib/docker
-$ sudo ln -s /srv/docker/ /var/lib/docker
-$ sudo dockerd # manual docker deamon start
-# sudo systemctl start docker ###???
-
-
-# THIS
-wget "https://download.docker.com/linux/ubuntu/dists/disco/pool/stable/amd64/containerd.io_1.2.6-3_amd64.deb"
-wget "https://download.docker.com/linux/ubuntu/dists/disco/pool/stable/amd64/docker-ce-cli_19.03.3~3-0~ubuntu-disco_amd64.deb"
-wget "https://download.docker.com/linux/ubuntu/dists/disco/pool/stable/amd64/docker-ce_19.03.3~3-0~ubuntu-disco_amd64.deb"
-sudo dpkg -i "containerd.io_1.2.6-3_amd64.deb"
-sudo dpkg -i "docker-ce-cli_19.03.3~3-0~ubuntu-disco_amd64.deb"
-sudo dpkg -i "docker-ce_19.03.3~3-0~ubuntu-disco_amd64.deb"
-
-$ inst /srv/_all/DATA/deb/docker/*
-or this
-  - worked on 2020-05-03
-$ curl -fsSL https://get.docker.com -o get-docker.sh
-$ sudo sh get-docker.sh
-# after install you need to add your user to docker user group
-$ sudo usermod -aG docker <your-user>
-
-
-to remove
-$ sudo apt-get purge docker-ce
-$ sudo rm -rf /var/lib/docker
-
-
-# if you get
-# docker-credential-secretservice not installed or not available in PATH
-# on docker build
-# you can fix it via
-$ sudo apt install golang-docker-credential-helpers
-# viz https://github.com/pgRouting/docker-pgrouting/issues/11
-
-EOF
-)
-
-echo $(cat << EOF
->>> install docker-compose
-
-info =
-https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-on-ubuntu-18-04
-
-EOF
-)
-
-sudo curl -L https://github.com/docker/compose/releases/download/1.23.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-docker-compose --version
-
 inst tldr
-
-inst autokey-gtk
 
 #echo ">>> compiz"
 # inst compiz compiz-plugins compiz-plugins-default compizconfig-settings-manager
@@ -446,18 +399,16 @@ inst_pip_tools () {
 
 
 
-inst_dev_tools_bash () {
-    inst_jqyq
-}
 
 inst_jqyq () {
     echo ">>> installing json and yaml parsing scripts usable from bash (jq, yq)"
     inst jq
-    sudo pip install yq
+    sudo pip3 install yq
 }
 
 inst_fuck () {
-    sudo pip3 install thefuck
+    # sudo pip3 install thefuck
+    inst thefuck
 }
 
 inst_blender () {
@@ -477,15 +428,6 @@ inst_qutebrowser () {
     inst qutebrowser
 }
 
-
-
-apt_repos_cd () {
-cd /etc/apt/
-}
-
-apt_repos_edit () {
-sudo vim /etc/apt/sources.list
-}
 
 dirfusuma="~/.config/fusuma"
 
@@ -542,4 +484,135 @@ uninstall_wine_and_lutris () {
     sudo apt remove lutris
     sudo apt purge lutris
     rm -rf ~/.config/lutris ~/.local/share/lutris ~/.cache/lutris
+}
+
+inst_docker () {
+echo $(cat << EOF
+>>> docker-ce
+
+comuninty edition - you want that
+install docker from deb https://download.docker.com/linux/ubuntu/dists/bionic/pool/stable/amd64/"
+download containerd.io, docker-ce-cli, docker-ce
+
+# if you want to store containers elswhere you can create symlink
+# so i have /srv/docker as a storage now
+$ sudo mkdir /var/lib/docker
+$ sudo ln -s /srv/docker/ /var/lib/docker
+$ sudo dockerd # manual docker deamon start
+# sudo systemctl start docker ###???
+
+
+# THIS
+wget "https://download.docker.com/linux/ubuntu/dists/disco/pool/stable/amd64/containerd.io_1.2.6-3_amd64.deb"
+wget "https://download.docker.com/linux/ubuntu/dists/disco/pool/stable/amd64/docker-ce-cli_19.03.3~3-0~ubuntu-disco_amd64.deb"
+wget "https://download.docker.com/linux/ubuntu/dists/disco/pool/stable/amd64/docker-ce_19.03.3~3-0~ubuntu-disco_amd64.deb"
+sudo dpkg -i "containerd.io_1.2.6-3_amd64.deb"
+sudo dpkg -i "docker-ce-cli_19.03.3~3-0~ubuntu-disco_amd64.deb"
+sudo dpkg -i "docker-ce_19.03.3~3-0~ubuntu-disco_amd64.deb"
+
+$ inst /srv/_all/DATA/deb/docker/*
+or this
+  - worked on 2020-05-03
+$ curl -fsSL https://get.docker.com -o get-docker.sh
+$ sudo sh get-docker.sh
+# after install you need to add your user to docker user group
+$ sudo usermod -aG docker <your-user>
+
+
+to remove
+$ sudo apt-get purge docker-ce
+$ sudo rm -rf /var/lib/docker
+
+
+# if you get
+# docker-credential-secretservice not installed or not available in PATH
+# on docker build
+# you can fix it via
+$ sudo apt install golang-docker-credential-helpers
+# viz https://github.com/pgRouting/docker-pgrouting/issues/11
+
+EOF
+)
+}
+
+inst_docker_compose () {
+
+echo $(cat << EOF
+>>> install docker-compose
+
+info =
+https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-on-ubuntu-18-04
+
+EOF
+)
+
+  sudo curl -L https://github.com/docker/compose/releases/download/1.23.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+  sudo chmod +x /usr/local/bin/docker-compose
+  docker-compose --version
+
+}
+
+inst_autokey () {
+  inst autokey-gtk
+  # on problems
+  # https://forums.linuxmint.com/viewtopic.php?t=326209
+  # sudo apt purge autokey-common
+}
+
+inst_urxvt () {
+  inst rxvt-unicode
+}
+
+inst_nvim () {
+  inst neovim
+  # plug install
+  # https://github.com/junegunn/vim-plug#neovim
+  sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+}
+
+inst_machine_dev_work () {
+  # Install Development work tools 
+  # to an apt-based linux
+
+  # terminal necessities
+  inst silversearcher-ag
+  inst_tmux
+  inst_tmuxp
+  inst_urxvt
+  inst_nvim
+  setup_urxvt
+
+  # development
+  inst git make
+  # inst pycharm
+
+  # coms
+  inst autokey
+
+  # slack emoji
+  inst gimp 
+
+  # mood
+  inst vlc
+  # inst_spotify
+  echo "install spotify yourself!"
+
+  # bonus terminal power
+
+  inst_docker
+  # inst_docker_compose
+  inst_fuck  # bash completion
+
+  # not sure - should i install as a global python package?
+  # inst_jqyq  # bash json
+
+}
+
+init_dotfiles_dev_work () {
+  init_dot_nvim
+  init_dot_autokey
+  # init_
+  # init_dot_tmuxp  # not defined
+  echo "- on nvim first start run PlugUpdate"
 }
