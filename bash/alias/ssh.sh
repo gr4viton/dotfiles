@@ -44,3 +44,10 @@ mosh_rpi () {
 }
 # alias retropie_me="shin retropie"
 
+ssh_generate_github_key () {
+  ssh-keygen -t ed25519 -C "${1}"
+}
+
+ssh_generate_github_key_dd () {
+  ssh_generate_github_key "${ENV_DD_MY_EMAIL}"
+}
