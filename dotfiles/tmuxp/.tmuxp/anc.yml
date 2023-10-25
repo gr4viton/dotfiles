@@ -3,6 +3,7 @@
 name: ans
 root: $dirbag
 
+shell_command_before: "muxl_base_da; cd ${dirpcanc}"
 # Optional tmux socket
 # socket_name: foo
 
@@ -43,21 +44,21 @@ startup_window: ae
 # post: tmux -CC attach -t monitor
 
 windows:
-      # layout: main-vertical
+      # layout: tiled
   - ae:
-      layout: main-horizontal
+      layout: tiled
       panes:
-        - vimo $diransprov"amadeus.py" $diransprov"travelport.py
+        - vimo $diransprov"
   - ad:
-      layout: main-horizontal
+      layout: tiled
       panes:
         - do_run ans
           # - vim dev/docker-compose-dev.yml
   - aag:
-      layout: main-horizontal
+      layout: tiled
       panes:
-        - ag amadeus
+        - ag TODO
   - ag:
-      layout: main-horizontal
+      layout: tiled
       panes:
         - glog

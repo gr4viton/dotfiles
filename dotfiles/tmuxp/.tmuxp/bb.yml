@@ -1,28 +1,33 @@
 session_name: bb
 
-start_directory: "${dirbb}"
+start_directory: "$dirbb"
 
-shell_command_before: "cdbbkw; set_term_xterm256color"
+shell_command_before: "muxl_base_da; cdbbkw;"
 
-startup_window: edit
+startup_window: do
 
 windows:
-      # layout: main-vertical
+      # layout: tiled
       #shell_command_before:
       #- src
   - window_name: do
-    layout: main-horizontal
+    layout: even-vertical
     panes:
-      - cdbb; bb_up_build
+    # - docker:
+    - cdbb; do_cat_build pudb; echo "do_cat_up pudb"
   - window_name: edit
-    layout: main-horizontal
     panes:
-      - vimo sabre/core.py swagger/black_box.yaml
+    - cdpc; viss
   - window_name: ag
-    layout: main-horizontal
+    layout: even-vertical
     panes:
-      - agp TODO -A1
+    - agp TODO -A1
   - window_name: git
-    layout: main-horizontal
+    layout: tiled
     panes:
-      - glog
+    - glog
+    - echo "hit_black_prov check check AMADEUS_KIWI"
+  - window_name: pudb
+    layout: tiled
+    panes:
+    - echo "pudb_connect"

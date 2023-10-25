@@ -2,9 +2,9 @@
 
 session_name: bag
 
-start_directory: "${dirbagama}"
+start_directory: "${dirbageach}"
 
-shell_command_before: "cdbagama"
+shell_command_before: "muxl_base_da; cd ${dirbageach}"
 # Optional tmux socket
 # socket_name: foo
 
@@ -45,25 +45,27 @@ startup_window: edit
 # post: tmux -CC attach -t monitor
 
 windows:
-      # layout: main-vertical
+      # layout: tiled
       #shell_command_before:
       #- src
   - window_name: edit
-    layout: main-horizontal
+    layout: tiled
     panes:
-      - vimo base.py 
+      - vim -S Session.vim
         #- echo $dirans
         #- window_name: docker
-        #layout: main-horizontal
+        #layout: tiled
         #panes:
         #- do_run ans
           # - vim dev/docker-compose-dev.yml
   - window_name: ag
-    layout: main-horizontal
+    layout: tiled
     panes:
-        #- ag amadeus
       - agp TODO -A1
   - window_name: git
-    layout: main-horizontal
+    layout: tiled
     panes:
       - TERM=xterm; glog
+  - window_name: devedit
+    panes:
+      - cd ${dirbag}/dev; vimo exec_automat.py some_bids.txt

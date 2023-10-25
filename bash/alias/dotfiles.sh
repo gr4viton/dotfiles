@@ -1,5 +1,9 @@
 init_dot () {
-
+    # Initialize the saved customized dotfile for 
+    # given application by creating symlinks to
+    # the github versioned dotfile folder
+    
+    
     # should work also with folder
     app_name="${1:?app_name}"
     local_file="${2:?local rc file of the app}"
@@ -50,7 +54,7 @@ init_dot () {
 }
 
 
-DIR_DDDOT="${DIR_DDD}/dotfiles/"
+DIR_DDDOT="${DIR_DDD}/dotfiles"
 
 init_dot_monitors () {
     # if the update of the setup is needed - use this: https://askubuntu.com/a/716677
@@ -95,20 +99,23 @@ init_dot_autokey () {
         "${DIR_DDDOT}/autokey_data/data/gr4viton"
 }
 
-init_dot_tmux () {
-    app_name="tmux"
+init_dot_tmux_all () {
     config_dir="${HOME}"
+
+    app_name="tmux"
     init_dot $app_name \
         "${config_dir}/.tmux.conf" \
         "${DIR_DDDOT}/tmux/dd.tmux.conf"
 
 
-    echo "NOT FULLY IMPLEMENTED YET"
+    echo "NOT FULLY IMPLEMENTED YET - missing tmuxinator and tmuxp"
     mux_sys=$home".config/tmuxinator/"
     mux_my=$dotfiles"tmuxinator/"
 
-    muxp_sys="${home}.tmuxp/"
-    muxp_my="${dotfiles}tmuxp/"
+    app_name="tmuxp"
+    init_dot $app_name \
+        "${config_dir}/.tmuxp" \
+        "${DIR_DDDOT}/tmuxp/.tmuxp"
 }
 
 _init_dot_urxvt () {

@@ -6,7 +6,7 @@ session_name: ans
 #
 start_directory: "${dirpcama}"
 
-shell_command_before: "cdpcama"
+shell_command_before: "muxl_base_da; cdpcama"
 #root: <%= ENV["dirans"] =%>
 # root
 
@@ -50,25 +50,27 @@ shell_command_before: "cdpcama"
 # post: tmux -CC attach -t monitor
 
 windows:
-      # layout: main-vertical
+      # layout: tiled
       #shell_command_before:
       #- src
-  - window_name: edit
-    layout: main-horizontal
+  - window_name: do
     panes:
-      - vimo $diransama"/base.py" flow/service/order.py step/base.py step/pnr/retrieve/step.py
+      - do_cat_up dev
+  - window_name: edit
+    layout: tiled
+    panes:
+      - viss
         #- echo $dirans
         #- window_name: docker
-        #layout: main-horizontal
+        #layout: tiled
         #panes:
         #- do_run ans
           # - vim dev/docker-compose-dev.yml
   - window_name: ag
-    layout: main-horizontal
+    layout: tiled
     panes:
-        #- ag amadeus
       - agp TODO -A1
   - window_name: git
-    layout: main-horizontal
+    layout: tiled
     panes:
       - TERM=xterm; glog

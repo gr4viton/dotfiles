@@ -2,37 +2,36 @@ session_name: rogue
 
 start_directory: "${dirroguekw}"
 
-shell_command_before: "cdroguekw"
+shell_command_before: "muxl_base_da; cdroguekw"
 
 startup_window: edit
 
 windows:
-      # layout: main-vertical
+      # layout: tiled
       #shell_command_before:
       #- src
   - window_name: py
-    layout: main-vertical
+    layout: tiled
     panes:
       - source $dirpcrogue/.env; pipenv shell
       - kw_rogue_info
 
   - window_name: edit
-    layout: main-horizontal
+    layout: tiled
     panes:
-      - vimo api.py test.py step/base.py
+      - viss
         #- echo $dirans
         #- window_name: docker
-        #layout: main-horizontal
+        #layout: tiled
         #panes:
         #- do_run ans
           # - vim dev/docker-compose-dev.yml
   - window_name: ag
-    layout: main-horizontal
+    layout: tiled
     panes:
-        #- ag amadeus
       - TERM=xterm; agp TODO -A1
   - window_name: git
-    layout: main-horizontal
+    layout: tiled
     panes:
       - TERM=xterm; glog
 

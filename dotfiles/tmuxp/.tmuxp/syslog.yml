@@ -2,13 +2,13 @@ session_name: syslog
 
 start_directory: "~"
 
-shell_command_before: "set_term_xterm256color"
+shell_command_before: "muxl_base_dd;"
 
 startup_window: edit
 
 windows:
   - window_name: usb
-    # layout: main-horizontal
+    # layout: tiled
     panes:
       - syslog
       - xinput
