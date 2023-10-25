@@ -122,8 +122,10 @@ URxvt*background: rgba:3155/0011/2444/efff
 !
 ! Xft: DejaVu fonts
 !  Fedora/debian packages: dejavu-sans-mono-fonts/ttf-dejavu 
-URxvt*font: xft:DejaVu Sans Mono:pixelsize=12:antialias=true:hinting=true
-URxvt*boldFont: xft:DejaVu Sans Mono:bold:pixelsize=12:antialias=true:hinting=true
+URxvt*font: xft:DejaVu Sans Mono:size=12:antialias=true:hinting=true
+URxvt*boldFont: xft:DejaVu Sans Mono:bold:size=12:antialias=true:hinting=true
+!URxvt*font: xft:DejaVu Sans Mono:pixelsize=12:antialias=true:hinting=true
+!URxvt*boldFont: xft:DejaVu Sans Mono:bold:pixelsize=12:antialias=true:hinting=true
 
 
 !-- Xft settings -- !

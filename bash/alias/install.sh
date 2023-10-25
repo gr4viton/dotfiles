@@ -374,9 +374,6 @@ inst_ctags_cron_vim () {
     echo "tags=$ctags_config_file"
 }
 
-inst_pycharm () {
-    instsnap pycharm-professional --classic
-}
 
 inst_dev () {
     inst_dev_tools_bash
@@ -554,6 +551,7 @@ EOF
 
 inst_autokey () {
   inst autokey-gtk
+  inst xdotool  # for emulating media keys
   # on problems
   # https://forums.linuxmint.com/viewtopic.php?t=326209
   # sudo apt purge autokey-common
@@ -571,8 +569,13 @@ inst_nvim () {
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 }
 
+inst_pycharm () {
+  echo "# pycharm"
+  echo "https://www.jetbrains.com/help/pycharm/installation-guide.html#ef484d74"
+}
+
 inst_machine_dev_work () {
-  # Install Development work tools 
+  # Install Development work tools
   # to an apt-based linux
 
   # terminal necessities
@@ -586,12 +589,14 @@ inst_machine_dev_work () {
   # development
   inst git make
   # inst pycharm
+  inst_pycharm
+
 
   # coms
   inst_autokey
 
   # slack emoji
-  inst gimp 
+  inst gimp
 
   # mood
   inst vlc
