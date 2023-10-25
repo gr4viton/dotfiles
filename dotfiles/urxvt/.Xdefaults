@@ -201,7 +201,7 @@ URxvt.tabbed.autohide: true
 
 URxvt.keysym.C-H: perl:tabbedex:prev_tab
 URxvt.keysym.C-L: perl:tabbedex:next_tab
-URxvt.keysym.C-K: perl:tabbedex:rename_tab
+! URxvt.keysym.C-K: perl:tabbedex:rename_tab  ! too often pressed in error
 URxvt.keysym.C-J: perl:tabbedex:new_tab
 /* URxvt.keysym.C-h: perl:tabbedex:move_tab_left */
 /* URxvt.keysym.C-l: perl:tabbedex:move_tab_right */

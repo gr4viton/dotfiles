@@ -118,13 +118,15 @@ init_dot_tmux_all () {
         "${DIR_DDDOT}/tmuxp/.tmuxp"
 }
 
-_init_dot_urxvt () {
-    echo "NOT IMPLEMENTED YET"
+init_dot_urxvt () {
+    # sometimes can be Xresources?
     urxvt_to=$dotfiles"urxvt/.Xresources"
     urxvt_from=$home".Xresources"
 
-    urxvt_to2=$dotfiles"urxvt/.Xdefaults"
-    urxvt_from2=$home".Xdefaults"
+    app_name="tmuxp"
+    init_dot $app_name \
+        "${HOME}/.Xdefaults" \
+        "${DIR_DDDOT}/urxvt/.Xdefaults"
 }
 
 _init_dot_mate_panel () {
