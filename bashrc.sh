@@ -5,6 +5,9 @@ if [ -z "$DIR_DD" ]; then
 fi
 DIR_DDD="$DIR_DD/dotfiles/"
 
+# for kw dotfiles
+DIR_DDD_KW="$DIR_DD_KW/dd-kw-dotfiles/"
+
 loadit() {
     script_path=$1
     if [ -f $script_path ]; then

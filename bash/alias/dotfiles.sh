@@ -55,6 +55,7 @@ init_dot () {
 
 
 DIR_DDDOT="${DIR_DDD}/dotfiles"
+DIR_DDDOT_KW="${DIR_DDD_KW}/dotfiles"
 
 init_dot_monitors () {
     # if the update of the setup is needed - use this: https://askubuntu.com/a/716677

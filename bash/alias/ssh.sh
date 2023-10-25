@@ -49,6 +49,7 @@ ssh_generate_github_key () {
 }
 
 ssh_generate_github_key_dd () {
+  # should rather use laptop hw name
   ssh_generate_github_key "${ENV_DD_MY_EMAIL}"
 }
 

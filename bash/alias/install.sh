@@ -588,7 +588,7 @@ inst_machine_dev_work () {
   # inst pycharm
 
   # coms
-  inst autokey
+  inst_autokey
 
   # slack emoji
   inst gimp 
@@ -610,9 +610,10 @@ inst_machine_dev_work () {
 }
 
 init_dotfiles_dev_work () {
+  echo "- autokey has to be started first - for the default config folders to be created"
   init_dot_nvim
   init_dot_autokey
-  # init_
-  init_dot_tmux_all  # not defined
+  init_dot_tmux_all
+  init_dot_urxvt
   echo "- on nvim first start run PlugUpdate"
 }
