@@ -1,0 +1,29 @@
+session_name: hovel
+
+start_directory: "$dirhovel"
+
+# shell_command_before: "muxl_base_da; cdbbkw;"
+# shell_command_before: "cdweb; source rc.sh"
+shell_command_before: "cdhovel"
+
+startup_window: do
+
+windows:
+      # layout: tiled
+      #shell_command_before:
+      #- src
+  - window_name: exe
+    layout: even-vertical
+    panes:
+    - echo hello
+  - window_name: edit
+    panes:
+    - cdhovel; cd src/pyhovel/; viss
+  - window_name: ag
+    layout: even-vertical
+    panes:
+    - agp TODO -A1
+  - window_name: git
+    layout: tiled
+    panes:
+    - glog

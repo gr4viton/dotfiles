@@ -1,0 +1,28 @@
+session_name: wiki
+
+start_directory: "$dirwiki"
+
+shell_command_before: "muxl_base_da; cdwiki;"
+
+startup_window: do
+
+windows:
+  - window_name: do
+    layout: even-vertical
+    panes:
+    - echo yarn develop; yarn develop
+  - window_name: edit
+    panes:
+    - viss
+  - window_name: ag
+    layout: even-vertical
+    panes:
+    - agp TODO -A1
+  - window_name: git
+    layout: tiled
+    panes:
+    - glog
+  - window_name: pudb
+    layout: tiled
+    panes:
+    - echo "pudb_connect"

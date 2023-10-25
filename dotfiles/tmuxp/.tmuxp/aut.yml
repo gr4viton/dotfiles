@@ -1,0 +1,30 @@
+session_name: aut
+
+start_directory: "$diraut"
+
+shell_command_before: "muxl_base_da; cdautkw;"
+
+startup_window: edit
+
+windows:
+  - window_name: do
+    layout: tiled
+    panes:
+      - cdaut; echo "./script/bash_in.sh"
+  - window_name: edit
+    layout: tiled
+    panes:
+      - cd $dirautpapi; viss
+  - window_name: ag
+    layout: tiled
+    panes:
+      - agp TODO -A1
+  - window_name: git
+    layout: tiled
+    panes:
+      - glogdog
+  - window_name: pudb
+    layout: tiled
+    panes:
+      - # pudb_connect
+

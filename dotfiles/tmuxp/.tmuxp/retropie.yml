@@ -1,0 +1,16 @@
+session_name: retropie
+
+start_directory: "/srv/dd/retro"
+
+shell_command_before: "muxl_base_dd"
+
+startup_window: edit
+
+windows:
+      # layout: tiled
+      #shell_command_before:
+      #- src
+  - window_name: ssh
+    layout: tiled
+    panes:
+      - retropie_me

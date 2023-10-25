@@ -1,0 +1,17 @@
+session_name: mblab
+
+start_directory: "/srv/dd/blender/mblab"
+
+shell_command_before: "muxl_base_dd"
+
+startup_window: edit
+
+windows:
+      # layout: tiled
+      #shell_command_before:
+      #- src
+  - window_name: edit
+    layout: tiled
+    panes:
+      - git log
+

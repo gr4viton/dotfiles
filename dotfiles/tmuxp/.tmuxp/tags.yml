@@ -1,0 +1,15 @@
+session_name: tags
+
+start_directory: "$dirbb"
+
+shell_command_before: ""
+
+startup_window: do
+
+windows:
+  - window_name: edit
+    layout: tiled
+    panes:
+    - visearch 'set tags' ~/.config/nvim/init.vim ~/.config/.ctags.txt
+    - crontab -e
+    - cd /srv/kiwi/data/tags; ll

@@ -1,0 +1,31 @@
+# :%s/DEFAULT/<name>/gc
+session_name: DEFAULT
+
+start_directory: "$dirDEFAULT"
+
+shell_command_before: "muxl_base_da; cdDEFAULTkw;"
+
+startup_window: edit
+
+windows:
+  - window_name: do
+    layout: tiled
+    panes:
+      - cdDEFAULT; do_cat_build dev
+      - cdDEFAULT; vido_cat_compose dev
+  - window_name: edit
+    layout: tiled
+    panes:
+      - viss
+  - window_name: ag
+    layout: tiled
+    panes:
+      - agp TODO -A1
+  - window_name: git
+    layout: tiled
+    panes:
+      - glogdog
+  - window_name: pudb
+    layout: tiled
+    panes:
+      - # pudb_connect

@@ -1,0 +1,32 @@
+# gds-observer
+session_name: go
+
+start_directory: "$dirgo"
+
+shell_command_before: "muxl_base_da; cdgokw;"
+
+startup_window: edit
+
+windows:
+  - window_name: do
+    # layout: tiled
+    panes:
+      - build:
+        - cdgo
+        - do_cat_build dev
+  - window_name: edit
+    layout: tiled
+    panes:
+      - viss
+  - window_name: ag
+    layout: tiled
+    panes:
+      - agp TODO -A1
+  - window_name: git
+    layout: tiled
+    panes:
+      - glogdog
+  - window_name: pudb
+    layout: tiled
+    panes:
+      - # pudb_connect

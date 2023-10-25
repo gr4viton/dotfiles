@@ -1,0 +1,28 @@
+session_name: zizala
+
+start_directory: "/srv/dd/component/zizala"
+
+shell_command_before: ""
+
+startup_window: edit
+
+windows:
+      # layout: tiled
+      #shell_command_before:
+      #- src
+  - window_name: exe
+    layout: main-vertical
+    panes:
+      # - yarn start
+      # - echo "expo install expo-camera"
+      - uvicorn main:app --reload
+  - window_name: edit
+    layout: main-vertical
+    panes:
+      - viss
+  - window_name: debug_ag
+    panes:
+      - ag TODO
+  - window_name: git
+    panes:
+      - glog

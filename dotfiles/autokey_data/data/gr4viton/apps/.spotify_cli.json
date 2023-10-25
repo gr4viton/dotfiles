@@ -1,0 +1,28 @@
+{
+    "type": "script",
+    "description": "spotify_cli",
+    "store": {},
+    "modes": [],
+    "usageCount": 22,
+    "prompt": false,
+    "omitTrigger": false,
+    "showInTrayMenu": false,
+    "abbreviation": {
+        "abbreviations": [],
+        "backspace": true,
+        "ignoreCase": false,
+        "immediate": false,
+        "triggerInside": false,
+        "wordChars": "[\\w]"
+    },
+    "hotkey": {
+        "modifiers": [
+            "<super>"
+        ],
+        "hotKey": "s"
+    },
+    "filter": {
+        "regex": null,
+        "isRecursive": false
+    }
+}

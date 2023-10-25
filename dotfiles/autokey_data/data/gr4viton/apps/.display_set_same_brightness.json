@@ -1,0 +1,31 @@
+{
+    "type": "script",
+    "description": "display_set_same_brightness",
+    "store": {},
+    "modes": [
+        3
+    ],
+    "usageCount": 13,
+    "prompt": true,
+    "omitTrigger": false,
+    "showInTrayMenu": false,
+    "abbreviation": {
+        "abbreviations": [],
+        "backspace": true,
+        "ignoreCase": false,
+        "immediate": false,
+        "triggerInside": false,
+        "wordChars": "[\\w]"
+    },
+    "hotkey": {
+        "modifiers": [
+            "<alt>",
+            "<super>"
+        ],
+        "hotKey": "c"
+    },
+    "filter": {
+        "regex": null,
+        "isRecursive": false
+    }
+}

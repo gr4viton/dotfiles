@@ -1,0 +1,32 @@
+session_name: backbone
+
+start_directory: "$dirback"
+
+shell_command_before: "muxl_base_da; cdbackkw;"
+
+startup_window: do
+
+windows:
+      # layout: tiled
+      #shell_command_before:
+      #- src
+  - window_name: do
+    layout: even-vertical
+    panes:
+    # - docker:
+    - cdback; do_cat_build pudb; echo "do_cat_up pudb"
+  - window_name: edit
+    panes:
+    - cdback; viss
+  - window_name: ag
+    layout: even-vertical
+    panes:
+    - agp TODO -A1
+  - window_name: git
+    layout: tiled
+    panes:
+    - glog
+  - window_name: pudb
+    layout: tiled
+    panes:
+    - echo "pudb_connect"

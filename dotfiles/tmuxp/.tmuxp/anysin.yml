@@ -1,0 +1,17 @@
+session_name: anysin
+
+start_directory: "/srv/dd/anysin"
+
+shell_command_before: ""
+
+startup_window: edit
+
+windows:
+      # layout: tiled
+      #shell_command_before:
+      #- src
+  - window_name: ssh
+    layout: tiled
+    panes:
+      - retropie_me
+

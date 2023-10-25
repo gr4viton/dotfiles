@@ -1,0 +1,3 @@
+<details>
+<summary>Click me to collapse/fold.</summary>
+</details>

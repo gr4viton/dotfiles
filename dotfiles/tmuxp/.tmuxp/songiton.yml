@@ -1,0 +1,26 @@
+session_name: songiton
+
+start_directory: "/srv/dd/component/songiton/fastapi"
+
+shell_command_before: ""
+
+startup_window: edit
+
+windows:
+      # layout: tiled
+      #shell_command_before:
+      #- src
+  - window_name: exe
+    layout: main-vertical
+    panes:
+      - py invoker.py
+      - uvicorn main:app --reload
+  - window_name: edit
+    layout: main-vertical
+    panes:
+      - viss
+  - window_name: debug_ag
+    layout: main-vertical
+    panes:
+      - ag TODO
+      - glog

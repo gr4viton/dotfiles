@@ -1,0 +1,29 @@
+session_name: conf
+
+start_directory: "${dirconfkw}"
+
+shell_command_before: "muxl_base_da; cd ${dirconfkw}"
+startup_window: edit
+
+windows:
+  - window_name: docker
+    layout: tiled
+    panes:
+    - do_build_ dev
+    - vido_compose_yml_all
+  - window_name: edit
+    layout: tiled
+    panes:
+      - viss
+  - window_name: ag
+    layout: tiled
+    panes:
+      - agp TODO -A1
+  - window_name: git
+    layout: tiled
+    panes:
+      - glog
+  - window_name: pudb
+    layout: tiled
+    panes:
+      - glog
