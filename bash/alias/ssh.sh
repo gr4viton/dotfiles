@@ -51,3 +51,10 @@ ssh_generate_github_key () {
 ssh_generate_github_key_dd () {
   ssh_generate_github_key "${ENV_DD_MY_EMAIL}"
 }
+
+ssh_add () {
+  # adds your ssh key to ssh agent
+  ssh-add ~/.ssh/id_rsa
+  # start the agent
+  eval `ssh-agent -s`
+}
