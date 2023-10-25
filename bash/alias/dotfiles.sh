@@ -97,7 +97,13 @@ init_dot_autokey () {
     init_dot $app_name \
         "${config_dir}/data/gr4viton" \
         "${DIR_DDDOT}/autokey_data/data/gr4viton"
+
+    # kw
+    init_dot $app_name \
+        "${config_dir}/data/kw" \
+        "${DIR_DDDOT}/autokey_data/data/kw"
 }
+
 
 init_dot_tmux_all () {
     config_dir="${HOME}"
