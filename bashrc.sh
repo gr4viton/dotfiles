@@ -6,7 +6,8 @@ fi
 DIR_DDD="$DIR_DD/dotfiles/"
 
 # for kw dotfiles
-DIR_DDD_KW="$DIR_DD_KW/dd-kw-dotfiles/"
+DIR_DDD_KW="$DIR_DD/dd-kw-dotfiles/"
+
 
 loadit() {
     script_path=$1

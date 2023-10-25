@@ -102,7 +102,7 @@ init_dot_autokey () {
     # kw
     init_dot $app_name \
         "${config_dir}/data/kw" \
-        "${DIR_DDDOT}/autokey_data/data/kw"
+        "${DIR_DDDOT_KW}/autokey_data/data/kw"
 }
 
 

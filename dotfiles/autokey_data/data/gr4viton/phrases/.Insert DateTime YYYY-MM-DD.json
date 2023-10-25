@@ -1,31 +1,31 @@
 {
-    "usageCount": 102, 
-    "omitTrigger": false, 
-    "prompt": false, 
-    "description": "Insert DateTime YYYY-MM-DD", 
-    "abbreviation": {
-        "wordChars": "[\\w]", 
-        "abbreviations": [], 
-        "immediate": false, 
-        "ignoreCase": false, 
-        "backspace": true, 
-        "triggerInside": false
-    }, 
-    "hotkey": {
-        "hotKey": "[", 
-        "modifiers": [
-            "<ctrl>", 
-            "<shift>"
-        ]
-    }, 
+    "type": "script",
+    "description": "Insert DateTime YYYY-MM-DD",
+    "store": {},
     "modes": [
         3
-    ], 
-    "showInTrayMenu": false, 
+    ],
+    "usageCount": 103,
+    "prompt": false,
+    "omitTrigger": false,
+    "showInTrayMenu": false,
+    "abbreviation": {
+        "abbreviations": [],
+        "backspace": true,
+        "ignoreCase": false,
+        "immediate": false,
+        "triggerInside": false,
+        "wordChars": "[\\w]"
+    },
+    "hotkey": {
+        "modifiers": [
+            "<ctrl>",
+            "<shift>"
+        ],
+        "hotKey": "["
+    },
     "filter": {
-        "regex": null, 
+        "regex": null,
         "isRecursive": false
-    }, 
-    "type": "script", 
-    "store": {}
+    }
 }
