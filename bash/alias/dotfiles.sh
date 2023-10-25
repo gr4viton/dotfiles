@@ -107,15 +107,14 @@ init_dot_tmux_all () {
         "${config_dir}/.tmux.conf" \
         "${DIR_DDDOT}/tmux/dd.tmux.conf"
 
-
-    echo "NOT FULLY IMPLEMENTED YET - missing tmuxinator and tmuxp"
-    mux_sys=$home".config/tmuxinator/"
-    mux_my=$dotfiles"tmuxinator/"
-
     app_name="tmuxp"
     init_dot $app_name \
         "${config_dir}/.tmuxp" \
         "${DIR_DDDOT}/tmuxp/.tmuxp"
+
+    echo "NOT FULLY IMPLEMENTED YET - missing tmuxinator"
+    mux_sys=$home".config/tmuxinator/"
+    mux_my=$dotfiles"tmuxinator/"
 }
 
 init_dot_urxvt () {

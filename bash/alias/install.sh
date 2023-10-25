@@ -613,6 +613,6 @@ init_dotfiles_dev_work () {
   init_dot_nvim
   init_dot_autokey
   # init_
-  # init_dot_tmuxp  # not defined
+  init_dot_tmux_all  # not defined
   echo "- on nvim first start run PlugUpdate"
 }
