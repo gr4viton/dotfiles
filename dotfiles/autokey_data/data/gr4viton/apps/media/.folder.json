@@ -1,13 +1,8 @@
 {
-    "type": "script",
-    "description": "volume_mute",
-    "store": {},
-    "modes": [
-        3
-    ],
-    "usageCount": 114,
-    "prompt": false,
-    "omitTrigger": false,
+    "type": "folder",
+    "title": "media",
+    "modes": [],
+    "usageCount": 209,
     "showInTrayMenu": false,
     "abbreviation": {
         "abbreviations": [],
@@ -18,11 +13,8 @@
         "wordChars": "[\\w]"
     },
     "hotkey": {
-        "modifiers": [
-            "<shift>",
-            "<super>"
-        ],
-        "hotKey": "c"
+        "modifiers": [],
+        "hotKey": null
     },
     "filter": {
         "regex": null,

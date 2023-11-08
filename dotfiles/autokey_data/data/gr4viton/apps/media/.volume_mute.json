@@ -1,9 +1,11 @@
 {
     "type": "script",
-    "description": "display_brightness_up",
+    "description": "volume_mute",
     "store": {},
-    "modes": [],
-    "usageCount": 0,
+    "modes": [
+        3
+    ],
+    "usageCount": 115,
     "prompt": false,
     "omitTrigger": false,
     "showInTrayMenu": false,
@@ -20,7 +22,7 @@
             "<shift>",
             "<super>"
         ],
-        "hotKey": "x"
+        "hotKey": "c"
     },
     "filter": {
         "regex": null,

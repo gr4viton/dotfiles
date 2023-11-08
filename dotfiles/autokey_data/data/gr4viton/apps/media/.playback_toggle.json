@@ -1,0 +1,29 @@
+{
+    "type": "script",
+    "description": "playback_toggle",
+    "store": {},
+    "modes": [],
+    "usageCount": 12,
+    "prompt": false,
+    "omitTrigger": false,
+    "showInTrayMenu": false,
+    "abbreviation": {
+        "abbreviations": [],
+        "backspace": true,
+        "ignoreCase": false,
+        "immediate": false,
+        "triggerInside": false,
+        "wordChars": "[\\w]"
+    },
+    "hotkey": {
+        "modifiers": [
+            "<shift>",
+            "<super>"
+        ],
+        "hotKey": "a"
+    },
+    "filter": {
+        "regex": null,
+        "isRecursive": false
+    }
+}

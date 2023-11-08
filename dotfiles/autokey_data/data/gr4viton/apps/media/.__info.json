@@ -1,6 +1,6 @@
 {
     "type": "script",
-    "description": "display_brightness_down",
+    "description": "__info",
     "store": {},
     "modes": [],
     "usageCount": 0,
@@ -16,11 +16,8 @@
         "wordChars": "[\\w]"
     },
     "hotkey": {
-        "modifiers": [
-            "<shift>",
-            "<super>"
-        ],
-        "hotKey": "x"
+        "modifiers": [],
+        "hotKey": null
     },
     "filter": {
         "regex": null,

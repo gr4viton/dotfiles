@@ -1,6 +1,6 @@
 {
     "type": "script",
-    "description": "playback_toggle",
+    "description": "display_all_brightness_medium",
     "store": {},
     "modes": [
         3
@@ -19,10 +19,10 @@
     },
     "hotkey": {
         "modifiers": [
-            "<shift>",
+            "<alt>",
             "<super>"
         ],
-        "hotKey": "a"
+        "hotKey": "r"
     },
     "filter": {
         "regex": null,
