@@ -1,0 +1,29 @@
+{
+    "type": "script",
+    "description": "display_brightness_up",
+    "store": {},
+    "modes": [],
+    "usageCount": 0,
+    "prompt": false,
+    "omitTrigger": false,
+    "showInTrayMenu": false,
+    "abbreviation": {
+        "abbreviations": [],
+        "backspace": true,
+        "ignoreCase": false,
+        "immediate": false,
+        "triggerInside": false,
+        "wordChars": "[\\w]"
+    },
+    "hotkey": {
+        "modifiers": [
+            "<shift>",
+            "<super>"
+        ],
+        "hotKey": "x"
+    },
+    "filter": {
+        "regex": null,
+        "isRecursive": false
+    }
+}

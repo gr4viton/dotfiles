@@ -1,0 +1,31 @@
+{
+    "type": "script",
+    "description": "volume_down",
+    "store": {},
+    "modes": [
+        3
+    ],
+    "usageCount": 39,
+    "prompt": false,
+    "omitTrigger": false,
+    "showInTrayMenu": false,
+    "abbreviation": {
+        "abbreviations": [],
+        "backspace": true,
+        "ignoreCase": false,
+        "immediate": false,
+        "triggerInside": false,
+        "wordChars": "[\\w]"
+    },
+    "hotkey": {
+        "modifiers": [
+            "<shift>",
+            "<super>"
+        ],
+        "hotKey": "d"
+    },
+    "filter": {
+        "regex": null,
+        "isRecursive": false
+    }
+}
