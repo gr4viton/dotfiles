@@ -24,7 +24,6 @@ extract () {
 }
 
 
-
 date_rfc_3339 () {
     # date in rfc-3339 format
     # it's like iso-8601 + time
@@ -478,9 +477,10 @@ alias urxvt_reload="xrdb -load $rcurxvt"
 alias vircurxvt="vim -O $rcurxvt"
 
 
-if [[ $(apt_installed thefuck) ]]; then
-    eval $(thefuck --alias)
-fi
+# this was so slow (1second)
+#if [[ $(apt_installed thefuck) ]]; then
+    #eval $(thefuck --alias)
+#fi
 
 
 # ############## gr4log
@@ -583,6 +583,8 @@ dir_kde_theme_global="/usr/share/plasma/look-and-feel"
 cd_kde_theme_global () {
     cd $dir_kde_theme_global
 }
+
+
 
 kde_create_and_use_local_theme_ () {
     # viz https://www.reddit.com/r/kde/comments/9j57z2/fixing_the_awful_volumebrightness_osd_size/

@@ -8,6 +8,10 @@
 #    - i used it: /var/lib/docker is a symlink to /srv/docker
 # - edit /etc/default/docker (debian path)
 
+docker-compose () {
+    docker compose "$@"
+}
+
 _do_build () {
     set -x
     time docker-compose -f $1 build ${@:2}

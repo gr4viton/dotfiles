@@ -8,6 +8,8 @@ DIR_DDD="$DIR_DD/dotfiles/"
 # for kw dotfiles
 DIR_DDD_KW="$DIR_DD/dd-kw-dotfiles/"
 
+# .env file load
+source "$HOME_DD/dd/dd_env"
 
 loadit() {
     script_path=$1
@@ -16,7 +18,9 @@ loadit() {
         script_name=$(basename $script_path)
         # script_name=$($script_name%%.*)
         # echo -n "$script_name "
-        echo -n "$(basename $script_name .sh) "
+        if [[ -z "$DOTFILES_SILENT_LOADING" ]]; then
+            echo -n "$(basename $script_name .sh) "
+        fi
     fi
 }
 
@@ -27,6 +31,7 @@ loadit_here() {
 }
 
 DIR_LOADIT_SCRIPT="${DIR_DDD}bash/"
+
 
 loadit_script() {
     script_path=$1
@@ -40,13 +45,17 @@ loadit_script() {
 
 HOSTNAME=$(hostname)
 
-echo "Sourcing ${DIR_DDD}/device_config.sh"
+# echo "Sourcing ${DIR_DDD}/device_config.sh"
 loadit "${DIR_DDD}/device_config.sh"
 
 
 if [[ "$HOSTNAME" == "dddell-latitude-5401" ]]; then
     DD_SELECTOR="full"
     USER_DD="dd"
+elif [[ "$HOSTNAME" == "dd-think" ]]; then
+    DD_SELECTOR="work"
+    USER_DD="dd"
+    DOTFILES_SILENT_LOADING=1
 elif [[ "$HOSTNAME" == "ubuntu" || "$HOSTNAME" == "rosbot" ]]; then
     DD_SELECTOR="ros"
     USER_DD="ubuntu"
@@ -76,7 +85,9 @@ else
 	HOME_ROOT="/root/"
 fi
 
-echo "Sourcing [$DD_SELECTOR script] files from $DIR_LOADIT_SCRIPT:"
+if [[ -z "$DOTFILES_SILENT_LOADING" ]]; then
+  echo "Sourcing [$DD_SELECTOR script] files from $DIR_LOADIT_SCRIPT:"
+fi
 
 # script lists
 # - all script lists should contain the alias/git.sh
@@ -87,7 +98,6 @@ echo "Sourcing [$DD_SELECTOR script] files from $DIR_LOADIT_SCRIPT:"
 # basic stuff - colors, ll, cd.., grep, rm ...
 # source $DIR_DD/dotfiles/bash/basic.sh
 
-source "$HOME_DD/dd/dd_env"
 
 if [[ "$DD_SELECTOR" == "full" ]]; then
 
@@ -130,6 +140,7 @@ if [[ "$DD_SELECTOR" == "full" ]]; then
         "alias/ssh.sh"
         "alias/ftp.sh"
         "alias/dell.sh"
+        "alias/think-x1.sh"
         "alias/dirs.sh"
         "alias/kiwi.sh"
         "alias/config.sh"
@@ -140,6 +151,54 @@ if [[ "$DD_SELECTOR" == "full" ]]; then
             # laptop wr
             "../../kiwi_alias.sh"
     )
+
+elif [[ "$DD_SELECTOR" == "work" ]]; then
+
+    scripts=(
+        "ps1.sh"
+        "basic.sh"
+
+            # basic
+            "alias/app/ag.sh"
+            "alias/app/apt.sh"
+            "alias/app/git.sh"
+            "alias/app/python.sh"
+            "alias/app/tmux.sh"
+            "alias/app/vim.sh"
+            "alias/app/ssh.sh"
+
+            # laptop ubuntu
+            "alias/app/aosd.sh"
+            "alias/app/curlftpfs.sh"
+            "alias/app/docker.sh"
+            "alias/app/kubectl.sh"
+            "alias/app/redis.sh"
+            "alias/app/tldr.sh"
+
+        "alias/office.sh"
+        "alias/monitor.sh"
+        "alias/centroid.sh"
+        "alias/install.sh"
+        "alias/graphic.sh"
+        "alias/esp32.sh"
+        "alias/hw.sh"
+        "alias/connect.sh"
+        "alias/sshfs.sh"
+        "alias/ssh.sh"
+        "alias/ftp.sh"
+        "alias/dell.sh"
+        "alias/think-x1.sh"
+        "alias/dirs.sh"
+        "alias/kiwi.sh"
+        "alias/config.sh"
+        "alias/game.sh"
+        "alias/tags.sh"
+        "alias/dotfiles.sh"
+
+            # laptop wr
+            "../../kiwi_alias.sh"
+    )
+
 
 elif [[ "$DD_SELECTOR" == "ros" ]]; then
 
@@ -237,18 +296,24 @@ elif [[ "$DD_SELECTOR" == "min" ]]; then
 fi
 
 
+# load scripts + echo their names if not disabled
 _len_so_far=0
 _limit_len_per_line=140
 _start_line='>>> '
-echo -en ${_start_line}
+if [[ -z "$DOTFILES_SILENT_LOADING" ]]; then
+    echo -en ${_start_line}
+fi
 for script in ${scripts[@]}; do
     script_name=$(basename $script)
     script_name="${script_name%%.*}"
     _len_so_far=$(( $_len_so_far + ${#script} ))
     if (( $_len_so_far > $_limit_len_per_line )); then
-        echo ""
-        echo -en ${_start_line}
-        _len_so_far=0
+        if [[ -z "$DOTFILES_SILENT_LOADING" ]]; then
+            # do the >>> for load_script echo filenames
+            echo ""
+            echo -en ${_start_line}
+            _len_so_far=0
+        fi
     fi
     loadit_script $script
 done
@@ -281,6 +346,8 @@ vrc () {
     fi
 }
 
+# poetry
+export PATH="/home/dd/.local/bin:$PATH"
 
-echo ""
+# echo ""
 echo "gr${c_red}4${c_end}viton .bashrc loaded!"

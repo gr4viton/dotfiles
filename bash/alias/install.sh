@@ -170,7 +170,7 @@ inst git make
 # inst exuberant-ctags  # unmaintained
 inst universal-ctags  # vim ctags
 
-inst tldr
+inst_tldr
 
 #echo ">>> compiz"
 # inst compiz compiz-plugins compiz-plugins-default compizconfig-settings-manager
@@ -485,6 +485,45 @@ uninstall_wine_and_lutris () {
 
 inst_docker () {
 echo $(cat << EOF
+
+>>> 2023-11-05
+>> install docker engine
+https://docs.docker.com/engine/install/ubuntu/
+sudo apt-get update
+sudo apt-get install ca-certificates curl gnupg
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+
+# on mint
+export VERSION_CODENAME=$UBUNTU_CODENAME
+# Add the repository to Apt sources:
+echo \
+  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+>> run demo sudo
+sudo docker run hello-world
+>> add the usergroup
+sudo groupadd docker
+sudo usermod -aG docker $USER
+newgrp docker
+>> run demo user
+docker run hello-world
+>> set to run on start
+https://docs.docker.com/engine/install/linux-postinstall/
+$ sudo systemctl enable docker.service
+$ sudo systemctl enable containerd.service
+
+
+>> docker-compose becomes "docker compose"
+
+
+
+>> older
 >>> docker-ce
 
 comuninty edition - you want that
@@ -574,6 +613,32 @@ inst_pycharm () {
   echo "https://www.jetbrains.com/help/pycharm/installation-guide.html#ef484d74"
 }
 
+inst_poetry () {
+    # https://python-poetry.org/docs/
+    curl -sSL https://install.python-poetry.org | python3 -
+}
+inst_tldr () {
+    inst tldr
+    tldr -u
+    tldr -p linux
+}
+
+inst_postman () {
+    echo "https://www.postman.com/downloads/"
+}
+
+inst_kubectl () {
+    echo "https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/"
+    # install
+    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    # validate
+    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+    echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+    # output kubectl: OK
+    echo "if output was 'kubectl: OK', then it checks out"
+    sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+}
+
 inst_machine_dev_work () {
   # Install Development work tools
   # to an apt-based linux
@@ -588,15 +653,22 @@ inst_machine_dev_work () {
 
   # development
   inst git make
-  # inst pycharm
   inst_pycharm
+  inst_poetry
+  inst_docker
+  # inst_docker_compose
 
+  # API
+  inst_postman
 
   # coms
   inst_autokey
 
-  # slack emoji
+  # slack emoji ++
   inst gimp
+
+  # office suite
+  inst qualculate
 
   # mood
   inst vlc
@@ -604,9 +676,8 @@ inst_machine_dev_work () {
   echo "install spotify yourself!"
 
   # bonus terminal power
+  inst_tldr
 
-  inst_docker
-  # inst_docker_compose
   inst_fuck  # bash completion
 
   # not sure - should i install as a global python package?

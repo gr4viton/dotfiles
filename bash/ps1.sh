@@ -1,4 +1,40 @@
 #!/bin/bash
+# __ps1__
+
+# urxvt randomize color
+urxvt_set_random_preset_theme () {
+  arr[0]="\033]11;#310024\007\033]10;white\007"  # ubuntu violet
+  arr[1]="\033]11;#000000\007\033]10;#008f11\007" # matrix
+  arr[2]="\033]11;#242424\007\033]10;#e3e0d7\007" # wombat256 vim? gray
+  #arr[3]="\033]11;#000080\007\033]10;white\007"  # m$
+  arr[3]="\033]11;#000030\007\033]10;white\007"  # dark blue
+  arr[4]="\033]11;#000000\007\033]10;#888888\007"  #
+
+  URXVT_THEME_LEN=5
+
+  #if [[ -z "$URXVT_THEME_CURRENT" ]]; then
+      #URXVT_THEME_CURRENT=0
+  #fi
+  #if [[ $URXVT_THEME_CURRENT == $URXVT_THEME_LEN ]]; then
+      #URXVT_THEME_CURRENT=0
+  #fi
+
+  # or rand
+  rand=$[ $RANDOM % $URXVT_THEME_LEN ]
+  theme=${arr[$rand]}
+  # theme=${arr[$URXVT_THEME_CURRENT]}  # envs are local to the started terminal
+
+  # set the urxvt background and foreground color values
+  # \033]11;#ff0000\007\033]10;yellow\007
+  echo -e "$theme"
+
+  #((URXVT_THEME_CURRENT=URXVT_THEME_CURRENT + 1))
+  #let URXVT_THEME_CURRENT++
+  #echo $URXVT_THEME_CURRENT
+  #export URXVT_THEME_CURRENT
+
+}
+urxvt_set_random_preset_theme
 
 # my colors
 c_end=$'\e[0m'

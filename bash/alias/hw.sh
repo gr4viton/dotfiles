@@ -17,21 +17,7 @@ alias graphics_intel='sudo prime-select intel'
 alias graphics_nvidia='sudo prime-select nvidia'
 
 
-# setup synclient touchpad
-# doc = ftp://www.x.org/pub/X11R7.5/doc/man/man4/synaptics.4.html
-if [[ $(apt_installed synclient) ]]; then
-synclient "TapButton3"=2
-synclient "PalmDetect"=1
-synclient "LockedDrags"=1
-## circ scrolling
-
-synclient "CircularScrolling"=1
-synclient "CircScrollTrigger"=4
-fi
-
-
 alias bluetooth_restart="sudo /etc/init.d/bluetooth restart"
-
 
 unity () {
     /usr/bin/unity3d -force-glcore -noUpm
@@ -49,13 +35,21 @@ dd_flash () {
 
 # keyboard
 
-# make CapsLock behave like Ctrl:
-setxkbmap -option ctrl:nocaps
+keyboard_setup () {
 
-# make short-pressed Ctrl behave like Escape:
-if [[ $(apt_installed xcape) ]]; then
-xcape -e 'Control_L=Escape'
-fi
+    # make short-pressed Ctrl behave like Escape:
+    # only start once
+    xcape_is_running=$(pgrep xcape)
+    if [[ -z $xcape_is_running ]]; then
+        # so slow
+        if [[ $(apt_installed xcape) ]]; then
+            xcape -e 'Control_L=Escape'
+        fi
+    fi
+    # make CapsLock behave like Ctrl:
+    setxkbmap -option ctrl:nocaps
+}
+keyboard_setup
 
 
 plasma_start () {

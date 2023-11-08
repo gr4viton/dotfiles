@@ -1,5 +1,5 @@
 
-__game__
+# __game__
 
 # - https://www.reddit.com/r/Steam/comments/99fjzw/steam_proton_for_non_steam_applications/
 # - https://github.com/ValveSoftware/Proton/issues/260

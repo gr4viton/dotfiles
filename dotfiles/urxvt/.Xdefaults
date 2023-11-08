@@ -101,11 +101,22 @@ URxvt*saveLines: 44000
 ! color depth for pixbuth, needed by transparency
 URxvt*depth: 32
 
+!!! COLOR
 ! font color (default is black)
-URxvt*foreground: White
-
 ! background color (prior to tinting) (default is white)
-URxvt*background: rgba:3155/0011/2444/efff
+! "ubuntu violet" - till 2023-11-06
+!URxvt*foreground: White
+!URxvt*background: rgba:3155/0011/2444/efff
+! navy blue - m$
+!URxvt*foreground: White
+!URxvt*background: rgba:0000/0000/8000/efff
+URxvt*foreground: rgba:e300/e000/d700/ffff
+URxvt*background: rgba:2400/2400/2400/efff
+
+! change to red background
+URxvt.keysym.C-7: command:\033]11;#310024\007\033]10;white\007
+URxvt.keysym.C-8: command:\033]11;#000080\007\033]10;white\007
+URxvt.keysym.C-9: command:\033]11;#000000\007\033]10;green\007
 
 ! Xft (X FreeType) with Bitstream, DejaVu, Liberation, or Terminus fonts:
 !  Fedora/debian packages: libXft/libxft2
