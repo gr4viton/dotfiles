@@ -619,8 +619,8 @@ inst_poetry () {
 }
 inst_tldr () {
     inst tldr
-    tldr -u
-    tldr -p linux
+#    tldr -u
+#    tldr -p linux
 }
 
 inst_postman () {

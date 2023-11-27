@@ -1,5 +1,5 @@
 #!/bin/bash
-# __office__
+# __monitor__
 
 
 # monitor brightness __monitor __display

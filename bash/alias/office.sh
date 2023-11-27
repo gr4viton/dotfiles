@@ -730,3 +730,32 @@ lstreepy () {
     treepy "$@"
 }
 
+
+keyboard_edit_layout () {
+  cd /usr/share/X11/xkb/symbols
+  ll
+  # echo "include \"cz_custom\"" | sudo tee /usr/share/X11/xkb/symbols/cz_custom_layout
+}
+
+
+nvim_at () {
+  # Opens via nvim and searches for the first passed param
+  search_param=$1
+  shift
+  nvim -c "silent! /${search_param}" $@
+}
+
+keyboard_refresh_layouts () {
+  # 2023-11-25 
+  # idea from my hackoviny - http://www.gr4viton.cz/2014/12/rozlozeni-klavesnice-win7/gr4hackoaltgr/
+  # help from phind.com - https://www.phind.com/search?cache=m1j81teoo5jv7dr1ene5aydz
+  # 
+  # you might need to allow third-row modifier on right alt (AltGr)
+  sudo dpkg-reconfigure xkb-data
+  sudo rm /var/lib/xkb/*.xkm
+}
+
+keyboard_update_layout_list () {
+  sudo nvim -c "silent! /layoutList" /usr/share/X11/xkb/rules/evdev.xml
+  keyboard_refresh_layouts
+}
