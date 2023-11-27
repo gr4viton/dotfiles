@@ -49,7 +49,6 @@ keyboard_setup () {
     # make CapsLock behave like Ctrl:
     setxkbmap -option ctrl:nocaps
 }
-keyboard_setup
 
 
 plasma_start () {
