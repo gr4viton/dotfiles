@@ -2,7 +2,6 @@
 # __git__
 
 # git
-alias git_initial_setup='git config --global pull.rebase true; git config --global alias.pushf "push --force-with-lease"'
 # alias gdiff='git diff --color-words'
 
 alias git_current_branch="git rev-parse --abbrev-ref HEAD"
@@ -117,11 +116,29 @@ git_set_local() {
     git config --list
 }
 
-alias git_iam_gr4viton_global="git_set_global gr4viton lordmutty@gmail.com"
-alias git_iam_gr4viton="git_set_local gr4viton lordmutty@gmail.com"
+git_aliases_init () {
+    git config --global alias.co checkout
+    git config --global alias.ca "commit --amend"
+    git config --global alias.br branch
+    git config --global alias.cm commit
+    git config --global alias.st status
+    git config --global pull.rebase true
+    git config --global alias.pushf "push --force-with-lease"
+}
 
-alias git_iam_kiwi_global="git_set_global daniel.davidek daniel.davidek@kiwi.com"
-alias git_iam_kiwi="git_set_local daniel.davidek daniel.davidek@kiwi.com"
+git_iam_gr4viton_global () {
+    git_aliases_init
+    git_set_global $ENV_DD_MY_GIT_USER $ENV_DD_MY_GIT_EMAIL
+}
+git_iam_gr4viton () {
+    git_aliases_init
+    git_set_global $ENV_DD_MY_GIT_USER $ENV_DD_MY_GIT_EMAIL
+}
+
+git_iam_kiwi () {
+    git_aliases_init
+    git_set_global $ENV_KW_MY_GIT_USER $ENV_KW_MY_GIT_EMAIL
+}
 
 alias git_whoami="git config --list"
 

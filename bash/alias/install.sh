@@ -638,6 +638,32 @@ inst_kubectl () {
     echo "if output was 'kubectl: OK', then it checks out"
     sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 }
+inst_gcloud () {
+  echo "https://cloud.google.com/sdk/docs/install#installation_instructions"
+  inst apt-transport-https ca-certificates gnupg curl sudo
+  echo ">>"
+  curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg
+  echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+  sudo apt update
+  inst google-cloud-cli
+}
+
+inst_gic_git_checkout_interactive__via_npm () {
+  inst npm
+  sudo npm install -g git-checkout-interactive  # git-checkout-intreractive
+}
+
+inst_python3_8 () {
+    # necessary for
+    inst python3.8
+    inst python3.8-distutils
+}
+
+inst_precommit () {
+  inst pre-commit
+  echo "if python3.8 is needed - inst_python3_8"
+  echo "the needed python version is specified in your project's '.pre-commit-config.yaml'"
+}
 
 inst_machine_dev_work () {
   # Install Development work tools
@@ -650,16 +676,25 @@ inst_machine_dev_work () {
   inst_urxvt
   inst_nvim
   setup_urxvt
+  inst_precommit
 
   # development
   inst git make
   inst_pycharm
   inst_poetry
   inst_docker
+  inst_gic_git_checkout_interactive__via_npm
+
   # inst_docker_compose
 
+  # kubernetes
+  inst_gcloud
+  inst_kubectl
+  inst_k9s
+
   # API
-  inst_postman
+  # inst_postman  # bad puppy
+  inst insomnia
 
   # coms
   inst_autokey
