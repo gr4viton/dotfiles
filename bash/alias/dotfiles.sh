@@ -177,4 +177,9 @@ init_dot_hackoviny () {
     echo ""
     echo "> into the /usr/share/X11/xkb/rules/evdev.xml"
     echo "> You can use the keybd_update_layout_list function to open it for editing"
+
+    echo ""
+    echo "> Then you can select the keyboard layout."
+    echo "> Be sure to also set 'Keyboard - Layouts - Options... - Key to choose the 3rd level - Right Alt'"
+    echo "> Otherwise the AltGr + letter wont produce the wanted diacritics."
 }
