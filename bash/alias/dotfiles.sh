@@ -154,3 +154,19 @@ init_dot_git_config () {
         "${config_dir}/.gitconfig" \
         "${DIR_DDDOT}/git/dd.gitconfig"
 }
+
+init_dot_hackoviny_iam_root () {
+    app_name="x11_keyboard_layout_hackoviny" 
+    config_dir="/usr/share/X11/xkb/symbols"
+    echo $config_dir
+    init_dot $app_name \
+        "${config_dir}/en_hackoviny" \
+        "${DIR_DDDOT}/keyboard/usr_share_x11_xkb_symbols/en_hackoviny"
+}
+
+init_dot_hackoviny () {
+    echo "need to be root, to add the keyboard layout"
+    sudo su -c "source ${DIR_DDD}/bashrc_local.sh && whoami && init_dot_hackoviny_iam_root"
+    whoami
+
+}

@@ -730,22 +730,23 @@ lstreepy () {
     treepy "$@"
 }
 
+# keyboard
 
-keyboard_edit_layout () {
+keybd_edit_layout () {
   cd /usr/share/X11/xkb/symbols
-  ll
+  ag hackoviny
   # echo "include \"cz_custom\"" | sudo tee /usr/share/X11/xkb/symbols/cz_custom_layout
 }
 
 
 nvim_at () {
   # Opens via nvim and searches for the first passed param
-  search_param=$1
+  search_param="$1"
   shift
-  nvim -c "silent! /${search_param}" $@
+  nvim -c "silent! /${search_param};" "$@"
 }
 
-keyboard_refresh_layouts () {
+keybd_refresh_layouts () {
   # 2023-11-25 
   # idea from my hackoviny - http://www.gr4viton.cz/2014/12/rozlozeni-klavesnice-win7/gr4hackoaltgr/
   # help from phind.com - https://www.phind.com/search?cache=m1j81teoo5jv7dr1ene5aydz
@@ -755,7 +756,24 @@ keyboard_refresh_layouts () {
   sudo rm /var/lib/xkb/*.xkm
 }
 
-keyboard_update_layout_list () {
+keybd_update_layout_list () {
   sudo nvim -c "silent! /layoutList" /usr/share/X11/xkb/rules/evdev.xml
-  keyboard_refresh_layouts
+  keybd_refresh_layouts
 }
+
+
+keybd_setup () {
+
+    # make short-pressed Ctrl behave like Escape:
+    # only start once
+    xcape_is_running=$(pgrep xcape)
+    if [[ -z $xcape_is_running ]]; then
+        # so slow
+        if [[ $(apt_installed xcape) ]]; then
+            xcape -e 'Control_L=Escape'
+        fi
+    fi
+    # make CapsLock behave like Ctrl:
+    setxkbmap -option ctrl:nocaps
+}
+
