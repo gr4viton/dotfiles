@@ -1,3 +1,6 @@
+## __dotfiles
+
+
 init_dot () {
     # Initialize the saved customized dotfile for
     # given application by creating symlinks to
@@ -168,5 +171,10 @@ init_dot_hackoviny () {
     echo "need to be root, to add the keyboard layout"
     sudo su -c "source ${DIR_DDD}/bashrc_local.sh && whoami && init_dot_hackoviny_iam_root"
     whoami
-
+    echo "> Now you need to insert the following item:"
+    echo ""
+    keybd_hackoviny_echo
+    echo ""
+    echo "> into the /usr/share/X11/xkb/rules/evdev.xml"
+    echo "> You can use the keybd_update_layout_list function to open it for editing"
 }

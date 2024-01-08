@@ -777,3 +777,25 @@ keybd_setup () {
     setxkbmap -option ctrl:nocaps
 }
 
+keybd_hackoviny_echo () {
+	
+out=$(cat <<-EOF
+    <layout>
+      <configItem>
+        <name>en_hackoviny</name>
+        <shortDescription>English layout with AltGr induced Czech-diacritics</shortDescription>
+        <description>English with háčkoviny (hackoviny)</description>
+        <languageList>
+          <iso639Id>ces</iso639Id>
+        </languageList>
+      </configItem>
+      <variantList/>
+    </layout>
+
+EOF
+)
+
+echo -e "$out"
+
+}
+
