@@ -1,9 +1,9 @@
 init_dot () {
-    # Initialize the saved customized dotfile for 
+    # Initialize the saved customized dotfile for
     # given application by creating symlinks to
     # the github versioned dotfile folder
-    
-    
+
+
     # should work also with folder
     app_name="${1:?app_name}"
     local_file="${2:?local rc file of the app}"
@@ -95,9 +95,13 @@ init_dot_nvim () {
 init_dot_autokey () {
     app_name="autokey"
     config_dir="${HOME}/.config/autokey/"
+    # dd
     init_dot $app_name \
         "${config_dir}/data/gr4viton" \
         "${DIR_DDDOT}/autokey_data/data/gr4viton"
+    init_dot $app_name \
+        "${config_dir}/data/scripts" \
+        "${DIR_DDDOT}/autokey_data/scripts"
 
     # kw
     init_dot $app_name \
