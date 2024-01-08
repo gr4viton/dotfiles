@@ -23,25 +23,25 @@ do_up () {
     set +x
 }
 
-docker_get_container_id() {
-    image_name=$1
-    docker ps | grep $image_name | awk '{print $1}'
+do_get_container_id() {
+    image_name="$1"
+    docker ps | grep "$image_name" | awk '{print $1}'
 }
 
-docker_get_container_name() {
-    image_name=$1
-    docker ps | grep $image_name | awk '{print $2}'
+do_get_container_name() {
+    image_name="$1"
+    docker ps | grep "$image_name" | awk '{print $2}'
 }
 
 do_run () {
     image_name=$1
-    container_id=$(docker_get_container_id $1)
-    container_name=$(docker_get_container_name $1)
+    container_id=$(do_get_container_id "$1")
+    container_name=$(do_get_container_name "$1")
     docker ps
     echo ">>> execing in docker $container_name -id = $container_id"
     set -x
     # docker exec -it ${@:3} $container_id "$command"
-    docker exec -it  $container_id ${@:2}
+    docker exec -it  "$container_id" "${@:2}"
     set +x
 }
 
@@ -58,12 +58,12 @@ do_run_redis_flush () {
 
 docker_attach () {
     image_name=$1
-    container_id=$(docker_get_container_id $1)
+    container_id=$(do_get_container_id $1)
     docker attach $container_id ${@:2}
 }
 
 
-# alias docker_attach_bag="docker attach `docker_get_container_id autobaggage_app`"
+# alias docker_attach_bag="docker attach `do_get_container_id autobaggage_app`"
 # fucking apostrophes :I
 docker_attach_bag() { docker attach $(docker ps | grep dev_app | awk '{print $1}'); }
 docker_inspect_bag() { docker inspect $(docker ps | grep dev_app | awk '{print $1}'); }
@@ -225,7 +225,7 @@ do_cat_build () {
 
 do_redis_cli () {
     image_name=redis
-    container_id=$(docker_get_container_id $image_name)
+    container_id=$(do_get_container_id $image_name)
     docker exec -it $container_id redis-cli "$@"
 }
 
