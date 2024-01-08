@@ -279,7 +279,7 @@ git_remote_list () {
 }
 git_remote_add_origin () {
     # remote_name = origin
-    git remote add origin $@
+    git remote add origin "$@"
     git_remote_list
 }
 git_remote_rm_origin () {
@@ -287,6 +287,12 @@ git_remote_rm_origin () {
     echo "> removing origin"
     git remote rm origin
     git_remote_list
+}
+
+git_remote_set_ssh_github () {
+    repo_name="${1?Repository name required}"
+    git_remote_rm_origin
+    git_remote_add_origin $(git_remote_url_ssh_github "$repo_name")
 }
 
 git_push_upstream_origin_master () {
