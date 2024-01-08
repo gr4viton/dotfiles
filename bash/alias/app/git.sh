@@ -320,3 +320,10 @@ git_clone_gitlab () {
 git_clone_github () {
     git clone $(git_remote_url_ssh_github $1)
 }
+
+git_fix_permissions () {
+	# https://stackoverflow.com/a/7849784
+cd .git/objects
+ls -al
+sudo chown -R dd:dd *
+}
