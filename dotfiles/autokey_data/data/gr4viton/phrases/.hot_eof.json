@@ -11,8 +11,9 @@
     "showInTrayMenu": false,
     "abbreviation": {
         "abbreviations": [
+            "!!EOF",
             "!!eof",
-            "!!EOF"
+            "!!echo"
         ],
         "backspace": true,
         "ignoreCase": false,
