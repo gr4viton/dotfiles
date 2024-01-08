@@ -734,8 +734,12 @@ lstreepy () {
 
 keybd_edit_layout () {
   cd /usr/share/X11/xkb/symbols
-  ag hackoviny
+  ll | grep hackoviny
   # echo "include \"cz_custom\"" | sudo tee /usr/share/X11/xkb/symbols/cz_custom_layout
+}
+
+keybd_hackoviny_edit () {
+  vim "${DIR_DDDOT}/keyboard/usr_share_x11_xkb_symbols/en_hackoviny"
 }
 
 
@@ -747,10 +751,10 @@ nvim_at () {
 }
 
 keybd_refresh_layouts () {
-  # 2023-11-25 
+  # 2023-11-25
   # idea from my hackoviny - http://www.gr4viton.cz/2014/12/rozlozeni-klavesnice-win7/gr4hackoaltgr/
   # help from phind.com - https://www.phind.com/search?cache=m1j81teoo5jv7dr1ene5aydz
-  # 
+  #
   # you might need to allow third-row modifier on right alt (AltGr)
   sudo dpkg-reconfigure xkb-data
   sudo rm /var/lib/xkb/*.xkm
@@ -778,7 +782,7 @@ keybd_setup () {
 }
 
 keybd_hackoviny_echo () {
-	
+
 out=$(cat <<-EOF
     <layout>
       <configItem>
