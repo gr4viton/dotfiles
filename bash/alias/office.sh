@@ -803,3 +803,29 @@ echo -e "$out"
 
 }
 
+
+vlc_grid() {
+    # https://www.phind.com/search?cache=q6stuujquqk5bz8uz12oh3tw
+    # Get the input parameters
+    dir=$1
+    cols=$2
+    rows=$3
+
+    # Calculate the width and height for each VLC window
+    screen_resolution=$(xrandr | grep '*' | awk '{print $1}')
+    width=$(echo $screen_resolution | cut -d'x' -f1)
+    height=$(echo $screen_resolution | cut -d'x' -f2)
+    win_width=$((width / cols))
+    win_height=$((height / rows))
+
+    # Loop over the range of windows
+    for ((i=0; i<$((cols * rows)); i++)); do
+        # Calculate the position for this window
+        x=$(((i % cols) * win_width))
+        y=$(((i / cols) * win_height))
+
+        # Start a VLC instance with the desired settings
+        vlc "$dir"/* --no-video-title-show --no-embedded-video --video-x=$x --video-y=$y --width=$win_width --height=$win_height &
+    done
+}
+

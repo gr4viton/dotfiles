@@ -166,17 +166,18 @@ do_run_tests () {
 
 
 do_cat_compose () {
+    # get docker compose file based on category of the "suffix"
     category="${1?category: dev, pudb, debug, prod, dev_local}"
     regex=$(do_regex_from_category $category)
     file=$(do_compose_yml_from_regex $regex ${@:2})
     echo $file
 }
-vido_cat_compose () {
+do_vim_cat () {
     file=$(do_cat_compose $@)
     vim $file
 }
 
-vido_compose_yml_all () {
+do_vim_all () {
     vimo $(do_compose_yml_all $@)
 }
 

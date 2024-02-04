@@ -596,6 +596,10 @@ inst_autokey () {
   # sudo apt purge autokey-common
 }
 
+inst_kdeconnect () {
+    inst kdeconnect
+}
+
 inst_urxvt () {
   inst rxvt-unicode
 }
@@ -698,6 +702,7 @@ inst_machine_dev_work () {
 
   # coms
   inst_autokey
+  inst_kdeconnect
 
   # slack emoji ++
   inst gimp

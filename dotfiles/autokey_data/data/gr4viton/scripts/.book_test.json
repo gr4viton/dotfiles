@@ -2,9 +2,7 @@
     "type": "script",
     "description": "book_test",
     "store": {},
-    "modes": [
-        3
-    ],
+    "modes": [],
     "usageCount": 7,
     "prompt": false,
     "omitTrigger": false,

@@ -159,7 +159,7 @@ init_dot_git_config () {
 }
 
 init_dot_hackoviny_iam_root () {
-    app_name="x11_keyboard_layout_hackoviny" 
+    app_name="x11_keyboard_layout_hackoviny"
     config_dir="/usr/share/X11/xkb/symbols"
     echo $config_dir
     init_dot $app_name \
@@ -182,4 +182,14 @@ init_dot_hackoviny () {
     echo "> Then you can select the keyboard layout."
     echo "> Be sure to also set 'Keyboard - Layouts - Options... - Key to choose the 3rd level - Right Alt'"
     echo "> Otherwise the AltGr + letter wont produce the wanted diacritics."
+}
+
+init_dot_vlc () {
+    app_name="vlc_config"
+    config_dir="${HOME}/.config/vlc/"
+    echo $config_dir
+    init_dot $app_name \
+        "${config_dir}/vlcrc" \
+        "${DIR_DDDOT}/vlc/vlcrc"
+
 }

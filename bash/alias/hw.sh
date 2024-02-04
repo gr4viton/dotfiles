@@ -1,8 +1,6 @@
 alias load_usb_to_uart_cp210x_modules='sudo modprobe usbserial # load this kernel module; sudo modprobe cp210x # load this kernel module'
 
 
-alias audio_restart='pulseaudio -k && sudo alsa force-reload'
-alias audio_restore_better='alsactl restore'
 
 # Post-install
 # These commands should be run after the first boot.
@@ -45,6 +43,8 @@ plasma_restart () {
 }
 
 
+# __router__
+# __switch__
 # switch es-2024 zyxel
 # https://unix.stackexchange.com/a/65362
 zyxel_es2024_connect () {
@@ -68,3 +68,48 @@ zyxel_tty_info () {
 # zyxel_text () {
 
 # }
+
+
+# __audio__
+audio_restart () {
+    pulseaudio --kill && sudo alsa force-reload
+    pulseaudio --start
+}
+audio_restore_alsa () {
+    alsactl restore
+}
+
+inst_be_bluetooth_speaker () {
+  # allow laptop to be paired via bluetooth and serve as an audio drain - bluetooth speaker
+  # 2024-01-10
+  # https://dev.to/bukanspot/use-my-linux-laptop-as-bluetooth-speaker-4549
+
+sudo apt install pulseaudio-module-bluetooth
+
+bluetooth_lines=$(cat <<-EOF
+### Adding bluetooth audio streaming on Linux ###
+load-module module-bluetooth-policy
+load-module module-bluetooth-discover
+
+EOF
+)
+
+# Step 3 – How to configure Linux to send sound through Bluetooth
+sudo su -c "mkdir /etc/pulse/system.pa.d/ &
+echo -e ${bluetooth_lines} >> /etc/pulse/system.pa.d/be-bluetooth-speaker.pa
+"
+# Step 4 – Restarting the Bluetooth service on Linux
+
+exit
+
+## Kill a running daemon on Linux ##
+pulseaudio --kill
+## Start the daemon if it is not running ##
+pulseaudio --start
+
+# Step 5 – Pair your Android / iOS mobile phone with your computer
+# - now make your laptop bluetooth discoverable, meaning not hidden
+# - and search on the phone or on other client, and pair with it
+
+
+}
