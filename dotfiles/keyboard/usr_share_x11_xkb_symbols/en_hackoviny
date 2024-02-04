@@ -35,8 +35,8 @@ xkb_symbols "basic" {
     key <AB03>  { [         c,          C,       ccaron,       Ccaron ] };
     key <AB06>  { [         n,          N,       ncaron,       Ncaron ] };
 
-    key <AD11>  { [    bracketleft, braceleft, uacute,      slash  ] };
-    key <AC10>  { [    semicolon, colon, uring,   quotedbl ] };
+    key <AD11>  { [    bracketleft, braceleft, uacute,      Uacute  ] };
+    key <AC10>  { [    semicolon, colon, uring,   Uring ] };
 
     key <TLDE>  { [	  grave,      asciitilde, deadoring,   NoSymbol] };
     key <AE01>  { [	  1,	exclam 		,      plus,          1] };

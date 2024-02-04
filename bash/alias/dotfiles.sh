@@ -167,6 +167,7 @@ init_dot_hackoviny_iam_root () {
         "${DIR_DDDOT}/keyboard/usr_share_x11_xkb_symbols/en_hackoviny"
 }
 
+
 init_dot_hackoviny () {
     echo "need to be root, to add the keyboard layout"
     sudo su -c "source ${DIR_DDD}/bashrc_local.sh && whoami && init_dot_hackoviny_iam_root"
