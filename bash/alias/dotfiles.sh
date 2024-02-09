@@ -141,8 +141,8 @@ init_dot_urxvt () {
     # urxvt_from=$home".Xresources"
     app_name="urxvt"
     init_dot $app_name \
-        "${HOME}/.Xdefaults" \
-        "${DIR_DDDOT}/urxvt/.Xdefaults"
+        "${HOME}/.Xresources" \
+        "${DIR_DDDOT}/urxvt/.Xresources"
 }
 
 _init_dot_mate_panel () {

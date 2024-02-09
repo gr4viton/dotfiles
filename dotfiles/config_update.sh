@@ -9,8 +9,8 @@ dotfiles=$main_dir"dotfiles/"
 urxvt_to=$dotfiles"urxvt/.Xresources"
 urxvt_from=$home".Xresources"
 
-urxvt_to2=$dotfiles"urxvt/.Xdefaults"
-urxvt_from2=$home".Xdefaults"
+urxvt_to2=$dotfiles"urxvt/.Xresources"
+urxvt_from2=$home".Xresources"
 
 tmux_to=$dotfiles"tmux/.tmux.conf"
 tmux_from=$home".tmux.conf"
