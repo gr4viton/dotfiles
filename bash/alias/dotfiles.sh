@@ -133,10 +133,13 @@ init_dot_tmux_all () {
 
 init_dot_urxvt () {
     # sometimes can be Xresources?
-    urxvt_to=$dotfiles"urxvt/.Xresources"
-    urxvt_from=$home".Xresources"
-
-    app_name="tmuxp"
+    # - .Xresources is more modern
+    # - .Xdefaults not suitable for remote access (not read by xrdb)
+    # - use .Xresources
+    # - keep .Xdefaults minimal if needed (only for legacy apps)
+    # urxvt_to=$dotfiles"urxvt/.Xresources"
+    # urxvt_from=$home".Xresources"
+    app_name="urxvt"
     init_dot $app_name \
         "${HOME}/.Xdefaults" \
         "${DIR_DDDOT}/urxvt/.Xdefaults"

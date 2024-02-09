@@ -36,3 +36,7 @@ apt_history () {
         echo "$txt"
     fi
 }
+
+apt_free_up_space_via_purge () {
+    sudo apt autoremove --purge
+}

@@ -806,26 +806,87 @@ echo -e "$out"
 
 vlc_grid() {
     # https://www.phind.com/search?cache=q6stuujquqk5bz8uz12oh3tw
-    # Get the input parameters
-    dir=$1
-    cols=$2
-    rows=$3
+    # Check if required commands are available
 
-    # Calculate the width and height for each VLC window
-    screen_resolution=$(xrandr | grep '*' | awk '{print $1}')
-    width=$(echo $screen_resolution | cut -d'x' -f1)
-    height=$(echo $screen_resolution | cut -d'x' -f2)
-    win_width=$((width / cols))
-    win_height=$((height / rows))
+    local dry_run_enabled=false
+    if [[ $4 == "--dry-run" ]]; then
+        dry_run_enabled=true
+    fi
 
-    # Loop over the range of windows
-    for ((i=0; i<$((cols * rows)); i++)); do
-        # Calculate the position for this window
-        x=$(((i % cols) * win_width))
-        y=$(((i / cols) * win_height))
+    local dir_path=$1
+    local columns=$2
+    local rows=$3
 
-        # Start a VLC instance with the desired settings
-        vlc "$dir"/* --no-video-title-show --no-embedded-video --video-x=$x --video-y=$y --width=$win_width --height=$win_height &
+    # Get screen width and height using xrandr
+    read screen_width screen_height <<<$(xrandr | grep '*' | awk '{print $1}' | head -n 1 | tr 'x' ' ')
+
+    # Calculate width and height for each VLC instance
+    local width=$(($screen_width / $columns))
+    local height=$(($screen_height / $rows))
+
+    # Check if directory exists
+    if [ ! -d "$dir_path" ]; then
+        echo "The directory does not exist."
+        return 1
+    fi
+
+    # Run in dry run mode or normal mode
+    if [ "$dry_run_enabled" = true ]; then
+        local dir_content=($(find "$dir_path" -maxdepth 1 -type f))
+        echo "${dir_path} ${#dir_content[@]}"
+        local subdirs=($(find "$dir_path" -mindepth 1 -maxdepth 1 -type d))
+        for subdir in "${subdirs[@]}"; do
+            dir_content=($(find "$subdir" -maxdepth 1 -type f))
+            echo "${subdir} ${#dir_content[@]}"
+        done
+        return 0
+    fi
+
+    # Build the playlist
+    local playlist=$(find "$dir_path" -type f | shuf)
+
+    # Check if the directory is not empty
+    if [ -z "$playlist" ]; then
+        echo "No video files found in the given directory."
+        return 1
+    fi
+
+    command -v vlc >/dev/null 2>&1 || { echo "VLC is not installed. Please install it and try again."; return 1; }
+    command -v wmctrl >/dev/null 2>&1 || { echo "wmctrl is not available. Please install it and try again."; return 1; }
+    command -v xrandr >/dev/null 2>&1 || { echo "xrandr is not available. Please install it and try again."; return 1; }
+
+    local i=0
+    for ((r=0; r<rows; r++)); do
+        for ((c=0; c<columns; c++)); do
+            # Calculate position
+            local xpos=$(($width * $c))
+            local ypos=$(($height * $r))
+
+            # echo "$playlist"
+            # return 0
+            # Launch VLC without interface, with the playlist and in fullscreen
+            vlc --no-video-deco --no-embedded-video --no-video-title-show --qt-start-minimized \
+                --mouse-hide-timeout=0 --random --playlist-enqueue --loop \
+                --video-x=$xpos --video-y=$ypos --width=$width --height=$height \
+                &
+                # $(echo "$playlist") \
+
+            # Getting process ID of the last started background process (vlc instance in that case)
+            local vlc_pid=$!
+            sleep 1 # Wait a bit to ensure window is created
+
+            # Mute sound
+            dbus-send --type=method_call --dest=org.mpris.MediaPlayer2.vlc.Instance$vlc_pid /org/mpris/MediaPlayer2 \
+                      org.freedesktop.DBus.Properties.Set string:org.mpris.MediaPlayer2.Player string:Volume variant:double:0.0
+
+            # Use wmctrl to make sure window is maximized without decoration
+            wmctrl -i -r $(wmctrl -l | grep "VLC" | tail -n 1 | awk '{print $1}') -b add,above
+
+            ((i++))
+        done
     done
 }
+
+# Now you can call the function with the directory path, columns, and rows like:
+# launch_vlc_grid /home/john/videos 2 1
 

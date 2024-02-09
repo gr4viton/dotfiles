@@ -71,6 +71,14 @@ URxvt.perl-lib: /home/dd/.urxvt/ext/
 !URxvt.perl-ext-common: tabbed,font-size,default,matcher,selection-to-clipboard,pasta,keyboard-select
 !URxvt.perl-ext-common: tabbed,font-size,default,matcher,pasta,keyboard-select
 !tabbeded
+
+
+! URxvt.perl-ext specifies the Perl extensions to load for every instance of URxvt
+!URxvt.perl-ext: tabbedex
+! URxvt.perl-ext-common specifies the Perl extensions that should be loaded for every
+! instance of URxvt, including those started via the -pe option.
+!URxvt.perl-ext-common: tabbedex
+
 URxvt.perl-ext-common: font-size,default,matcher,tabbedex,vtwheel,fullscreen,clipboard,selection-to-clipboard,pasta,perl:clipboard_xclip:paste
 
 URxvt.keysym.M-u:     perl:url-select:select_next
@@ -78,8 +86,6 @@ URxvt.keysym.M-u:     perl:url-select:select_next
 URxvt.keysym.M-Escape:perl:keyboard-select:activate
 !URxvt.perl-ext-common: tabbed,font-size,default
 
-URxvt.iso14755: false
-URxvt.iso14755_52: false
 
 URxvt.keysym.C-Up:     font-size:increase
 URxvt.keysym.C-Down:   font-size:decrease
@@ -96,7 +102,8 @@ URxvt*transparent: false
 !URxvt*shading: 40
 
 ! scrollback buffer lines - 65535 is max on most machines (64 is default)
-URxvt*saveLines: 44000
+!URxvt*saveLines: 44000
+URxvt*saveLines: 65535
 
 ! color depth for pixbuth, needed by transparency
 URxvt*depth: 32
@@ -133,8 +140,10 @@ URxvt.keysym.C-9: command:\033]11;#000000\007\033]10;green\007
 !
 ! Xft: DejaVu fonts
 !  Fedora/debian packages: dejavu-sans-mono-fonts/ttf-dejavu 
-URxvt*font: xft:DejaVu Sans Mono:size=12:antialias=true:hinting=true
-URxvt*boldFont: xft:DejaVu Sans Mono:bold:size=12:antialias=true:hinting=true
+URxvt*font: xft:DejaVu Sans Mono:size=8:antialias=true:hinting=true
+URxvt*boldFont: xft:DejaVu Sans Mono:bold:size=8:antialias=true:hinting=true
+!URxvt*font: xft:DejaVu Sans Mono:size=12:antialias=true:hinting=true
+!URxvt*boldFont: xft:DejaVu Sans Mono:bold:size=12:antialias=true:hinting=true
 !URxvt*font: xft:DejaVu Sans Mono:pixelsize=12:antialias=true:hinting=true
 !URxvt*boldFont: xft:DejaVu Sans Mono:bold:pixelsize=12:antialias=true:hinting=true
 
@@ -232,7 +241,11 @@ Urxvt.keysym.F11: perl:fullscreen:switch
 URxvt*meta8: False
 
 ! Set the key to be interpreted as the Meta key to: alt, meta, hyper, super, mod1, mod2, mod3, mod4, mod5; option -mod.
-URxvt*modifier: alt
+
+! changed 2024-02-09 linux-mint - default alt to move tabs
+!URxvt*modifier: alt  
+! not sure if it works
+URxvt*modifier: meta
 ! meta:false and modifier:alt works for vim to detect <A-x> combination
 
 ! Paste with Alt+v
@@ -243,10 +256,18 @@ URxvt*modifier: alt
 !URxvt.keysym.M-v: perl:clipboard:paste
 URxvt.keysym.Shift-Control-V: eval:paste_clipboard
 URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
-
+!
 ! new clipboard_xclip
 URxvt.keysym.Control-Alt-V: perl:clipboard_xclip:paste
-URxvt.iso14755: False
+! is it anyhow different?
+!
+
+! iso14755 - on true
+! - A beginning key sequence (such as Ctrl+Shift) followed by an alphanumeric code
+! shall result in the input of the corresponding Unicode character.
+URxvt.iso14755: false
+URxvt.iso14755_52: false
+!URxvt.iso14755: False
 
 
 URxvt.keysym.M-n: matcher:select
