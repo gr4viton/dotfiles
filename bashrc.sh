@@ -324,27 +324,59 @@ done
 rcbash="${HOME_DD}.bashrc"
 rcbash_root="${HOME_ROOT}.bashrc"
 
-src () {
+src1 () {
     file="${1:-.bashrc}"
     if [[ "$file" == ".bashrc" ]]; then
-        source $rcbash;
+        source "$rcbash";
     else
-        file=$(ag --sh -l "$@" ${DIR_DDD})
+        shift
+        file=$(ag --sh -l "$@" "${DIR_DDD}")
+        echo "source $file"
+        source "$file"
+    fi
+}
+vrc1 () {
+    file="${1:-.bashrc}"
+    if [[ "$file" == ".bashrc" ]]; then
+        vim "${DIR_DDD}bashrc.sh"
+    else
+        file=$(ag --sh -l "$@" "${DIR_DDD}")
+        echo "vim $file"
+        vim "$file"
+    fi
+}
+
+src_ () {
+    path="${1:-}"
+    file="${2:-.bashrc}"
+    if [[ "$file" == ".bashrc" ]]; then
+        source "$rcbash";
+    else
+        shift
+        file=$(ag --sh -l "$@" "${path}")
         echo "source $file"
         source $file
     fi
 }
-vrc () {
-    file="${1:-.bashrc}"
+vrc_ () {
+    path="${1:-}"
+    file="${2:-.bashrc}"
     if [[ "$file" == ".bashrc" ]]; then
-        # vim "${DIR_DDD}bashrc.sh" "${rcbash}" ;
-        vim "${DIR_DDD}bashrc.sh"
+        vim "${path}bashrc.sh"
     else
-        file=$(ag --sh -l "$@" ${DIR_DDD})
+        shift
+        set -x
+        file=$(ag --sh -l "$@" "${path}")
+        set +x
         echo "vim $file"
         vim $file
     fi
 }
+
+src () { src_ "${DIR_DDD}" "$@" ; }
+vrc () { vrc_ "${DIR_DDD}" "$@" ; }
+srckw () { src_ "${DIR_DDD_KW}" "$@" ; }
+vrckw () { vrc_ "${DIR_DDD_KW}" "$@" ; }
 
 # echo ""
 echo "gr${c_red}4${c_end}viton .bashrc loaded!"

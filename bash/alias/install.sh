@@ -600,8 +600,14 @@ inst_kdeconnect () {
     inst kdeconnect
 }
 
+inst_urxvt_tabbeddex () {
+    # install and/or update
+  curl https://raw.githubusercontent.com/mina86/urxvt-tabbedex/master/install | sh
+}
+
 inst_urxvt () {
   inst rxvt-unicode
+  inst_urxvt_tabbeddex
 }
 
 inst_nvim () {

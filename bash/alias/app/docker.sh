@@ -100,6 +100,11 @@ do_compose_yml_from_regex () {
     txt="${1:?regex in docker-compose file}"
     path="${2:-$PWD}"
     fnames=$(ag -g "/docker-compose$txt\.ya?ml$" $path)  # with dir selection ($path) echoes full paths
+    echo $fname
+    if [[ -z "$fname" ]]; then
+        fnames=$(ag -g "/compose$txt\.ya?ml$" $path)  # with dir selection ($path) echoes full paths
+    fi
+
     for f in $fnames; do
         echo $f
         break

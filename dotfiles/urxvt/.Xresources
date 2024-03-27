@@ -50,7 +50,9 @@ URxvt.scrollBar: false
 xterm*background: violet
 xterm*foreground: grey
 
-Xft.dpi: 276.0
+!lowered from 276 - font was too big for some reason
+!Xft.dpi: 138  
+Xft.dpi: 276  
 Xft.autohint: 0
 Xft.lcdfilter: lcddefault
 Xft.hintstyle: hintfull
@@ -64,7 +66,7 @@ XTerm*Foreground: white
 
 !## urxvt
 
-URxvt.perl-lib: /home/dd/.urxvt/ext/
+!URxvt.perl-lib: /home/dd/.urxvt/ext/
 !kokos
 !URxvt.perl-ext-common: tabbed,font-size,default,matcher
 !me
@@ -79,7 +81,10 @@ URxvt.perl-lib: /home/dd/.urxvt/ext/
 ! instance of URxvt, including those started via the -pe option.
 !URxvt.perl-ext-common: tabbedex
 
-URxvt.perl-ext-common: font-size,default,matcher,tabbedex,vtwheel,fullscreen,clipboard,selection-to-clipboard,pasta,perl:clipboard_xclip:paste
+!2024-03-27 - pre
+!URxvt.perl-ext-common: font-size,default,matcher,tabbedex,vtwheel,fullscreen,clipboard,selection-to-clipboard,pasta,perl:clipboard_xclip:paste
+!2024-03-27
+URxvt.perl-ext-common: default,matcher,tabbedex,vtwheel,fullscreen,clipboard,selection-to-clipboard,pasta,perl:clipboard_xclip:paste
 
 URxvt.keysym.M-u:     perl:url-select:select_next
 
@@ -140,12 +145,17 @@ URxvt.keysym.C-9: command:\033]11;#000000\007\033]10;green\007
 !
 ! Xft: DejaVu fonts
 !  Fedora/debian packages: dejavu-sans-mono-fonts/ttf-dejavu 
-URxvt*font: xft:DejaVu Sans Mono:size=8:antialias=true:hinting=true
-URxvt*boldFont: xft:DejaVu Sans Mono:bold:size=8:antialias=true:hinting=true
-!URxvt*font: xft:DejaVu Sans Mono:size=12:antialias=true:hinting=true
-!URxvt*boldFont: xft:DejaVu Sans Mono:bold:size=12:antialias=true:hinting=true
+! 2024-03-27
+!URxvt*font: xft:DejaVu Sans Mono:size=8:antialias=true:hinting=true
+!URxvt*boldFont: xft:DejaVu Sans Mono:bold:size=8:antialias=true:hinting=true
+
+URxvt*font: xft:DejaVu Sans Mono:size=24:antialias=true:hinting=true:dpi=48
+URxvt*boldFont: xft:DejaVu Sans Mono:bold:size=24:antialias=true:hinting=true:dpi=48
+!
 !URxvt*font: xft:DejaVu Sans Mono:pixelsize=12:antialias=true:hinting=true
 !URxvt*boldFont: xft:DejaVu Sans Mono:bold:pixelsize=12:antialias=true:hinting=true
+!URxvt*font: xft:DejaVu Sans Mono:pixelsize=24:antialias=true:hinting=true
+!URxvt*boldFont: xft:DejaVu Sans Mono:bold:pixelsize=24:antialias=true:hinting=true
 
 
 !-- Xft settings -- !
@@ -173,6 +183,7 @@ URxvt*boldFont: xft:DejaVu Sans Mono:bold:size=8:antialias=true:hinting=true
 
 ! font spacing correction
 URxvt*letterSpace: -2
+! URxvt*letterSpace: -8 ? try it?
 
 ! Replace blue folder colors with a lighter shade for clarity. To
 !  set colored folders and files within urxvt, xterm, and aterm, add
@@ -221,10 +232,11 @@ URxvt*matcher.button: 1
 
 URxvt.tabbed.autohide: true
 
-URxvt.keysym.C-H: perl:tabbedex:prev_tab
-URxvt.keysym.C-L: perl:tabbedex:next_tab
+URxvt.keysym.C-h: perl:tabbedex:prev_tab
+URxvt.keysym.C-l: perl:tabbedex:next_tab
 ! URxvt.keysym.C-K: perl:tabbedex:rename_tab  ! too often pressed in error
-URxvt.keysym.C-J: perl:tabbedex:new_tab
+URxvt.keysym.C-j: perl:tabbedex:new_tab
+URxvt.keysym.C-6: perl:tabbedex:new_tab
 /* URxvt.keysym.C-h: perl:tabbedex:move_tab_left */
 /* URxvt.keysym.C-l: perl:tabbedex:move_tab_right */
 

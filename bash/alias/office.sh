@@ -473,7 +473,10 @@ wiki_clean_cache () {
 
 rcurxvt="~/.Xresources"
 # rcurxvt="~/.Xdefaults"
-alias urxvt_reload="xrdb -load $rcurxvt"
+urxvt_reload () {
+    # xrdb -load $rcurxvt  # orig
+    xrdb -merge ~/.Xresources
+}
 alias vircurxvt="vim -O $rcurxvt"
 
 

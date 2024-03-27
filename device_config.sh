@@ -79,4 +79,5 @@ device_omatic "s8" "u0_a304" "192.168.0.110" "8022"
 ## s20 = android samsung s20 fe
 device_omatic "s20" "u0_a396" "192.168.0.124" "8022"
 
-device_omatic "hass" "pi" "192.168.0.100" "8123"
+# device_omatic "hass" "pi" "192.168.0.100" "8123"
+device_omatic "hass" "dd" "192.168.0.100" "22"
