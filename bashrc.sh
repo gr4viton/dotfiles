@@ -380,3 +380,8 @@ vrckw () { vrc_ "${DIR_DDD_KW}" "$@" ; }
 
 # echo ""
 echo "gr${c_red}4${c_end}viton .bashrc loaded!"
+
+# ⇧2024-03-14
+# zoxide
+
+eval "$(zoxide init zsh)"
