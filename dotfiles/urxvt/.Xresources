@@ -232,11 +232,10 @@ URxvt*matcher.button: 1
 
 URxvt.tabbed.autohide: true
 
-URxvt.keysym.C-h: perl:tabbedex:prev_tab
-URxvt.keysym.C-l: perl:tabbedex:next_tab
+URxvt.keysym.C-S-H: perl:tabbedex:prev_tab
+URxvt.keysym.C-S-L: perl:tabbedex:next_tab
 ! URxvt.keysym.C-K: perl:tabbedex:rename_tab  ! too often pressed in error
-URxvt.keysym.C-j: perl:tabbedex:new_tab
-URxvt.keysym.C-6: perl:tabbedex:new_tab
+URxvt.keysym.C-S-J: perl:tabbedex:new_tab
 /* URxvt.keysym.C-h: perl:tabbedex:move_tab_left */
 /* URxvt.keysym.C-l: perl:tabbedex:move_tab_right */
 

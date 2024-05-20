@@ -59,6 +59,6 @@ DOLLAR="${RED}▶"
 #   git rev-parse --abbrev-ref HEAD 2>/dev/null | sed 's:.*/::'
 # }
 
-BRANCH="\$(git_branch_cutted)"
+BRANCH="\$(git_branch)"
 
 export PS1="${BLUE}${BRANCH}${END} ${GREEN}\u ${YELLOW}\W ${DOLLAR}${END} "

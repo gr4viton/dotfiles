@@ -192,7 +192,7 @@ nnoremap <A-H> <C-W><left>
 "    Set it to unnamed to use * (PRIMARY, on select)
 "    Set it to unnamedplus to use + (CLIPBOARD, ^C)
 " viz https://vi.stackexchange.com/a/96
-" set clipboard "unnamedplus"
+set clipboard "unnamedplus"
 
 " let g:clipboard = {
 "       \   'name': 'myClipboard',
