@@ -127,6 +127,7 @@ if [[ "$DD_SELECTOR" == "full" ]]; then
 
 
         "alias/office.sh"
+        "alias/ai.sh"
         "alias/monitor.sh"
         "alias/centroid.sh"
         "alias/install.sh"
@@ -176,6 +177,7 @@ elif [[ "$DD_SELECTOR" == "work" ]]; then
             "alias/app/tldr.sh"
 
         "alias/office.sh"
+        "alias/ai.sh"
         "alias/monitor.sh"
         "alias/centroid.sh"
         "alias/install.sh"

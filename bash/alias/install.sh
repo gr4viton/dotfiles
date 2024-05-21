@@ -484,7 +484,7 @@ uninstall_wine_and_lutris () {
 }
 
 inst_docker () {
-echo $(cat << EOF
+cat << EOF
 
 >>> 2023-11-05
 >> install docker engine
@@ -568,7 +568,6 @@ $ sudo apt install golang-docker-credential-helpers
 # viz https://github.com/pgRouting/docker-pgrouting/issues/11
 
 EOF
-)
 }
 
 inst_docker_compose () {
