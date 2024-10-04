@@ -56,7 +56,9 @@ rsync_from_termux () {
 	echo "  from $dirlocal"
 	echo "    to $dirremote"
 	remote_url="gr4viton@192.168.0.220:$dirremote"
+	set -x
 	rsync -av --exclude ".thumbnails" --safe-links --ignore-existing --info=progress2 $dirlocal $remote_url --rsync-path=/opt/bin/rsync
+	set +x
 }
 
 rsync_dcim () {
