@@ -88,11 +88,38 @@ folderize () {
     # ${param:?word} writes word to stdout when param is unset or null
     local abbrev="${1:?Abbreviation alias needed.}"
     local folder="${2:?Directory to folderize needed.}"
+    local venv_path="$3"  # Optional: absolute path to venv
+    local use_uv="$4"     # Optional: boolean for uv sync
 
     export dir${abbrev}="$folder"
     export d${abbrev}="$folder"
-    which > /dev/null 2>&1 cd${abbrev} || alias cd${abbrev}="cd \"$folder\""
+
+    # Base cd command
+    local cd_command="cd \"$folder\""
+
+    # Handle venv activation if specified
+    if [[ -n "$venv_path" ]]; then
+        # Validate it's an absolute path and exists
+        if [[ ! "$venv_path" = /* ]] || [[ ! -d "$venv_path" ]]; then
+            echo "Warning: Invalid or non-existent venv path: $venv_path" >&2
+            return 1
+        fi
+
+        cd_command+=" && source \"$venv_path/bin/activate\""
+    fi
+
+    # Add uv sync if requested
+    if [[ "$use_uv" == "true" && -n "$venv_path" ]]; then
+        cd_command+=" && uv sync --all-extras"
+    fi
+
+    # Create aliases
+    which > /dev/null 2>&1 cd${abbrev} || alias cd${abbrev}="$cd_command"
     which > /dev/null 2>&1 ls${abbrev} || alias lll${abbrev}o="lla \"$folder\""
+
+# Usage:
+# folderize "aut" "/srv/kw/automation/src" "/srv/kw/automation/.venv"
+# folderize "aut" "/srv/kw/automation/src" "/srv/kw/automation/.venv" "true"
 
 }
 
@@ -402,7 +429,9 @@ count_of_words_per_line () {
 }
 
 
-alias zalgo="python3 /srv/dd/component/zalgo-cli/zalgo.py"
+# alias zalgo="python3 /srv/dd/component/zalgo-cli/zalgo.py"
+# zalgo text - utf8 - obfuscate
+# pip install zalgo-cli
 
 alias dolphin_here="dolphin $PWD"
 alias dohe="dolphin $PWD"
@@ -893,3 +922,91 @@ vlc_grid() {
 # Now you can call the function with the directory path, columns, and rows like:
 # launch_vlc_grid /home/john/videos 2 1
 
+
+prerun () {
+    FULL_PATH="$1"
+    shift
+    pre-commit run --files $(find ${FULL_PATH} -type f | grep ".py$") "$@"
+}
+precommit_run () {
+    prerun "$@"
+}
+prerun_last () {
+    # run on files changed in last commit
+    FILES=$(git diff --name-only --diff-filter=ACMRT $(git merge-base HEAD master)...HEAD | sort -u)
+    echo $FILES
+    pre-commit run --files $FILES
+}
+prerun_branch () {
+    # run on all changed files of current branch
+    FILES=$(git diff --name-only --diff-filter=ACMRT $(git merge-base HEAD master)...HEAD | sort -u)
+    echo $FILES
+    pre-commit run --files $FILES
+}
+prerun_some () {
+    FULL_PATH="$1"
+    shift
+    LINTER_NAME="$2"
+    shift
+    pre-commit run --files $(find ${FULL_PATH} -type f | grep ".py$") --hook-stage manual ${LINTER_NAME} "$@"
+}
+
+
+get_enums () {
+    find . -name "*.py" -exec grep -Eo '^class\s+\w+\(.*Enum.*\)' {} + | sort | uniq -c | sed -E 's/.*class\s+(\w+).*/\1/'
+}
+
+get_value_enums () {
+    classNames=$(get_enums)
+    cd /srv/kw/provider-clients
+    for className in $classNames; do
+#       echo "Checking for incorrect usage of $className..."
+
+      ## ag  --hidden "(f.*${className}(?!(?:\.\w*)?\.value))"
+      # ag  --hidden "(\"\"\".*${className}(?!(?:\.\w*)?\.value)\"\"\")"
+      # ag  --hidden "format\(.*${className}(?!(?:\.\w*)?\.value)"
+
+      ag  --hidden "(${className}(?!(?:\.\w*)?\.value))"
+
+
+      #grep -rHnle "(f.*${className}.*\")"     | grep -v "\.${className}\..*\.value"
+      #grep -rHnle "(\"\"\".*${className}.*\"\"\")" | grep -v "\.${className}\..*\.value"
+      #grep -rHnle "format.*${className}[^\.]" | grep -v "\.${className}\..*\.value"
+    done
+
+    cd /srv/kw/automation
+
+}
+
+ln_s () {
+    # symbolic lync creation
+    the_what="$1"
+    the_link="$2"
+    ln -s "$the_what" "$the_link"
+}
+
+boot_full () {
+    show_disk_space | grep boot
+    sudo apt autoremove
+    sudo update-grub
+}
+
+
+clip() {
+    if [ $# -eq 0 ]; then
+        echo "Usage: clip filename"
+        return 1
+    fi
+
+    if [ ! -f "$1" ]; then
+        echo "Error: File '$1' does not exist"
+        return 1
+    fi
+
+    if ! command -v xclip &> /dev/null; then
+        echo "Error: xclip is not installed. Install it with: sudo apt-get install xclip"
+        return 1
+    fi
+
+    cat "$1" | xclip -selection clipboard && echo "Contents of '$1' copied to clipboard"
+}

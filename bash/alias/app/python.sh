@@ -1,3 +1,5 @@
+# __python__ __pip__
+
 # language python
 ## python
 ## pip
@@ -84,10 +86,29 @@ alias pipenv="python3 -m pipenv"
 # alias pip_compile_both='pip_compile; pip_compile_test'
 
 
-make_python_venv () {
-    python3.6 -m venv $1
+#make_python_venv () {
+#    python3.6 -m venv $1
+#}
 
+venvadd () {
+    local PYTHON="${1:-python3}"
+    $PYTHON -m venv .venv
 }
+venvjo () {
+    source .venv/bin/activate
+}
+venvno () {
+    deactivate
+}
+
+poetry_bump_in_venv () {
+    venvjo
+    set -x
+    poetry lock --no-update
+    set +x
+    venvno
+}
+
 
 export PYTHONDONTWRITEBYTECODE=1  # do not write pyc files when running python
 
@@ -122,6 +143,7 @@ regex_all_md () {
 alias all_py='find . -type f -regextype sed -regex ".*\.py" -print0'
 
 regex_all_py () {
+    echo "Example of cmd: 's/\(def prefix_.*\)/\1 #  comment/g'"
     echo "Do you want to execute this regex:";
     echo "$1";
     echo "On all the *.py files in this directory and subdirectories?:";
@@ -137,7 +159,12 @@ regex_all_py () {
     then # this grammar (the #[] operator) means that the variable $answer where any Y or y in 1st position will be dropped if they exist.
         set -x;
         # echo "$files" | xargs -0 sed -i "${1}";
+
+        # sed = only single-line regex
         find . -type f -regextype sed -regex ".*\.py" -print0 | xargs -0 sed -i "$1"
+
+        # perl = multi-line regex? somehow it works
+        # find . -type f -regextype sed -regex ".*\.py" -print0 | xargs -0 perl -i -pe "$1"
         set +x;
     else
         echo No;
@@ -192,6 +219,13 @@ alias black120_str="black -l 120 -S"
 
 alias blacks="black120_str"
 
+ruffix (){
+    ruff format $@
+}
+ruffix_imports (){
+    ruff check --select=I fix $@
+}
+
 _pip_parse_versions () {
     # get stderr out from pip install versions (with legacy-resolver
     # and output only the package versions one per line
@@ -234,3 +268,27 @@ pip_search_versions () {
     _pip_parse_versions "$pip_stderr" $last_count
 }
 
+
+regex_all_fix_multiline_docs_end_dot () {
+    regex_all_py 's/"""\(.*\w$\)/"""\1./g'
+}
+regex_all_fix_singleline_docs_end_dot () {
+    regex_all_py 's/"""\(.*\w\)"""$/"""\1."""/g'; git diff
+}
+regex_all_fix_docs_end_dot () {
+    regex_all_fix_multiline_docs_end_dot
+    regex_all_fix_singleline_docs_end_dot
+}
+
+alias py3=python3
+alias py=python3
+
+uv_sync () {
+  uv sync --all-extras
+}
+uv_add () {
+    uv add "$@"
+}
+uv_lock () {
+    uv lock
+}

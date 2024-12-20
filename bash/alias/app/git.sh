@@ -15,30 +15,110 @@ git_branch_cutted() {
     git_branch | sed 's:.*/::'
 }
 
-gpl () {
+# gpl () {
+    # git pull --rebase origin master
+# }
+gpr () {
     git pull --rebase origin master
 }
-alias gpull_rebase='gpl'
-
-gplcurrent_branch () {
-    git pull --rebase origin $(git_branch)
+gprb () {
+    git pull --rebase origin "$(git_branch)"
 }
+
+gife () { git fetch ; }
+gifeo () { git fetch origin ; }
+
+giad () { git add "$@" ; }
+giau () { git add -u "$@" ; }
+giap () { git add -p "$@" ; }
+
+gico () { git commit "$@" ; }
+gica () { git commit --amend "$@" ; }
+
+gicono () {
+    git commit --no-verify "$@"
+}
+giconoa () {
+    git commit --no-verify --amend "$@"
+}
+gicano () {
+    git commit --no-verify --amend "$@"
+}
+giconopre () {
+    PRE_COMMIT_ALLOW_NO_CONFIG=1 git commit "$@"
+}
+
+girea () { git rebase --abort ; }
+girec () { git rebase --continue ; }
+giresh () {
+    # This command moves the HEAD and branch pointer back one commit,
+    # effectively "uncommitting" the changes but leaving them in your working directory.
+    git reset HEAD^
+    git status
+}
+
 
 gpf () {
     date_rfc_3339
-    git push --force-with-lease
+    git push --force-with-lease --force-if-includes
 }
 
-gid () {
-    git diff --color-words
+gidi () {
+    git diff "$@"
+}
+gidiw () {
+    git diff --color-words "$@"
+}
+gidimr () {
+    # changes like in MR
+    # ... from common ancestor
+    git diff master...$(git_branch) "$@"
+}
+gidis () {
+    gis
+    gidi
+}
+gis () {
+    git status
 }
 
-alias pushf='gpf'
+glog () {
+    git log --stat "$@"
+}
+glogmr () {
+    # changes like in MR
+    # ... from common ancestor
+    git log master...$(git_branch) -p "$@"
+}
+glog1 () {
+    git log --pretty=oneline "$@"
+}
+glogp () {
+    git log --stat --patch "$@"
+}
+glor () {
 
-alias glog='git log --stat'
-alias glog_oneline='git log --pretty=oneline'
-alias glogp='git log --stat --patch'
-alias glogfiles='git ls-files'
+    if [ $# -eq 0 ]; then
+        echo "Usage: glog <grep_pattern> [additional git log options]"
+        return 1
+    fi
+
+    grep_pattern=$1
+    shift  # Remove the first argument (grep pattern) from the argument list
+    git log --stat --perl-regexp --grep="$grep_pattern" "$@"
+}
+glorp () {  # lol glurp
+    glogr --patch "$@"
+}
+glogpword () {
+    git log --stat --patch --word-diff "$@"
+}
+glogpporcelain () {
+    git log --stat --patch --word-diff=porcelain "$@"
+}
+glogfiles () {
+    git ls-files "$@"
+}
 
 # git
 
@@ -65,14 +145,19 @@ gic () {
     gci
 }
 
+gim () {
+    git checkout master
+}
+
 git_delete_merged_branches () {
     git checkout master && git branch -d $(git branch --merged | tr '*' ' ' | tr 'master' ' ')
 }
 alias gloghash='git log --pretty=format:"%h %s"'
 
-glogdog () { git log --all --decorate --oneline --graph; }
-gloggraph () { git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all; }
-gloggraph_2line () { git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all; }
+glog2 () { git log --all --decorate --oneline --graph; }
+
+glog3 () { git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all; }
+glog4 () { git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all; }
 
 alias gir="git rebase"
 
@@ -83,6 +168,10 @@ giri () {  # git rebase
 giri_root () {
     git rebase -i --root
 }
+giri2 () { giri 2 ; }
+giri3 () { giri 3 ; }
+giri4 () { giri 4 ; }
+giri5 () { giri 5 ; }
 
 gir_conflict_files () {
     git diff --name-only --diff-filter=U
@@ -90,6 +179,10 @@ gir_conflict_files () {
 vigir_conflict_files () {
     vim $(git diff --name-only | uniq)
 }
+giriv () {
+    vigir_conflict_files
+}
+
 
 gir_onto_commit_keeping_current_branch () {
     git rebase --onto $1 --root=$(git_branch)
@@ -220,7 +313,7 @@ git_cap () {
 # search in commits
 git_search () {
     set -x
-    git log $@
+    git log "$@"
     set +x
 }
 
@@ -340,3 +433,208 @@ cd .git/objects
 ls -al
 sudo chown -R dd:dd *
 }
+
+gib () {
+    git co -b "$@"
+}
+
+gig () {
+    GREP="$1"
+    shift
+    git log --grep="$GREP" "$@"
+}
+gip () {
+    GREP="$1"
+    shift
+    git log --grep="$GREP" -p "$@"
+}
+
+gife_short () {
+    echo "Fetching updates from remote..."
+    git fetch --all --prune > /dev/null
+}
+
+
+gib_merged_list_no () {
+    # all branches merged in origin/master
+    gife_short
+    git branch --merged origin/master | grep -v "^\*" | grep -v "master"
+}
+gib_merged_delete_no () {
+    gife_short
+    git branch --merged origin/master | grep -v "^\*" | grep -v "master" | xargs -n 1 git branch -d
+}
+
+gib_merged_delete() {
+    gife_short
+
+    echo "Listing local branches fully merged into origin/master:"
+    branches_to_delete=$(git for-each-ref --format='%(refname:short) %(upstream:track)' refs/heads/ |
+    while read branch track; do
+        if [[ "$branch" != "master" && "$branch" != "main" ]]; then
+            if git merge-base --is-ancestor $branch origin/master; then
+                echo $branch
+            fi
+        fi
+    done)
+
+
+    if [ -z "$branches_to_delete" ]; then
+        echo "No branches to delete."
+        return 0
+    fi
+
+    echo "$branches_to_delete"
+    echo ""
+
+    read -p "Do you want to delete these branches? (y/N): " confirm
+
+    if [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]]; then
+        echo "Deleting branches..."
+        echo "$branches_to_delete" | xargs git branch -d
+        echo "Branches deleted."
+    else
+        echo "Operation cancelled. No branches were deleted."
+    fi
+}
+gib_tmp_list () {
+    # all branches without origin counterpart with tmp prefix
+    gife_short
+
+
+    git branch -vv | grep -v '\[origin/' | grep -E '^(tmp|temp)|/(tmp|temp)|-(tmp|temp)|(tmp|temp)$' | awk '{print $1}'
+}
+gib_tmp_delete() {
+    # all branches without origin counterpart with tmp prefix
+    gife_short
+
+    echo "Listing temporary branches not in remote:"
+    branches_to_delete=$(git branch -vv | grep -v '\[origin/' | grep -E '^(tmp|temp)|/(tmp|temp)|-(tmp|temp)|(tmp|temp)$' | awk '{print $1}')
+
+
+
+    if [ -z "$branches_to_delete" ]; then
+        echo "No temporary branches to delete."
+        return 0
+    fi
+
+    echo "$branches_to_delete"
+    echo ""
+
+    read -p "Do you want to delete these branches? (y/N): " confirm
+
+    if [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]]; then
+        echo "Deleting branches..."
+        echo "$branches_to_delete" | xargs git branch -D
+        echo "Branches deleted."
+    else
+        echo "Operation cancelled. No branches were deleted."
+    fi
+}
+
+gib_localonly_list () {
+    # all branches without origin counterpart with tmp prefix
+    gife_short
+    git branch -vv | grep -v '\[origin/' | awk '{print $1}'
+}
+gib_localonly_delete() {
+    # all branches without origin counterpart with tmp prefix
+    gife_short
+
+    echo "Listing temporary branches not in remote:"
+    branches_to_delete=$(git branch -vv | grep -v '\[origin/' | awk '{print $1}')
+
+
+    if [ -z "$branches_to_delete" ]; then
+        echo "No temporary branches to delete."
+        return 0
+    fi
+
+    echo "$branches_to_delete"
+    echo ""
+
+    read -p "Do you want to delete these branches? (y/N): " confirm
+
+    if [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]]; then
+        echo "Deleting branches..."
+        echo "$branches_to_delete" | xargs git branch -D
+        echo "Branches deleted."
+    else
+        echo "Operation cancelled. No branches were deleted."
+    fi
+}
+
+gib_unpushed_list() {
+    gife_short
+
+    echo "Listing local branches with unpushed commits:"
+    git for-each-ref --format='%(refname:short) %(upstream:short)' refs/heads/ |
+    while read local remote; do
+        if [[ -n "$remote" ]]; then
+            if git rev-parse --verify $remote &>/dev/null; then
+                ahead=$(git rev-list --count $remote..$local)
+                if [[ $ahead -gt 0 ]]; then
+                    echo "(ahead by $ahead commit(s)     : $local"
+                fi
+            else
+                    echo "(no remote counterpart)    : $local"
+            fi
+        else
+                    echo "(no remote tracking branch): $local"
+        fi
+    done
+}
+gib_localahead_list() {
+    gife_short
+
+    echo "Listing local branches with unpushed commits to existing remote branches:"
+    git for-each-ref --format='%(refname:short) %(upstream:short)' refs/heads/ |
+    while read local remote; do
+        if [[ -n "$remote" ]]; then
+            if git rev-parse --verify $remote &>/dev/null; then
+                ahead=$(git rev-list --count $remote..$local)
+                if [[ $ahead -gt 0 ]]; then
+                    printf "Local ahead by %3d commit(s): %s \n" $ahead "$local"
+                fi
+            fi
+        fi
+    done
+}
+
+
+gib_localahead_table() {
+    gife_short
+
+    echo "Listing branches with unpushed commits:"
+    printf "%7s | %7s | %7s | %-30s\n" "Local" "Origin" "Unpushed" "Branch"
+    printf "%s\n" "---------|---------|----------|---------------------------------"
+    git for-each-ref --format='%(refname:short) %(upstream:short)' refs/heads/ |
+    while read local remote; do
+        if [[ -n "$remote" && "$local" != "master" && "$local" != "main" ]]; then
+            if git rev-parse --verify $remote &>/dev/null; then
+                # Find the common ancestor of local branch and local master
+                local_base=$(git merge-base $local master)
+                # Count commits from common ancestor to local branch
+                local_commits=$(git rev-list --count $local_base..$local)
+
+                # Find the common ancestor of remote branch and origin/master
+                remote_base=$(git merge-base $remote origin/master)
+                # Count commits from common ancestor to remote branch
+                origin_commits=$(git rev-list --count $remote_base..$remote)
+
+                # Count unpushed commits
+                ahead=$(git rev-list --count $remote..$local)
+
+                if [[ $ahead -gt 0 ]]; then
+                    printf "%7d | %7d | %7d | %-30s\n" $local_commits $origin_commits $ahead "$local"
+                fi
+            fi
+        fi
+    done
+}
+
+git_remove_ALL_without_origin_branch_USE_WITH_CARE () {
+    gife_short
+    git fetch -p && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -D
+}
+

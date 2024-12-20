@@ -89,3 +89,5 @@ test_auto_db () {
     echo python -c "import psycopg2;try:;psycopg2.connect('$KIWI_AUTOMATION_DB_FULL_URL');except:print('does not work'); print('works')"
 }
 
+
+

@@ -646,6 +646,12 @@ inst_kubectl () {
     # output kubectl: OK
     echo "if output was 'kubectl: OK', then it checks out"
     sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
+    # needed auth - https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl#apt_1
+    apt-get install google-cloud-sdk-gke-gcloud-auth-plugin
+
+    # k9s install via homebrew
+
 }
 inst_gcloud () {
   echo "https://cloud.google.com/sdk/docs/install#installation_instructions"
@@ -737,4 +743,10 @@ init_dotfiles_dev_work () {
   init_dot_tmux_all
   init_dot_urxvt
   echo "- on nvim first start run PlugUpdate"
+}
+
+install_vault () {
+    wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+    sudo apt update && sudo apt install vault
 }

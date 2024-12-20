@@ -377,6 +377,10 @@ vrc_ () {
 
 src () { src_ "${DIR_DDD}" "$@" ; }
 vrc () { vrc_ "${DIR_DDD}" "$@" ; }
+vrcs () {
+    vrc_ "${DIR_DDD}" "$@" ;
+    src_ "${DIR_DDD}" "$@" ;
+}
 srckw () { src_ "${DIR_DDD_KW}" "$@" ; }
 vrckw () { vrc_ "${DIR_DDD_KW}" "$@" ; }
 
@@ -386,4 +390,5 @@ echo "gr${c_red}4${c_end}viton .bashrc loaded!"
 # ⇧2024-03-14
 # zoxide
 
-eval "$(zoxide init zsh)"
+# eval "$(zoxide init zsh)"
+eval "$(thefuck --alias)"

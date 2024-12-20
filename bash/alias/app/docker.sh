@@ -12,14 +12,14 @@ docker-compose () {
     docker compose "$@"
 }
 
-_do_build () {
+do_build () {
     set -x
-    time docker-compose -f $1 build ${@:2}
+    time docker-compose -f "$1" build "${@:2}"
     set +x
 }
 do_up () {
     set -x
-    docker-compose -f $1 up
+    docker-compose -f "$1" up "${@:2}"
     set +x
 }
 
@@ -136,6 +136,8 @@ do_regex_from_category () {
         echo $do_regex_local
     elif [[ $category == "prod" ]]; then
         echo $do_regex_prod
+    else
+        echo ".*$1.*"
     fi
 }
 
@@ -170,7 +172,7 @@ do_run_tests () {
 }
 
 
-do_cat_compose () {
+d_compose () {
     # get docker compose file based on category of the "suffix"
     category="${1?category: dev, pudb, debug, prod, dev_local}"
     regex=$(do_regex_from_category $category)
@@ -178,7 +180,7 @@ do_cat_compose () {
     echo $file
 }
 do_vim_cat () {
-    file=$(do_cat_compose $@)
+    file=$(d_compose $@)
     vim $file
 }
 
@@ -189,7 +191,7 @@ do_vim_all () {
 # _do_build__from_regex () {
 #     txt="${1:?regex in docker-compose file}"
 #     file=$(do_compose_yml_from_regex $1 $@)
-#     _do_build $file
+#     do_build $file
 # }
 
 # _do_build_cat () {
@@ -205,34 +207,76 @@ do_vim_all () {
 #     do_up $file
 # }
 
-do_cat_up () {
+d_up () {
+    category="${1?category: dev, pudb, debug, prod, dev_local}"
+    echo "category: \"$category\""
+    regex=$(do_regex_from_category $category)
+    echo "category inner regex: \"$regex\""
+    file="$(do_compose_yml_from_regex $regex)"
+    echo "file selected: \"$file\""
+    do_up "$file" "${@:2}"
+}
+
+d_upr () {
+    d_up "$@" --remove-orphans
+}
+
+d_up_sh () {
+    dc_option=shell d_up "$@"
+}
+
+d_build () {
     category="${1?category: dev, pudb, debug, prod, dev_local}"
     echo "category: \"$category\""
     regex=$(do_regex_from_category $category)
     echo "category inner regex: \"$regex\""
     file=$(do_compose_yml_from_regex $regex)
     echo "file selected: \"$file\""
-    do_up $file ${@:2}
+    do_build $file ${@:2}
 }
 
-do_cat_up_sh () {
-    dc_option=shell do_cat_up $@
+do_compose_get() {
+    repat="${1:?regex pattern}"
+    fnames=$(ag -g "/$repat$")
+    for f in $fnames; do
+        # selects first
+        echo $f
+        break
+    done
+
+}
+dob () {
+    # repat=".*((?!dev)).*.y(a)ml"  # negative lookahead = does not contain dev
+    repat="(docker-|)compose.ya?ml"  # negative lookahead = does not contain dev
+    fname=$(do_compose_get "$repat")
+    echo "file selected: \"$fname\""
+    do_build "$fname" "$@"
+}
+dobno () {
+    dob --no-cache
+}
+dou () {
+    repat="(docker-|)compose.ya?ml"  # negative lookahead = does not contain dev
+    fname=$(do_compose_get "$repat")
+    echo "file selected: \"$fname\""
+    do_up "$fname" "$@"
 }
 
-do_cat_build () {
-    category="${1?category: dev, pudb, debug, prod, dev_local}"
-    echo "category: \"$category\""
-    regex=$(do_regex_from_category $category)
-    echo "category inner regex: \"$regex\""
-    file=$(do_compose_yml_from_regex $regex)
-    echo "file selected: \"$file\""
-    _do_build $file ${@:2}
+
+dob2 () {
+    do_build docker-compose.yaml ${1}
 }
 
 do_redis_cli () {
     image_name=redis
     container_id=$(do_get_container_id $image_name)
     docker exec -it $container_id redis-cli "$@"
+}
+
+do_redis_kill () {
+    image_name=redis
+    container_id=$(do_get_container_id $image_name)
+    docker kill $container_id
 }
 
 
@@ -252,4 +296,12 @@ sudo systemctl unmask docker.service
 sudo systemctl unmask docker.socket
 sudo systemctl start docker.service
 sudo systemctl status docker
+}
+
+
+k9sp () {
+    kcl_context_use_prod; k9s
+}
+k9ss () {
+    kcl_context_use_sandbox; k9s
 }

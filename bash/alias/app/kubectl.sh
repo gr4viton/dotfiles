@@ -1,4 +1,4 @@
-# kubectl kubernetes k8s
+# __kubectl__ __kcl__ __kubernetes__ __k8s__
 ## alias kubectl to something sane
 alias kcl='kubectl'
 ## alias to switch namespaces (kube switch namespace)
@@ -26,10 +26,19 @@ kcl_context_use_grep () {
 }
 
 kcl_context_use_prod () {
+    kcl_context_use_grep "prod-eu"
+
+}
+kcl_context_use_sandbox () {
+    kcl_context_use_grep "sandbox-eu"
+
+}
+
+kcl_context_use_old_prod () {
     kcl_context_use_grep "autobooking-prod"
 }
 
-kcl_context_use_sandbox () {
+kcl_context_use_old_sandbox () {
     kcl_context_use_grep "autobooking-sandbox"
 }
 
@@ -126,7 +135,7 @@ kcl_rollout_restart_deploy () {
     pod_row=$(kcl_pod_grep $name | head -1)
     pod_namespace=$(echo $pod_row | awk '{print $1}')
     set -x
-    kcl rollout restart deploy $pod_namespace -n $pod_namespace
+    kcl rollout restart deploy $name -n $pod_namespace
     set +x
 }
 
@@ -137,6 +146,16 @@ kcl_redeploy () {
 kcl_redeploy_all_gds () {
     projects=( black-box schedule-changer configuru refundopedia gds-viewer gds-queue-handler refunderino faust )
     for var in "${projects[@]}"
+    do
+      echo "redeploy for: ${var}"
+      kcl_redeploy ${var}
+    done
+}
+
+kcl_redeploy_all_modules_x_stagings () {
+    for var in $(
+        kubectl get deployments --no-headers  --all-namespaces  | grep -E '^modules-staging|^modules-chrome-staging' | awk '{print $2}'
+    )
     do
       echo "redeploy for: ${var}"
       kcl_redeploy ${var}

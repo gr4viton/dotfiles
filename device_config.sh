@@ -81,3 +81,10 @@ device_omatic "s20" "u0_a396" "192.168.0.124" "8022"
 
 # device_omatic "hass" "pi" "192.168.0.100" "8123"
 device_omatic "hass" "dd" "192.168.0.100" "22"
+
+
+source_all () {
+    set -a
+    source "$@"
+    set +a
+}
