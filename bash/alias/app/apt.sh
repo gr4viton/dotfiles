@@ -40,3 +40,12 @@ apt_history () {
 apt_free_up_space_via_purge () {
     sudo apt autoremove --purge
 }
+
+apt_kernel_del () {
+  ls /boot
+  echo "# from https://www.cyberciti.biz/faq/debian-ubuntu-linux-delete-old-kernel-images-command/"
+  echo "apt-get --purge remove linux-image-5.15.0*-generic"
+  echo "sudo apt --purge autoremove"
+  ls /boot
+}
+
