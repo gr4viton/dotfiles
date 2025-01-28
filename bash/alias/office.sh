@@ -79,11 +79,18 @@ folderize () {
     #
     # $1 = abbreviation used for folder aliases
     # $2 = folder path
+    # $3 = (optional) absolute path to python venv
+    # $4 = (optional) boolean to run 'uv sync --all-extras' after venv activation
     #
-    # gr4_folderize "esp32" "/srv/dd/esp32"
+    # Examples:
+    # folderize "esp32" "/srv/dd/esp32"
+    # folderize "aut" "/srv/kw/automation/src" "/srv/kw/automation/.venv"
+    # folderize "aut" "/srv/kw/automation/src" "/srv/kw/automation/.venv" "true"
+    #
     # creates:
     # - aliases: `cdesp32`, `lsesp32`
     # - envars: `diresp32`, `desp32`
+    # - optional venv activation and uv sync
 
     # ${param:?word} writes word to stdout when param is unset or null
     local abbrev="${1:?Abbreviation alias needed.}"
@@ -99,28 +106,24 @@ folderize () {
 
     # Handle venv activation if specified
     if [[ -n "$venv_path" ]]; then
-        # Validate it's an absolute path and exists
-        if [[ ! "$venv_path" = /* ]] || [[ ! -d "$venv_path" ]]; then
-            echo "Warning: Invalid or non-existent venv path: $venv_path" >&2
-            return 1
+        # Check if venv exists
+        if [[ -d "$venv_path" ]]; then
+            # Deactivate any existing venv first
+            cd_command+=" && deactivate 2>/dev/null || true"
+            cd_command+=" && source \"$venv_path/bin/activate\""
+
+            # Add uv sync if requested
+            if [[ "$use_uv" == "true" ]]; then
+                cd_command+=" && uv sync --all-extras"
+            fi
+        else
+            echo "Note: Venv path does not exist: $venv_path - skipping venv activation" >&2
         fi
-
-        cd_command+=" && source \"$venv_path/bin/activate\""
-    fi
-
-    # Add uv sync if requested
-    if [[ "$use_uv" == "true" && -n "$venv_path" ]]; then
-        cd_command+=" && uv sync --all-extras"
     fi
 
     # Create aliases
     which > /dev/null 2>&1 cd${abbrev} || alias cd${abbrev}="$cd_command"
     which > /dev/null 2>&1 ls${abbrev} || alias lll${abbrev}o="lla \"$folder\""
-
-# Usage:
-# folderize "aut" "/srv/kw/automation/src" "/srv/kw/automation/.venv"
-# folderize "aut" "/srv/kw/automation/src" "/srv/kw/automation/.venv" "true"
-
 }
 
 alias gr4_folderize="folderize"

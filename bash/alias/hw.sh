@@ -1,3 +1,5 @@
+# __hw__
+
 alias load_usb_to_uart_cp210x_modules='sudo modprobe usbserial # load this kernel module; sudo modprobe cp210x # load this kernel module'
 
 
@@ -112,4 +114,11 @@ pulseaudio --start
 # - and search on the phone or on other client, and pair with it
 
 
+}
+
+
+## 3d printer
+
+3d_install_rpi_imager () {
+  sudo apt install rpi-imager
 }

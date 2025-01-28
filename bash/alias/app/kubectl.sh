@@ -143,6 +143,19 @@ kcl_redeploy () {
     kcl_rollout_restart_deploy $@
 }
 
+kcl_deploy_configuru_re () {
+    kcl_rollout_restart_deploy configuru
+}
+
+kcl_deploy_configuru_undo () {
+    name=configuru
+    pod_row=$(kcl_pod_grep $name | head -1)
+    pod_namespace=$(echo $pod_row | awk '{print $1}')
+    set -x
+    kcl_deploy_undo configuru
+    set +x
+}
+
 kcl_redeploy_all_gds () {
     projects=( black-box schedule-changer configuru refundopedia gds-viewer gds-queue-handler refunderino faust )
     for var in "${projects[@]}"
