@@ -24,13 +24,17 @@ extract () {
 }
 
 
-date_rfc_3339 () {
+get_date_rfc_3339 () {
     # date in rfc-3339 format
     # it's like iso-8601 + time
     date --rfc-3339=seconds
     # date --rfc-3339=ns
     # date --rfc-3339=date
 }
+date_rfc_3339 () {
+    get_date_rfc_3339
+}
+
 date_seconds () {
     date --utc --rfc-3339=seconds
 }
@@ -1012,4 +1016,17 @@ clip() {
     fi
 
     cat "$1" | xclip -selection clipboard && echo "Contents of '$1' copied to clipboard"
+}
+
+vpn_configure () {
+    echo "https://www.firezone.dev/docs/user-guides/client-instructions#linux-network-manager"
+    sudo nmcli connection import type wireguard file /path/to/configuration.conf
+}
+
+vpn_kw_up () {
+    nmcli connection up kwdd
+}
+
+vpn_kw_down () {
+    nmcli connection down kwdd
 }

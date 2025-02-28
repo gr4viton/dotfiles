@@ -48,12 +48,16 @@ giconopre () {
     PRE_COMMIT_ALLOW_NO_CONFIG=1 git commit "$@"
 }
 
-girea () { git rebase --abort ; }
-girec () { git rebase --continue ; }
+gireabort () { git rebase --abort ; }
+girecontinue () { git rebase --continue ; }
 giresh () {
-    # This command moves the HEAD and branch pointer back one commit,
-    # effectively "uncommitting" the changes but leaving them in your working directory.
+    echo "This command moves the HEAD and branch pointer back one commit,"
+    echo "effectively "uncommitting" the changes but leaving them in your working directory."
     git reset HEAD^
+    git status
+}
+
+gist () {
     git status
 }
 
@@ -638,3 +642,10 @@ git_remove_ALL_without_origin_branch_USE_WITH_CARE () {
     git fetch -p && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -D
 }
 
+
+glogstat () {
+  glog --stat --oneline  "${@}"
+}
+glognumstat () {
+  glog --numstat --oneline  "${@}"
+}

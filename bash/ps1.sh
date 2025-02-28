@@ -4,9 +4,9 @@
 # urxvt randomize color
 urxvt_set_random_preset_theme () {
   arr[0]="\033]11;#310024\007\033]10;white\007"  # ubuntu violet
-  arr[1]="\033]11;#000000\007\033]10;#008f11\007" # matrix
+  #arr[1]="\033]11;#000000\007\033]10;#008f11\007" # matrix  - git diff green colors do not stand out.
   arr[2]="\033]11;#242424\007\033]10;#e3e0d7\007" # wombat256 vim? gray
-  #arr[3]="\033]11;#000080\007\033]10;white\007"  # m$
+  arr[3]="\033]11;#000080\007\033]10;white\007"  # m$
   arr[3]="\033]11;#000030\007\033]10;white\007"  # dark blue
   arr[4]="\033]11;#000000\007\033]10;#AAAAAA\007"  #
 
