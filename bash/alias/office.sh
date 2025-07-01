@@ -958,6 +958,13 @@ prerun_some () {
     pre-commit run --files $(find ${FULL_PATH} -type f | grep ".py$") --hook-stage manual ${LINTER_NAME} "$@"
 }
 
+prerun_id () {
+    FULL_PATH="$1"
+    shift
+    HOOK_ID="$2"
+    shift
+    pre-commit run --files $(find ${FULL_PATH} -type f | grep ".py$") --hook-id "$HOOK_ID" "$@"
+}
 
 get_enums () {
     find . -name "*.py" -exec grep -Eo '^class\s+\w+\(.*Enum.*\)' {} + | sort | uniq -c | sed -E 's/.*class\s+(\w+).*/\1/'
@@ -1000,22 +1007,22 @@ boot_full () {
 
 
 clip() {
-    if [ $# -eq 0 ]; then
-        echo "Usage: clip filename"
-        return 1
-    fi
-
-    if [ ! -f "$1" ]; then
-        echo "Error: File '$1' does not exist"
-        return 1
-    fi
-
     if ! command -v xclip &> /dev/null; then
         echo "Error: xclip is not installed. Install it with: sudo apt-get install xclip"
         return 1
     fi
 
-    cat "$1" | xclip -selection clipboard && echo "Contents of '$1' copied to clipboard"
+    if [ $# -eq 0 ]; then
+        # Read from stdin if no arguments
+        xclip -selection clipboard
+    else
+        # Original file handling
+        if [ ! -f "$1" ]; then
+            echo "Error: File '$1' does not exist"
+            return 1
+        fi
+        cat "$1" | xclip -selection clipboard && echo "Contents of '$1' copied to clipboard"
+    fi
 }
 
 vpn_configure () {
@@ -1029,4 +1036,51 @@ vpn_kw_up () {
 
 vpn_kw_down () {
     nmcli connection down kwdd
+}
+
+emoj() {
+    # based on https://github.com/junegunn/fzf/wiki/examples#emoji
+    # XDG Base Directory compliance
+    local data_dir="${XDG_DATA_HOME:-$HOME/.local/share}/emoj"
+    local emoji_file="$data_dir/emojis.txt"
+
+    # Ensure directory exists
+    if ! mkdir -p "$data_dir"; then
+        echo "Error: Could not create directory $data_dir" >&2
+        return 1
+    fi
+
+    # Download if file doesn't exist
+    if [[ ! -f "$emoji_file" ]]; then
+        echo "Downloading emoji database..."
+        if ! curl -sSL 'https://git.io/JXXO7' -o "$emoji_file"; then
+            echo "Error: Failed to download emoji database" >&2
+            return 1
+        fi
+    fi
+
+    # Verify file is not empty
+    if [[ ! -s "$emoji_file" ]]; then
+        echo "Error: Emoji database is empty" >&2
+        rm -f "$emoji_file"  # Remove corrupted file
+        return 1
+    fi
+
+
+    #echo "$data_dir"
+    # Use fzf to select emoji and cut the first character
+    # echo "$(cat "$emoji_file" | fzf | awk '{print substr($1,1,1)}') "
+
+    cat "$emoji_file" | fzf | perl -CS -pe 's/^(.).*/$1/' | tr -d '\n'
+}
+
+mcpinspect () {
+    npx @modelcontextprotocol/inspector
+}
+
+cursorcd () {
+    cd /srv/kiwi/COMPANY/2025-03-13-cursor/
+}
+cursorcp () {
+    cp "$1" /opt/cursor.appimage
 }

@@ -392,3 +392,4 @@ echo "gr${c_red}4${c_end}viton .bashrc loaded!"
 
 # eval "$(zoxide init zsh)"
 eval "$(thefuck --alias)"
+eval "$(direnv hook bash)"

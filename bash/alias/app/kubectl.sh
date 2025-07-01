@@ -30,7 +30,9 @@ kcl_context_use_prod () {
 
 }
 kcl_context_use_sandbox () {
+    set -x
     kcl_context_use_grep "sandbox-eu"
+    set +x
 
 }
 

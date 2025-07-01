@@ -170,6 +170,12 @@ do_run_tests () {
     # eg
     # $ do_run_tests -k "ClassNameOne"
 }
+do_run_tests_modules () {
+    docker-compose -f docker-compose.what.yml run modules pytest test/ "$@"
+    # you can pass -k argument to select concrete test files
+    # eg
+    # $ do_run_tests -k "ClassNameOne"
+}
 
 
 d_compose () {

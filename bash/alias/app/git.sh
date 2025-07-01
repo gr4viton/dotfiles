@@ -420,7 +420,7 @@ git_remote_url_ssh_github () {
     echo "git@github.com:gr4viton/$1.git"
 }
 git_remote_url_ssh_kw () {
-    echo "git@skypicker.com:gr4viton/$1.git"
+    echo "git@skypicker.com:daniel.davidek/$1.git"
 }
 
 git_clone_gitlab () {
