@@ -935,6 +935,10 @@ prerun () {
     shift
     pre-commit run --files $(find ${FULL_PATH} -type f | grep ".py$") "$@"
 }
+prerunc () {
+    pre-commit clean
+    prerun "$@"
+}
 precommit_run () {
     prerun "$@"
 }
@@ -1083,4 +1087,19 @@ cursorcd () {
 }
 cursorcp () {
     cp "$1" /opt/cursor.appimage
+}
+
+killconfiguru () {
+    ps aux | grep -E 'uv.*configuru|configuru.*uv' | grep -v grep | awk '{print $2}' | xargs -r kill -9
+}
+
+uv_run_test_kw () {
+	uv run --all-extras -- pytest --cov kw tests/unit "$@"
+}
+uv_run_tests_kw () {
+	uv run --all-extras -- pytest --cov kw test/unit "$@"
+}
+
+todo () {
+    vim /srv/kiwi/todo.md
 }

@@ -21,8 +21,16 @@ git_branch_cutted() {
 gpr () {
     git pull --rebase origin master
 }
+gprbranch () {
+    # concrete branch
+    git pull --rebase origin "$(1)"
+}
 gprb () {
+    # current branch
     git pull --rebase origin "$(git_branch)"
+}
+gprmain () {
+    git pull --rebase origin main
 }
 
 gife () { git fetch ; }
@@ -50,22 +58,42 @@ giconopre () {
 
 gireabort () { git rebase --abort ; }
 girecontinue () { git rebase --continue ; }
-giresh () {
+gire_edit_split () {
     echo "This command moves the HEAD and branch pointer back one commit,"
     echo "effectively "uncommitting" the changes but leaving them in your working directory."
     git reset HEAD^
     git status
+    echo "Now interactive add by-parts - only add one portion of the files you want to keep in the commit"
+    git add -p
+    echo "Now commit, then add and commit the other changes in a separate commit (if you want) and then girecontinue"
 }
 
 gist () {
     git status
 }
 
-
-gpf () {
+gpff () {
+    # f like full
     date_rfc_3339
-    git push --force-with-lease --force-if-includes
+    git push --force-with-lease --force-if-includes "$@"
 }
+
+gpfs () {
+    # s - like skip
+    gpff "-o ci.skip"
+}
+
+gpffn () {
+    # push new branch
+    # fn = like full and new
+    git push --set-upstream origin $(git_branch) "$@"
+}
+gpfsn () {
+    # push new branch without ci pipeline start
+    # sn = like skip pipe and new
+    gpfF "-o ci.skip"
+}
+
 
 gidi () {
     git diff "$@"
@@ -87,58 +115,83 @@ gis () {
 }
 
 glog () {
+    set -x
     git log --stat "$@"
+    set +x
 }
 glogmr () {
     # changes like in MR
     # ... from common ancestor
+    set -x
     git log master...$(git_branch) -p "$@"
+    set +x
 }
 glog1 () {
+    set -x
     git log --pretty=oneline "$@"
+    set +x
 }
 glogp () {
+    set -x
     git log --stat --patch "$@"
+    set +x
 }
-glor () {
+glogrep () {
 
     if [ $# -eq 0 ]; then
         echo "Usage: glog <grep_pattern> [additional git log options]"
         return 1
     fi
 
-    grep_pattern=$1
+    grep_pattern="$1"
     shift  # Remove the first argument (grep pattern) from the argument list
+    set -x
     git log --stat --perl-regexp --grep="$grep_pattern" "$@"
+    set +x
 }
-glorp () {  # lol glurp
-    glogr --patch "$@"
+glogrepp () {  # lol glurp
+    set -x
+    glogrep --patch "$@"
+    set +x
 }
 glogpword () {
+    set -x
     git log --stat --patch --word-diff "$@"
+    set +x
 }
 glogpporcelain () {
+    set -x
     git log --stat --patch --word-diff=porcelain "$@"
+    set +x
 }
 glogfiles () {
+    set -x
     git ls-files "$@"
+    set +x
 }
 
 # git
 
-glogd () {
-    glogdd | head -20
-}
-
 glogdd () {
     # git branch --sort=-committerdate
     # the same
+    set -x
     git for-each-ref --format='%(refname:short)' refs/heads/** --sort=-committerdate
+    set +x
 }
 
+glogd () {
+    set -x
+    glogdd | head -20
+    set +x
+}
+
+
 glogd_get () {
+    set -x
     num="${1:?number of line - first = 1}"
     sed -n "${num}p" <(glogdd)
+    set +x
 }
 git_install_gci () {
     echo "install the git checkout interactive"
@@ -152,17 +205,39 @@ gic () {
 gim () {
     git checkout master
 }
+gimain () {
+    git checkout main
+}
 
 git_delete_merged_branches () {
     git checkout master && git branch -d $(git branch --merged | tr '*' ' ' | tr 'master' ' ')
 }
 alias gloghash='git log --pretty=format:"%h %s"'
 
-glog2 () { git log --all --decorate --oneline --graph; }
+glog2 () {
+    git log --decorate --oneline --graph;
+}
+glog2a () {
+    git log --all --decorate --oneline --graph;
+}
 
-glog3 () { git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all; }
-glog4 () { git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all; }
+glog3 () {
+    set -x
+    git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' "$@";
+    set +x
+}
+glog3a () {
+    glog3 --all
+}
+glog4 () {
+    set -x
+    git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' "$@";
+    set +x
+}
 
+glog4a () {
+    glog4 --all
+}
 alias gir="git rebase"
 
 
@@ -178,7 +253,9 @@ giri4 () { giri 4 ; }
 giri5 () { giri 5 ; }
 
 gir_conflict_files () {
+    set -x
     git diff --name-only --diff-filter=U
+    set +x
 }
 vigir_conflict_files () {
     vim $(git diff --name-only | uniq)
@@ -190,6 +267,11 @@ giriv () {
 
 gir_onto_commit_keeping_current_branch () {
     git rebase --onto $1 --root=$(git_branch)
+}
+gir_rebase_merges_on_remote_master () {
+    # rebase to origin master preserving merge commits
+    git fetch
+    git rebase --rebase-merges origin/master
 }
 vigit_rebase_conflict2 () {
     vimo $(gir_conflict_files)
@@ -220,7 +302,7 @@ git_aliases_init () {
     git config --global alias.cm commit
     git config --global alias.st status
     git config --global pull.rebase true
-    git config --global alias.pushf "push --force-with-lease"
+    #git config --global alias.pushf "push --force-with-lease"
 }
 
 git_iam_gr4viton_global () {
@@ -644,8 +726,18 @@ git_remove_ALL_without_origin_branch_USE_WITH_CARE () {
 
 
 glogstat () {
+    set -x
   glog --stat --oneline  "${@}"
+    set +x
 }
 glognumstat () {
+    set -x
   glog --numstat --oneline  "${@}"
+    set +x
+}
+
+gitouch () {
+    folder="$1"
+    fname="$folder/__init_.py"
+    mkdir -p "$folder" && touch "$fname" && git add "$fname"
 }
