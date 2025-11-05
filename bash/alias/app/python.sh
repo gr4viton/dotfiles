@@ -284,11 +284,11 @@ alias py3=python3
 alias py=python3
 
 uv_sync () {
-  uv sync --all-extras
+  uv sync --all-extras "$@"
 }
 uv_add () {
     uv add "$@"
 }
 uv_lock () {
-    uv lock
+    uv lock "$@"
 }

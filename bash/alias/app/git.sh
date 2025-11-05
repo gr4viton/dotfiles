@@ -83,15 +83,15 @@ gpfs () {
     gpff "-o ci.skip"
 }
 
-gpffn () {
+gpfnf () {
     # push new branch
     # fn = like full and new
     git push --set-upstream origin $(git_branch) "$@"
 }
-gpfsn () {
+gpfns () {
     # push new branch without ci pipeline start
     # sn = like skip pipe and new
-    gpfF "-o ci.skip"
+    gpfnf "-o ci.skip"
 }
 
 
