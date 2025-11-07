@@ -750,3 +750,15 @@ install_vault () {
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
     sudo apt update && sudo apt install vault
 }
+
+install_espanso_wayland () {
+# https://espanso.org/docs/install/linux/#deb-wayland
+wget https://github.com/espanso/espanso/releases/latest/download/espanso-debian-wayland-amd64.deb
+sudo apt install ./espanso-debian-wayland-amd64.deb
+sudo setcap "cap_dac_override+p" $(which espanso)
+# Register espanso as a systemd service (required only once)
+espanso service register
+
+# Start espanso
+espanso start
+}

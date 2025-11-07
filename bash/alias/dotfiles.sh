@@ -197,3 +197,13 @@ init_dot_vlc () {
         "${DIR_DDDOT}/vlc/vlcrc"
 
 }
+
+init_dot_espanso () {
+    app_name="espanso"
+    config_dir="${HOME}/.config/"
+    echo $config_dir
+    init_dot $app_name \
+        "${config_dir}/espanso" \
+        "${DIR_DDDOT}/espanso"
+}
+

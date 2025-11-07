@@ -29,6 +29,8 @@ muxp_my="${dotfiles}tmuxp/"
 autokey_sys="${home}.config/autokey/data/"
 autokey_my="${dotfiles}/autokey_data/"
 
+espanso_sys="${home}.config/espanso/"
+espanso_my="${dotfiles}/espanso/"
 
 config_updater () {
     update_option="${1?save/load}"
@@ -74,7 +76,7 @@ apply_configs () {
 	cp $urxvt_to $urxvt_from
 
     # urxvt
-    xrdb ~/.Xresources
+    #xrdb ~/.Xresources
 
 	# echo ">>> nvim conf"
 	# mkdir -p dirname $nvim_dir_from
@@ -93,6 +95,10 @@ apply_configs () {
     echo ">>> autokey"
     mkdir $autokey_sys
     cp $autokey_my $autokey_sys
+
+    echo ">>> espanso"
+    mkdir $espanso_sys
+    cp $espanso_my $espanso_sys
 }
 
 copy_configs () {
