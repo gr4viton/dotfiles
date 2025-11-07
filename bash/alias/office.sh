@@ -88,8 +88,6 @@ folderize () {
     #
     # Examples:
     # folderize "esp32" "/srv/dd/esp32"
-    # folderize "aut" "/srv/kw/automation/src" "/srv/kw/automation/.venv"
-    # folderize "aut" "/srv/kw/automation/src" "/srv/kw/automation/.venv" "true"
     #
     # creates:
     # - aliases: `cdesp32`, `lsesp32`
@@ -363,9 +361,6 @@ env_clean_pip () {
 	unset PYPI_USERNAME
 }
 alias unset_pip_extras="env_clean_pip"
-pypi_unset_kiwi () {
-    env_clean_pip
-}
 
 difff () {
     diff -u $@ | ydiff -s
@@ -691,10 +686,6 @@ kde_edit_local_theme () {
     viss
 }
 
-wiki_markdown_check () {
-    d_full_wiki="/srv/kiwi/repo/used/handbook/"
-    mdl --config ".markdownlint-loose.yml" --rules "$d_full_wiki/src/utils/markdown-lint-rules.js" ${d_full_wiki}.
-}
 wiki_markdown_here () {
     mdl --config ".markdownlint-loose.yml" --rules "src/utils/markdown-lint-rules.js" . $@
 }
@@ -732,9 +723,6 @@ milkdrop () {
 
 
 
-camunda () {
-    /srv/kiwi/apps/camunda-modeler-4.7.0-linux-x64/./camunda-modeler
-}
 
 netcheck_log () {
     vim /srv/dd/app/netcheck/log/connection.log
@@ -974,27 +962,6 @@ get_enums () {
     find . -name "*.py" -exec grep -Eo '^class\s+\w+\(.*Enum.*\)' {} + | sort | uniq -c | sed -E 's/.*class\s+(\w+).*/\1/'
 }
 
-get_value_enums () {
-    classNames=$(get_enums)
-    cd /srv/kw/provider-clients
-    for className in $classNames; do
-#       echo "Checking for incorrect usage of $className..."
-
-      ## ag  --hidden "(f.*${className}(?!(?:\.\w*)?\.value))"
-      # ag  --hidden "(\"\"\".*${className}(?!(?:\.\w*)?\.value)\"\"\")"
-      # ag  --hidden "format\(.*${className}(?!(?:\.\w*)?\.value)"
-
-      ag  --hidden "(${className}(?!(?:\.\w*)?\.value))"
-
-
-      #grep -rHnle "(f.*${className}.*\")"     | grep -v "\.${className}\..*\.value"
-      #grep -rHnle "(\"\"\".*${className}.*\"\"\")" | grep -v "\.${className}\..*\.value"
-      #grep -rHnle "format.*${className}[^\.]" | grep -v "\.${className}\..*\.value"
-    done
-
-    cd /srv/kw/automation
-
-}
 
 ln_s () {
     # symbolic lync creation
@@ -1082,25 +1049,21 @@ mcpinspect () {
     npx @modelcontextprotocol/inspector
 }
 
-cursorcd () {
-    cd /srv/kiwi/COMPANY/2025-03-13-cursor/
-}
 cursorcp () {
     cp "$1" /opt/cursor.appimage
 }
 
-killconfiguru () {
-    ps aux | grep -E 'uv.*configuru|configuru.*uv' | grep -v grep | awk '{print $2}' | xargs -r kill -9
+
+
+
+
+cata () {
+  find . -type f -exec cat {} + | less
+}
+cataclip () {
+  cata | clip
 }
 
-uv_run_test_kw () {
-	uv run --all-extras -- pytest --cov kw tests/unit "$@"
+hiber () {
+	sudo systemctl hibernate
 }
-uv_run_tests_kw () {
-	uv run --all-extras -- pytest --cov kw test/unit "$@"
-}
-
-todo () {
-    vim /srv/kiwi/todo.md
-}
-
