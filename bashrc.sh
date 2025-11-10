@@ -5,9 +5,6 @@ if [ -z "$DIR_DD" ]; then
 fi
 DIR_DDD="$DIR_DD/dotfiles/"
 
-# for kw dotfiles
-DIR_DDD_KW="$DIR_DD/dd-kw-dotfiles/"
-
 # .env file load
 source "$HOME_DD/dd/dd_env"
 
@@ -143,14 +140,10 @@ if [[ "$DD_SELECTOR" == "full" ]]; then
         "alias/dell.sh"
         "alias/think-x1.sh"
         "alias/dirs.sh"
-        "alias/kiwi.sh"
         "alias/config.sh"
         "alias/game.sh"
         "alias/tags.sh"
         "alias/dotfiles.sh"
-
-            # laptop wr
-            "../../kiwi_alias.sh"
     )
 
 elif [[ "$DD_SELECTOR" == "work" ]]; then
@@ -191,14 +184,10 @@ elif [[ "$DD_SELECTOR" == "work" ]]; then
         "alias/dell.sh"
         "alias/think-x1.sh"
         "alias/dirs.sh"
-        "alias/kiwi.sh"
         "alias/config.sh"
         "alias/game.sh"
         "alias/tags.sh"
         "alias/dotfiles.sh"
-
-            # laptop wr
-            "../../kiwi_alias.sh"
     )
 
 

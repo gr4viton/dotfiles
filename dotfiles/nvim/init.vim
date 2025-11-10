@@ -301,7 +301,7 @@ vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 
 """ ctags
 " ctags for multi-file function definition search
-set tags=/srv/kiwi/data/tags/tags
+" set tags=/path/to/tags/file
 " install https://robhoward.id.au/blog/2012/03/ctags-with-vim/
 " in crontab add `ctags -R
 

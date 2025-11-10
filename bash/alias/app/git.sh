@@ -314,11 +314,6 @@ git_iam_gr4viton () {
     git_set_global $ENV_DD_MY_GIT_USER $ENV_DD_MY_GIT_EMAIL
 }
 
-git_iam_kiwi () {
-    git_aliases_init
-    git_set_global $ENV_KW_MY_GIT_USER $ENV_KW_MY_GIT_EMAIL
-}
-
 alias git_whoami="git config --list"
 
 ## git ssh
@@ -478,11 +473,6 @@ git_remote_set_ssh_gitlab () {
     git_remote_rm_origin
     git_remote_add_origin $(git_remote_url_ssh_gitlab "$repo_name")
 }
-git_remote_set_ssh_kiwi () {
-    repo_name="${1?Repository name required}"
-    git_remote_rm_origin
-    git_remote_add_origin $(git_remote_url_ssh_kw "$repo_name")
-}
 
 git_push_upstream_origin_master () {
     git push --set-upstream origin master
@@ -500,9 +490,6 @@ git_remote_url_ssh_gitlab () {
 }
 git_remote_url_ssh_github () {
     echo "git@github.com:gr4viton/$1.git"
-}
-git_remote_url_ssh_kw () {
-    echo "git@skypicker.com:daniel.davidek/$1.git"
 }
 
 git_clone_gitlab () {

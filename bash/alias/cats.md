@@ -38,7 +38,6 @@
 
 ## dirs.sh
 - folderize
-  - kiwi
   - gr4
   - centroid
   - kodi ... projects
@@ -77,17 +76,6 @@
 ## install.sh
 - projects programs ..
 --> init in project dirs
-
-## kiwi.sh
-
-- pip_compile
-- bb_do_dev..
-- bb_run
-- `bag_`
-- step
-- ams
-- devs
-- okta
 
 ## octopi
 - octo

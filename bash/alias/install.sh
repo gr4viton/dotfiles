@@ -211,27 +211,6 @@ EOF
 # sudo snap install slack --classic
 echo "install slack from https://slack.com/downloads/linux"
 
-echo "VPN kiwi"
-echo $(cat << EOF
-from confluence comment from baptiste.darthenay@kiwi.com here:
-https://confluence.kiwi.com/display/ICT/VPN+Setup+how-to?utm_source=grossmann+VPN&utm_campaign=ae6369c106-EMAIL_CAMPAIGN_2018_09_24_07_21_COPY_02&utm_medium=email&utm_term=0_4321084e62-ae6369c106-66087249
-
-EOF
-)
-
-sudo apt-get install openfortivpn network-manager-fortisslvpn-gnome
-
-# sudo tail -f /var/log/syslog
-# vpn-connection[...kiwi_vpn",0]: Started the VPN service, PID 16151
-# vpn-connection[...kiwi_vpn",0]: Saw the service appear; activating connection
-# vpn-connection[...kiwi_vpn",0]: VPN connection: (ConnectInteractive) reply received
-# vpn-connection[...kiwi_vpn",0]: VPN connection: failed to connect: 'Failed to create file “/var/lib/NetworkManager-fortisslvpn/....config.RHNEUZ”: No such
-# vpn-connection[...kiwi_vpn",0]: VPN plugin: state changed: stopped (6)
-# vpn-connection[...kiwi_vpn",0]: VPN service disappeared
-
-sudo mkdir /var/lib/NetworkManager-fortisslvpn/
-sudo chown dd:dd /var/lib/NetworkManager-fortisslvpn/
-
 echo ">>> dev"
 inst_dev
 
@@ -359,11 +338,10 @@ inst_py_dependencies () {
 
 
 inst_ctags_cron_vim () {
-    mkdir -p /srv/kiwi/data/tags/
     # the config file has to have suffix (eg .txt) otherwise it generates error
     ctags_config_file="/home/dd/.config/.ctags.txt"
-    scan_folder="/srv/kw/"
-    tags_storage="/srv/kiwi/data/tags/tags"
+    scan_folder="/srv/code/"
+    tags_storage="/srv/code/tags"
     echo "Plz add the following line to \`crontab -e\`"
     echo "10 * * * * ctags -R -o $tags_storage $scan_folder --options=$ctags_config_file"
     echo ""

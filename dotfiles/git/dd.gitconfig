@@ -2,21 +2,19 @@
 # -> call `git_iam_...` in newly cloned repos
 #[user]
     #name = daniel.davidek
-    #email = daniel.davidek@kiwi.com
-# lrn - https://gitlab.skypicker.com/snippets/12
 # [push]         
 #       default = matching 
 # [pull]         
 #       rebase = true
 [alias]
         pushf = push --force-with-lease
-        co = checkout
+	co = checkout
         au = add -u
-        br = branch
+	br = branch
         ci = commit
-        ca = commit --amend
+	ca = commit --amend
         cf = commit -a --fixup
-        st = status
+	st = status
         hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
         type = cat-file -t
         dump = cat-file -p
@@ -25,6 +23,12 @@
         pom = pull origin master
         cleanup = "!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
 	count-lines = "! git log --author=\"$1\" --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf \"added lines: %s, removed lines: %s, total lines: %s\\n\", add, subs, loc }' #"
+	cm = commit
         
 [color]
         ui = auto
+[pull]
+	rebase = true
+[user]
+	name = gr4viton
+	email = lordmutty@gmail.com

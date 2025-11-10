@@ -26,7 +26,7 @@ windows:
     layout: tiled
     panes:
     - glog
-    - echo "hit_black_prov check check AMADEUS_KIWI"
+    - echo "ready for git commands"
   - window_name: pudb
     layout: tiled
     panes:

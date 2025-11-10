@@ -4,8 +4,8 @@ tags_info () {
     echo "run tags_rerun to rerun
 }
 
-CTAGS_SCAN_DIR="/srv/kw"
-CTAGS_TAGS_FILE="/srv/kiwi/data/tags/tags"
+CTAGS_SCAN_DIR=""
+CTAGS_TAGS_FILE=""
 # CTAGS_OPTIONS_FILE="/home/dd/.config/.ctags.txt"  # old
 CTAGS_OPTIONS_FILE="/home/dd/.config/ctags/default.ctags"
 

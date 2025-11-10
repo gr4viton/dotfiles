@@ -109,7 +109,5 @@ sh3d_to_endora () {
 # gr4log
 # logs
 logAutomateMe=$dirgr4log'LOG/dev/logAutomateMe.vim'
-dirkiwilog=$dirgr4log'LOG/work/kiwi/'
 
 gr4_folderize "dot" "$HOME/dd/dotfiles"
-gr4_folderize "dotkw" "$HOME/dd/dd-kw-dotfiles"

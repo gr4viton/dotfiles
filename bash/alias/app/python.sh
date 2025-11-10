@@ -30,7 +30,6 @@ pypi_upload_test () {
 
 
 pip_unused_packages () {
-    echo "viz https://kiwi.wiki/handbook/how-to/manage-python-dependencies/"
     cat *requirements.in | grep --color=none "^[^#-][^][~=<># ]\+" -o | uniq | tr '-' '_' | xargs -I{} bash -c '! git --no-pager grep -w -q -i {} "*.py" && echo "{} not found in Python files"'
 }
 

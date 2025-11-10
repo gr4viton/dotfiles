@@ -18,7 +18,6 @@ alias mount_D_ro='sudo mount -o ro /dev/nvme0n1p9 /mnt/D'
 
 alias dbm_autogenerate="alembic revision --autogenerate -m $msg"
 alias dbm_run_postgres='docker run postgres'
-alias dbm_change_db='vim /srv/kw/dbmodels/kw/automation/dbmodels/settings_local.py'
 
 alias dbm_psql='psql -h 172.17.0.2 -U postgres postgres'
 alias dbm_psql_drop='psql -h 172.17.0.2 -U postgres postgres -c "drop schema public cascade;"'
@@ -34,8 +33,6 @@ alias dbm_test_twice='dbm_test_once; dbm_test_once'
 
 alias dbm_versions_sort='ls alembic/versions/ |sort -k1.14'
 
-alias dbm_venv='source /srv/kw/dbmodels/venv3_test/bin/activate'
-
 dbm_recheckout_master_alembic_fcn() {
     cur=`git rev-parse --abbrev-ref HEAD`
     echo Current branch = $cur
@@ -48,7 +45,6 @@ dbm_recheckout_master_alembic_fcn() {
     git pull
 
     echo 'Using this DATABASE settings:'
-    echo $(python -c "from kw.automation.dbmodels.settings import DATABASES as DB; print(DB)")
     while true; do
         read -p "Are you sure you are not deleting PRODUCTION DB !???! " yn
         case $yn in
@@ -83,10 +79,6 @@ alias samsung_unmount="fusermount -u /media/myphone"
 swag_validate () {
     swag_file="${1?swagger file}"
     swagger-cli validate $swag_file
-}
-
-test_auto_db () {
-    echo python -c "import psycopg2;try:;psycopg2.connect('$KIWI_AUTOMATION_DB_FULL_URL');except:print('does not work'); print('works')"
 }
 
 

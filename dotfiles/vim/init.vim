@@ -71,7 +71,7 @@ filetype plugin indent on    " required
 "
 
 "%%%%%%%%%%%%%%%%%%%%%%%
-set nocompatible "pøepne Vi do vim
+set nocompatible "pï¿½epne Vi do vim
 "source $VIMRUNTIME/vimrc_example.vim
 source $VIMRUNTIME/mswin.vim
 behave mswin
@@ -101,7 +101,7 @@ function MyDiff()
   silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
 endfunction
 
-"set guifont=Consolas:h9:cDEFAULT "dobrý fonty
+"set guifont=Consolas:h9:cDEFAULT "dobrï¿½ fonty
 colorscheme wombat256mod "dobry barvy
 "colorscheme slate
 
@@ -338,7 +338,7 @@ vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 let g:syntastic_python_pylint_post_args="--max-line-length=120"
 let g:syntastic_python_flake8_args='--ignore=E501,E225'
 
-set tags=/srv/kiwi/data/tags/tags
+" set tags=/path/to/tags/file
 
 " noremap = nvo == normal + (visual + select) + operator pending
 " noremap! = ic == insert + command-line mode

@@ -65,7 +65,6 @@ muxl_base () {
 }
 
 muxl_base_da () {
-    # da = data and automation = kiwi
     muxl_base
 }
 
