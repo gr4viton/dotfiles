@@ -3,7 +3,7 @@
 
 ## logins
 
-gmail kiwi
+gmail
 gitlab
 sentry
 thezoo

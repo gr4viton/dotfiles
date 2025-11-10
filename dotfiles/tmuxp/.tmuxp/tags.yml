@@ -12,4 +12,3 @@ windows:
     panes:
     - visearch 'set tags' ~/.config/nvim/init.vim ~/.config/.ctags.txt
     - crontab -e
-    - cd /srv/kiwi/data/tags; ll

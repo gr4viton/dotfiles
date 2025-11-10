@@ -112,7 +112,3 @@
 ## speak.sh
 - speak_install
 - isay
-
-## tags.sh
-- ctags
-- tags_info

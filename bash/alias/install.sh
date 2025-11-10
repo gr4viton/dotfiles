@@ -337,20 +337,6 @@ inst_py_dependencies () {
 }
 
 
-inst_ctags_cron_vim () {
-    # the config file has to have suffix (eg .txt) otherwise it generates error
-    ctags_config_file="/home/dd/.config/.ctags.txt"
-    scan_folder="/srv/code/"
-    tags_storage="/srv/code/tags"
-    echo "Plz add the following line to \`crontab -e\`"
-    echo "10 * * * * ctags -R -o $tags_storage $scan_folder --options=$ctags_config_file"
-    echo ""
-    echo "10 * * * * = each 10 minutes generates tags"
-    echo "ctags -R -o <tags_storage> <scan_folder> --options=<ctags_config_file>"
-    echo ""
-    echo "Plz add the following line to your \`.vimrc\` config file"
-    echo "tags=$ctags_config_file"
-}
 
 
 inst_dev () {

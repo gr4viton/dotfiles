@@ -142,7 +142,6 @@ if [[ "$DD_SELECTOR" == "full" ]]; then
         "alias/dirs.sh"
         "alias/config.sh"
         "alias/game.sh"
-        "alias/tags.sh"
         "alias/dotfiles.sh"
     )
 
@@ -186,7 +185,6 @@ elif [[ "$DD_SELECTOR" == "work" ]]; then
         "alias/dirs.sh"
         "alias/config.sh"
         "alias/game.sh"
-        "alias/tags.sh"
         "alias/dotfiles.sh"
     )
 
