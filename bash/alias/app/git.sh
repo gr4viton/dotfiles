@@ -15,11 +15,18 @@ git_branch_cutted() {
     git_branch | sed 's:.*/::'
 }
 
-# gpl () {
-    # git pull --rebase origin master
-# }
+git_branch_default () {
+  git config --get init.defaultBranch
+}
+git_branch_main_is_default () {
+  git config init.defaultBranch main
+}
+git_branch_master_is_default () {
+  git config init.defaultBranch master
+}
+
 gpr () {
-    git pull --rebase origin master
+    git pull --rebase origin $(git_branch_default)
 }
 gprbranch () {
     # concrete branch
@@ -28,9 +35,6 @@ gprbranch () {
 gprb () {
     # current branch
     git pull --rebase origin "$(git_branch)"
-}
-gprmain () {
-    git pull --rebase origin main
 }
 
 gife () { git fetch ; }
@@ -69,7 +73,7 @@ gire_edit_split () {
 }
 
 gist () {
-    git status
+    git status "$@"
 }
 
 gpff () {
@@ -104,7 +108,7 @@ gidiw () {
 gidimr () {
     # changes like in MR
     # ... from common ancestor
-    git diff master...$(git_branch) "$@"
+    git diff $(git_branch_default)...$(git_branch) "$@"
 }
 gidis () {
     gis
@@ -123,7 +127,7 @@ glogmr () {
     # changes like in MR
     # ... from common ancestor
     set -x
-    git log master...$(git_branch) -p "$@"
+    git log $(git_branch_default)...$(git_branch) -p "$@"
     set +x
 }
 glog1 () {
@@ -199,18 +203,16 @@ git_install_gci () {
 }
 gic () {
     # interactvie checkout of branches
-    gci
+    # gci  # what was the name of the tool? anyway
+    git branch --sort=-committerdate | fzf | xargs git checkout
 }
 
 gim () {
-    git checkout master
-}
-gimain () {
-    git checkout main
+  git checkout $(git_branch_default)
 }
 
 git_delete_merged_branches () {
-    git checkout master && git branch -d $(git branch --merged | tr '*' ' ' | tr 'master' ' ')
+    git checkout $(git_branch_default) && git branch -d $(git branch --merged | tr '*' ' ' | tr "$(git_branch_default)" ' ')
 }
 alias gloghash='git log --pretty=format:"%h %s"'
 
@@ -271,7 +273,7 @@ gir_onto_commit_keeping_current_branch () {
 gir_rebase_merges_on_remote_master () {
     # rebase to origin master preserving merge commits
     git fetch
-    git rebase --rebase-merges origin/master
+    git rebase --rebase-merges origin/$(git_branch_default)
 }
 vigit_rebase_conflict2 () {
     vimo $(gir_conflict_files)
@@ -336,7 +338,7 @@ git_generate_ssh() {
 git_recheckout_current_branch() {
     cur=`git rev-parse --abbrev-ref HEAD`
     echo Current branch = $cur
-    git checkout master
+    git checkout $(git_branch_default)
     git branch -D $cur
     git pull
     git checkout $cur
@@ -347,7 +349,7 @@ git_delete_and_recheckout_current_branch() {
     # - deletes current branch, pulls origin, checkout it again
     cur=`git rev-parse --abbrev-ref HEAD`
     echo Current branch = $cur
-    git checkout master
+    git checkout $(git_branch_default)
     git branch -D $cur
     git pull
     git checkout $cur
@@ -368,13 +370,13 @@ alias gitcal_mine='git cal --author=daniel.davidek'
 git_rebase_interactive_till_master() {
     current_branch=`git_current_branch`
     git fetch
-    first_common_ancestor=`git merge-base $current_branch origin/master`
+    first_common_ancestor=`git merge-base $current_branch origin/$(git_branch_default)`
     git rebase -i $first_common_ancestor
 }
 
 git_override_remote_master_with_local_master () {
     # be sure the remote master is not needed - as it will be overriden
-    git branch --set-upstream-to=origin/master master
+    git branch --set-upstream-to=origin/$(git_branch_default) $(git_branch_default)
     gpf
 }
 
@@ -475,7 +477,7 @@ git_remote_set_ssh_gitlab () {
 }
 
 git_push_upstream_origin_master () {
-    git push --set-upstream origin master
+    git push --set-upstream origin $(git_branch_default)
 }
 
 git_remove_from_whole_history_file () {
@@ -531,21 +533,21 @@ gife_short () {
 gib_merged_list_no () {
     # all branches merged in origin/master
     gife_short
-    git branch --merged origin/master | grep -v "^\*" | grep -v "master"
+    git branch --merged origin/$(git_branch_default) | grep -v "^\*" | grep -v "$(git_branch_default)"
 }
 gib_merged_delete_no () {
     gife_short
-    git branch --merged origin/master | grep -v "^\*" | grep -v "master" | xargs -n 1 git branch -d
+    git branch --merged origin/$(git_branch_default) | grep -v "^\*" | grep -v "$(git_branch_default)" | xargs -n 1 git branch -d
 }
 
 gib_merged_delete() {
     gife_short
 
-    echo "Listing local branches fully merged into origin/master:"
+    echo "Listing local branches fully merged into origin/$(git_branch_default):"
     branches_to_delete=$(git for-each-ref --format='%(refname:short) %(upstream:track)' refs/heads/ |
     while read branch track; do
-        if [[ "$branch" != "master" && "$branch" != "main" ]]; then
-            if git merge-base --is-ancestor $branch origin/master; then
+        if [[ "$branch" != "$(git_branch_default)" && "$branch" != "main" ]]; then
+            if git merge-base --is-ancestor $branch origin/$(git_branch_default); then
                 echo $branch
             fi
         fi
@@ -683,15 +685,15 @@ gib_localahead_table() {
     printf "%s\n" "---------|---------|----------|---------------------------------"
     git for-each-ref --format='%(refname:short) %(upstream:short)' refs/heads/ |
     while read local remote; do
-        if [[ -n "$remote" && "$local" != "master" && "$local" != "main" ]]; then
+        if [[ -n "$remote" && "$local" != "$(git_branch_default)" && "$local" != "main" ]]; then
             if git rev-parse --verify $remote &>/dev/null; then
-                # Find the common ancestor of local branch and local master
-                local_base=$(git merge-base $local master)
+                # Find the common ancestor of local branch and local $(git_branch_default)
+                local_base=$(git merge-base $local $(git_branch_default))
                 # Count commits from common ancestor to local branch
                 local_commits=$(git rev-list --count $local_base..$local)
 
-                # Find the common ancestor of remote branch and origin/master
-                remote_base=$(git merge-base $remote origin/master)
+                # Find the common ancestor of remote branch and origin/$(git_branch_default)
+                remote_base=$(git merge-base $remote origin/$(git_branch_default))
                 # Count commits from common ancestor to remote branch
                 origin_commits=$(git rev-list --count $remote_base..$remote)
 
@@ -728,3 +730,5 @@ gitouch () {
     fname="$folder/__init_.py"
     mkdir -p "$folder" && touch "$fname" && git add "$fname"
 }
+
+
