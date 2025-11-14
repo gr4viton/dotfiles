@@ -1066,4 +1066,53 @@ cataclip () {
 
 hiber () {
 	sudo systemctl hibernate
+#alias hibernae='systemctl hibernate -i'
 }
+
+alias do_assasinate='sudo pkill -f docker'
+alias xml2json_ret="xml2json -t xml2json retrieve.xml -o retrieve.json --pretty --strip_namespace"
+alias xml2json_base="xml2json -t xml2json -o retrieve.json --pretty --strip_namespace"
+
+
+rsync_bkp () {
+	sudo apt install sshfs
+	sudo ufw allow ssh
+	inst sshfs
+	DIR_LAP="/mnt/sshfs/think/home/dd/BKP"
+	# srv
+	rsync -rtPh --exclude='*/.venv/*' --exclude='.pytest_cache' /srv/ $DIR_LAP/srv
+	# home
+        rsync -rtPh --exclude='*/.venv/*' --exclude='.pytest_cache'/home/dd $DIR_LAP/home_dd
+}
+
+
+lsf () { lla | fzf ; }
+
+prerun_commit () {
+  echo "Running: git diff --name-only -z $@"
+  echo "Running: pre-commit run --files <files>"
+  git diff --name-only -z "$@" | xargs -0 pre-commit run --files
+}
+
+prerun_branch() {
+# Run on files changed since diverging from master
+# prerun_branch
+
+# Run on files changed since diverging from main
+# prerun_branch main
+
+# Run on files changed since diverging from develop
+# prerun_branch develop
+
+  local base_branch="${1:-master}"
+  echo "Running: prerun_commit \$(git merge-base \"$base_branch\" HEAD)"
+  prerun_commit $(git merge-base "$base_branch" HEAD)
+}
+
+fluxresume () {
+  flux resume -n "$1" ks "$1-production-main-app"
+}
+fluxsuspend () {
+  flux suspend -n "$1" ks "$1-production-main-app"
+}
+
