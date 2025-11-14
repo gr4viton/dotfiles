@@ -339,7 +339,7 @@ git_recheckout_current_branch() {
     cur=`git rev-parse --abbrev-ref HEAD`
     echo Current branch = $cur
     git checkout $(git_branch_default)
-    git branch -D $cur
+    # git branch -D $cur
     git pull
     git checkout $cur
 }
