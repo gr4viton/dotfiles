@@ -362,9 +362,21 @@ env_clean_pip () {
 }
 alias unset_pip_extras="env_clean_pip"
 
-difff () {
-    diff -u $@ | ydiff -s
+# difff () {
+#     diff -u $@ | ydiff -s
+# }
+#
+# SUDO apt install git-delta
+# Regular delta diff
+difff() {
+  diff -u "$1" "$2" | delta
 }
+
+# Side-by-side delta diff
+diffs() {
+  diff -u "$1" "$2" | delta --side-by-side
+}
+
 
 alias xclip_pipe='xargs echo -n | xclip -selection clipboard'
 
@@ -1116,3 +1128,162 @@ fluxsuspend () {
   flux suspend -n "$1" ks "$1-production-main-app"
 }
 
+
+espanso_edit () { espanso edit ; }
+espanso_restart () { espanso restart ; }
+
+
+local_avahi () {
+  # Avahi = Linux implementation of mDNS (multicast DNS) and DNS-SD (DNS Service Discovery)
+  # ~ bonjour
+  # Devices broadcast their hostname on the local network via multicast.
+
+  avahi-browse -a -t
+  # Or specifically look for SSH services:
+  avahi-browse -r _ssh._tcp
+}
+
+rpi_install () {
+# Install Docker
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+
+# Add your user to docker group (so you don't need sudo)
+sudo usermod -aG docker dd
+
+# Start Docker on boot
+sudo systemctl enable docker
+
+# Log out and back in for group to take effect
+exit
+# Then SSH back in
+}
+
+vrcnvim () {
+  nvim ~/.config/nvim/init.lua
+}
+
+generate_holiday_table() {
+    python3 << 'EOF'
+from datetime import date, timedelta
+
+# Hardcoded holiday strings
+cz_list = """1 Jan: Restoration Day of the Independent Czech State
+29 Mar: Good Friday
+1 Apr: Easter Monday
+1 May: Labour Day
+8 May: Liberation Day
+5 Jul: St Cyril and Methodius Day
+6 Jul: Jan Hus Day
+28 Sep: St. Wenceslas Day
+28 Oct: Independent Czechoslovak State Day
+17 Nov: Struggle for Freedom and Democracy Day
+24 Dec: Christmas Eve
+25 Dec: Christmas Day
+26 Dec: St. Stephen's Day"""
+
+sk_list = """1 Jan: Day of the Establishment of the Slovak Republic
+6 Jan: Three Kings' Day
+29 Mar: Good Friday
+1 Apr: Easter Monday
+1 May: Labour Day
+8 May: Day of victory over fascism
+5 Jul: St Cyril and Methodius Day
+29 Aug: Slovak National Uprising Day
+15 Sep: Day of Our Lady of Sorrows
+1 Nov: All Saints' Day
+17 Nov: Day of Freedom and Democracy
+24 Dec: Christmas Eve
+25 Dec: Christmas Day
+26 Dec: St. Stephen's Day"""
+
+def parse_holidays(text_block, year=2026):
+    months = {
+        "Jan": 1, "Mar": 3, "Apr": 4, "May": 5, "Jun": 6, 
+        "Jul": 7, "Aug": 8, "Sep": 9, "Oct": 10, "Nov": 11, "Dec": 12
+    }
+    holiday_dates = set()
+    for line in text_block.strip().split('\n'):
+        line = line.strip()
+        if ':' in line:
+            date_part = line.split(':')[0].strip()
+            day_str, month_str = date_part.split()
+            holiday_dates.add(date(year, months[month_str], int(day_str)))
+    return holiday_dates
+
+def generate_markdown_table():
+    cz_holidays = parse_holidays(cz_list)
+    sk_holidays = parse_holidays(sk_list)
+    
+    start_date = date(2026, 1, 1)
+    end_date = date(2026, 12, 31)
+    
+    with open("table.md", "w", encoding="utf-8") as f:
+        f.write("| dates | cz | sk |\n")
+        f.write("| :--- | :---: | :---: |\n")
+        
+        current = start_date
+        while current <= end_date:
+            cz_val = "yes" if current in cz_holidays else ""
+            sk_val = "yes" if current in sk_holidays else ""
+            f.write(f"| {current} | {cz_val} | {sk_val} |\n")
+            current += timedelta(days=1)
+
+if __name__ == "__main__":
+    generate_markdown_table()
+    print("Table 'table.md' has been generated successfully.")
+EOF
+}
+
+firefox_turn_off_gestures () {
+  echo "about:support"
+  # open profile folder
+  # create user.js in there
+  # fill it with
+  # user_pref("browser.gesture.swipe.left", "");
+  # user_pref("browser.gesture.swipe.right", "");
+  # user_pref("browser.gesture.swipe.up", "");
+  # user_pref("browser.gesture.swipe.down", "");
+  # user_pref("browser.gesture.pinch.in", "");
+  # user_pref("browser.gesture.pinch.out", "");
+  # user_pref("browser.gesture.twist.left", "");
+  # user_pref("browser.gesture.twist.right", "");
+}
+
+gire_take_head() {
+# Accept version from HEAD (commit being replayed) for one conflicted file during rebase.
+# Usage: accept_rebase_head <filename>
+  local file="$1"
+  if [[ -z "$file" ]]; then
+    echo "Usage: accept_rebase_head <filename>" >&2
+    return 1
+  fi
+  if [[ ! -d .git/rebase-merge && ! -d .git/rebase-apply ]]; then
+    echo "Not in a rebase. Aborting." >&2
+    return 1
+  fi
+  if ! git ls-files -u -- "$file" | grep -q .; then
+    echo "File has no conflicts or is not tracked: $file" >&2
+    return 1
+  fi
+  git checkout --theirs -- "$file" && git add "$file"
+}
+
+gire_take_mine() {
+# Accept "mine" (branch we're rebasing onto) for one conflicted file during rebase.
+# Usage: accept_rebase_mine <filename>
+  local file="$1"
+  if [[ -z "$file" ]]; then
+    echo "Usage: accept_rebase_mine <filename>" >&2
+    return 1
+  fi
+  if [[ ! -d .git/rebase-merge && ! -d .git/rebase-apply ]]; then
+    echo "Not in a rebase. Aborting." >&2
+    return 1
+  fi
+  if ! git ls-files -u -- "$file" | grep -q .; then
+    echo "File has no conflicts or is not tracked: $file" >&2
+    return 1
+  fi
+  git checkout --ours -- "$file" && git add "$file"
+}

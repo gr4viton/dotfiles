@@ -3,7 +3,8 @@
 set colored-stats on
 
 export SHELL="/bin/bash"
-export EDITOR="/usr/bin/nvim"
+# export EDITOR="/usr/bin/nvim"
+export EDITOR="nvim"
 
 # Nice output and secure deletion/moving and verbosity
 if [ "$TERM" != "dumb" ]; then

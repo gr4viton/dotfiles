@@ -123,17 +123,22 @@ EOF
 }
 
 inst_neovim () {
-  inst neovim
-  echo ">>> neovim-pluginstaller"
-  curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  pip3 install --user neovim
+  # Remove old neovim if installed
+  sudo apt remove neovim
 
-  echo "vim, :PlugInstall now"
-  # install coc
-  inst nodejs npm
-  # copyy @ coc
-  inst xsel
+  # Download latest AppImage
+  curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+  chmod u+x nvim.appimage
+
+  # Move to a directory in PATH
+  sudo mv nvim.appimage /usr/local/bin/nvim
+
+  # Test it
+  nvim --version
 }
+
+
+
 
 inst_tmux () {
   # install terminal multiplexer + features

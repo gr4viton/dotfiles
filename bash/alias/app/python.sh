@@ -291,3 +291,7 @@ uv_add () {
 uv_lock () {
     uv lock "$@"
 }
+
+uv_refresh_dispatcher () {
+   uv sync --refresh-package kw-dispatcher
+}
