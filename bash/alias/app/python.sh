@@ -177,6 +177,96 @@ regex_all_py () {
     # done
 }
 
+regexit () {
+  # Usage:
+  #   regexit '<match_regex>' '<replacement_with_\1_\2...>'
+  # Example:
+  #   regexit 'modules([./])clients[./]peakwork' 'modules\1peakwork'
+
+  local match_re="$1"
+  local repl="$2"
+
+  if [ -z "$match_re" ] || [ -z "$repl" ]; then
+    echo "Usage: regexit '<match_regex>' '<replacement_with_\\1_\\2...>'"
+    return 2
+  fi
+  command -v ag >/dev/null 2>&1 || { echo "ag not found"; return 127; }
+
+  echo "Match regex (ag + sed -E):"
+  echo "  $match_re"
+  echo "Replacement:"
+  echo "  $repl"
+  echo
+
+  mapfile -t files < <(ag -l --nocolor "$match_re" . 2>/dev/null)
+
+  ((${#files[@]} == 0)) && { echo "No files matched."; return 0; }
+
+  echo "Files containing the pattern:"
+  printf '  %s\n' "${files[@]}"
+  echo
+
+  printf 'Run replacement (y/n)? '
+  read -r answer
+  [[ "$answer" =~ ^[Yy]$ ]] || { echo "No."; return 0; }
+
+  # Build the sed substitution automatically.
+  # Use a delimiter unlikely to appear in paths/regex.
+  local delim='|'
+  local sed_expr="s${delim}${match_re}${delim}${repl}${delim}g"
+
+  set -x
+  sed -E -i "$sed_expr" "${files[@]}"
+  set +x
+}
+
+regexpath () {
+  # Usage:
+  #   regexpath "modules clients peakwork" "modules peakwork"
+  #
+  # Turns space-separated path segments into a regex that matches either "/" or "."
+  # between segments, capturing the first separator so it can be reused in output.
+  #
+  # Example:
+  #   regexpath "modules clients peakwork" "modules peakwork"
+  # -> regexit "modules([./])clients[./]peakwork" "modules\1peakwork"
+
+  local from="$1"
+  local to="$2"
+
+  if [ -z "$from" ] || [ -z "$to" ]; then
+    echo 'Usage: regexpath "seg1 seg2 ..." "seg1 seg2 ..."'
+    return 2
+  fi
+
+  # Split on spaces (intentionally simple: segments must not contain spaces)
+  local -a A B
+  read -r -a A <<< "$from"
+  read -r -a B <<< "$to"
+
+  ((${#A[@]} >= 2)) || { echo "regexpath: FROM needs at least 2 segments"; return 2; }
+  ((${#B[@]} >= 1)) || { echo "regexpath: TO needs at least 1 segment"; return 2; }
+
+  # Build match regex:
+  #   seg1([./])seg2[./]seg3[./]...segN
+  local match="${A[0]}([./])${A[1]}"
+  local i
+  for ((i=2; i<${#A[@]}; i++)); do
+    match+="[./]${A[i]}"
+  done
+
+  # Build replacement:
+  #   seg1\1seg2\1seg3...
+  # (uses the captured separator from the match)
+  local repl="${B[0]}"
+  for ((i=1; i<${#B[@]}; i++)); do
+    repl+="\\1${B[i]}"
+  done
+
+  regexit "$match" "$repl"
+}
+
+
 
 # echo_py
 

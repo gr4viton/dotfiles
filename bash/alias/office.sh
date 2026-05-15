@@ -1287,3 +1287,13 @@ gire_take_mine() {
   fi
   git checkout --ours -- "$file" && git add "$file"
 }
+
+rm_empty_folders () {
+  # Deletes empty directories under the current directory (does not delete ".")
+  # Safe for names with spaces/newlines.
+
+  find . -depth -type d -empty -print0 | while IFS= read -r -d '' d; do
+    [ "$d" = "." ] && continue
+    rmdir -- "$d"
+  done
+}

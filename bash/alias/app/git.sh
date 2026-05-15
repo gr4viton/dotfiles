@@ -101,15 +101,31 @@ gpfns () {
 
 gidi () {
     git diff "$@"
+    # force less to avoid anti-UX behavior dependent on diff length - then CTRL-D killing the terminal...
+    # Skip less entirely if diff is empty
+    # if git diff --quiet "$@" 2>/dev/null; then
+    #     return
+    # fi
+    # # Force less to always open (no auto-quit on short diffs)
+    # LESS="-RX" git diff "$@"
 }
+
 gidiw () {
-    git diff --color-words "$@"
+    LESS="-RX" git diff --color-words "$@"
 }
 gidimr () {
     # changes like in MR
     # ... from common ancestor
-    git diff $(git_branch_default)...$(git_branch) "$@"
+    LESS="-RX" git diff $(git_branch_default)...$(git_branch) "$@"
 }
+gidimrfiles () {
+    git diff --name-only $(git_branch_default)...$(git_branch) "$@"
+}
+
+prerunchanged () {
+    pre-commit run --files $(gidimrfiles | grep '\.py$') "$@"
+}
+
 gidis () {
     gis
     gidi
@@ -204,7 +220,9 @@ git_install_gci () {
 gic () {
     # interactvie checkout of branches
     # gci  # what was the name of the tool? anyway
-    git branch --sort=-committerdate | fzf | xargs git checkout
+    #git branch --sort=-committerdate | fzf | xargs git checkout
+    # there were prefixes + *
+    git branch --sort=-committerdate | fzf | sed 's/^[ *+]*//' | xargs git checkout
 }
 
 gim () {
@@ -1091,4 +1109,236 @@ gislist () {
 
 gisdrop0 () {
   git stash drop stash@{0}
+}
+
+gimv_simple () {
+  local from="$1"
+  local to="$2"
+
+  if [ -z "$from" ] || [ -z "$to" ]; then
+    echo 'Usage: gimv "seg1 seg2 ..." "seg1 seg2 ..."'
+    return 2
+  fi
+  command -v git >/dev/null 2>&1 || { echo "git not found"; return 127; }
+
+  local -a A B
+  read -r -a A <<< "$from"
+  read -r -a B <<< "$to"
+
+  local from_suffix="${A[0]}" i
+  for ((i=1; i<${#A[@]}; i++)); do from_suffix+="/${A[i]}"; done
+
+  local to_suffix="${B[0]}"
+  for ((i=1; i<${#B[@]}; i++)); do to_suffix+="/${B[i]}"; done
+
+  mapfile -d '' dirs < <(find . -type d -path "*/$from_suffix" -print0)
+  ((${#dirs[@]} == 0)) && { echo "No directories matched */$from_suffix"; return 0; }
+
+  local -a srcs dsts
+  local d f rel base dst
+  for d in "${dirs[@]}"; do
+    base="${d%/$from_suffix}"
+
+    while IFS= read -r -d '' f; do
+      # Skip __pycache__ and .pyc
+      case "$f" in
+        *"/__pycache__/"*|*.pyc) continue ;;
+      esac
+
+      rel="${f#"$d"/}"
+      dst="$base/$to_suffix/$rel"
+      srcs+=("$f")
+      dsts+=("$dst")
+    done < <(find "$d" -type f -print0)
+  done
+
+  ((${#srcs[@]} == 0)) && { echo "No files to move (after filtering)."; return 0; }
+
+  echo "Will move these files (git mv):"
+  for ((i=0; i<${#srcs[@]}; i++)); do
+    printf '  %s -> %s\n' "${srcs[i]}" "${dsts[i]}"
+  done
+  echo
+
+  printf 'Proceed (y/n)? '
+  read -r answer
+  [[ "$answer" =~ ^[Yy]$ ]] || { echo "No."; return 0; }
+
+  set -e
+  for ((i=0; i<${#srcs[@]}; i++)); do
+    mkdir -p "$(dirname -- "${dsts[i]}")"
+    git mv -- "${srcs[i]}" "${dsts[i]}"
+  done
+}
+
+# --- original folder mover (your previous gimv_only logic), renamed ---
+gimv_folder () {
+  local from="$1"
+  local to="$2"
+
+  if [ -z "$from" ] || [ -z "$to" ]; then
+    echo 'Usage: gimv_move "seg1 seg2 ..." "seg1 seg2 ..."'
+    return 2
+  fi
+  command -v git >/dev/null 2>&1 || { echo "git not found"; return 127; }
+
+  local -a A B
+  read -r -a A <<< "$from"
+  read -r -a B <<< "$to"
+
+  local from_suffix="${A[0]}" i
+  for ((i=1; i<${#A[@]}; i++)); do from_suffix+="/${A[i]}"; done
+
+  local to_suffix="${B[0]}"
+  for ((i=1; i<${#B[@]}; i++)); do to_suffix+="/${B[i]}"; done
+
+  mapfile -d '' dirs < <(find . -type d -path "*/$from_suffix" -print0)
+  ((${#dirs[@]} == 0)) && { echo "No directories matched */$from_suffix"; return 0; }
+
+  local -a srcs dsts
+  local d f rel base dst
+  for d in "${dirs[@]}"; do
+    base="${d%/$from_suffix}"
+
+    while IFS= read -r -d '' f; do
+      # Skip caches/bytecode
+      case "$f" in
+        *"/__pycache__/"*|*.pyc) continue ;;
+      esac
+
+      rel="${f#"$d"/}"
+      dst="$base/$to_suffix/$rel"
+      srcs+=("$f")
+      dsts+=("$dst")
+    done < <(find "$d" -type f -print0)
+  done
+
+  ((${#srcs[@]} == 0)) && { echo "No files to move (after filtering)."; return 0; }
+
+  echo "Will move these files (git mv):"
+  for ((i=0; i<${#srcs[@]}; i++)); do
+    printf '  %s -> %s\n' "${srcs[i]}" "${dsts[i]}"
+  done
+  echo
+
+  printf 'Proceed with git mv (y/n)? '
+  read -r answer
+  [[ "$answer" =~ ^[Yy]$ ]] || { echo "No."; return 1; }  # return 1 = user said no
+
+  set -e
+  for ((i=0; i<${#srcs[@]}; i++)); do
+    mkdir -p "$(dirname -- "${dsts[i]}")"
+    git mv -- "${srcs[i]}" "${dsts[i]}"
+  done
+
+  return 0
+}
+
+# --- new: file mover (moves matching */from_file to */to_file) ---
+gimv_file () {
+  local from="$1"
+  local to="$2"
+  local answer="$3"
+
+  if [ -z "$from" ] || [ -z "$to" ]; then
+    echo 'Usage: gimv_file "seg1 seg2 file.ext" "seg1 seg2 ... newfile.ext"'
+    return 2
+  fi
+  command -v git >/dev/null 2>&1 || { echo "git not found"; return 127; }
+
+  local -a A B
+  read -r -a A <<< "$from"
+  read -r -a B <<< "$to"
+
+  local from_suffix="${A[0]}" i
+  for ((i=1; i<${#A[@]}; i++)); do from_suffix+="/${A[i]}"; done
+
+  local to_suffix="${B[0]}"
+  for ((i=1; i<${#B[@]}; i++)); do to_suffix+="/${B[i]}"; done
+
+  # Find all matching files anywhere under PWD
+  mapfile -d '' srcs < <(find . -type f -path "*/$from_suffix" -print0)
+  ((${#srcs[@]} == 0)) && { echo "No files matched */$from_suffix"; return 0; }
+
+  local -a dsts
+  local s base dst
+  for s in "${srcs[@]}"; do
+    # Skip caches/bytecode
+    case "$s" in
+      *"/__pycache__/"*|*.pyc) continue ;;
+    esac
+
+    base="${s%/$from_suffix}"
+    dst="$base/$to_suffix"
+    dsts+=("$dst")
+  done
+
+  ((${#dsts[@]} == 0)) && { echo "No files to move (after filtering)."; return 0; }
+
+  echo "Will move these files (git mv):"
+  for ((i=0; i<${#dsts[@]}; i++)); do
+    printf '  %s -> %s\n' "${srcs[i]}" "${dsts[i]}"
+  done
+  echo
+
+  [[ "$answer" =~ ^[Yy]$ ]] || printf 'Proceed with git mv (y/n)? ' && read -r answer
+  [[ "$answer" =~ ^[Yy]$ ]] || { echo "No."; return 1; }
+
+  set -e
+  for ((i=0; i<${#dsts[@]}; i++)); do
+    mkdir -p "$(dirname -- "${dsts[i]}")"
+    git mv -- "${srcs[i]}" "${dsts[i]}"
+  done
+
+  return 0
+}
+
+# --- gimv: decide folder vs file, then (if moved) run regexpath with suffix-stripped tokens ---
+gimv () {
+  local from="$1"
+  local to="$2"
+
+  if [ -z "$from" ] || [ -z "$to" ]; then
+    echo 'Usage: gimv "seg1 seg2 ..." "seg1 seg2 ..."'
+    return 2
+  fi
+
+  local -a FA TA
+  read -r -a FA <<< "$from"
+  read -r -a TA <<< "$to"
+
+  # Decide: if FROM last token contains a dot, treat as file move
+  local mover="gimv_folder"
+  if [[ "${FA[-1]}" == *.* ]]; then
+    mover="gimv_file"
+  fi
+
+  $mover "$from" "$to"
+  local rc=$?
+
+  # Prepare regexpath args: strip extension from last token if it looks like a filename
+  local from_rp="$from"
+  local to_rp="$to"
+
+  # add a space after
+  if [[ "${FA[-1]}" == *.* ]]; then
+    FA[-1]="${FA[-1]%.*}"
+    from_rp="${FA[*]} "
+  fi
+  if [[ "${TA[-1]}" == *.* ]]; then
+    TA[-1]="${TA[-1]%.*}"
+    to_rp="${TA[*]} "
+  fi
+
+  if [ $rc -eq 0 ]; then
+    echo
+    echo "Now updating references via regexpath..."
+    regexpath "$from_rp" "$to_rp"
+  elif [ $rc -eq 1 ]; then
+    echo "Move cancelled; not running regexpath."
+    return 0
+  else
+    echo "Move failed; not running regexpath."
+    return $rc
+  fi
 }
