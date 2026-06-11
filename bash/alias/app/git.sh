@@ -1373,10 +1373,24 @@ gisave_simple () {
 }
 
 gisave () {
-  local count="${1:?usage: export_commits <count> [output-file]}"
-  local outfile="branch__$(git_branch).txt"
+  local count="$1"
   local repo_name="$(git_repo_name)"
-  echo "create MR in ${repo_name} repo with the following commits, MRtitle = first commit message, and branch name the same as this file name (eg branch__dd-asd.txt -> branch = dd-asd)" > "${outfile}"
-  git log -"${count}" --format=fuller -p --stat >> "${outfile}"
-  echo "Wrote last ${count} commit(s) to ${outfile}"
-}
+  local branch="$(git_branch)"
+  local base="$(git_branch_default)"
+  local outfile="branch__${branch}.txt"
+  {
+    echo "create MR in ${repo_name} repo with the following commits, MRtitle = first commit message, and branch name the same as this file name (eg branch__dd-asd.txt -> branch = dd-asd)"
+  } > "${outfile}"
+  if [[ -n "${count}" ]]; then
+    git log -"${count}" --format=fuller -p --stat >> "${outfile}"
+    echo "Wrote last ${count} commit(s) to ${outfile}"
+  else
+    count="$(git rev-list --count "${base}..HEAD")"
+    if (( count == 0 )); then
+      echo "No commits on ${branch} ahead of ${base}" >&2
+      rm -f "${outfile}"
+      return 1
+    fi
+    git log "${base}..HEAD" --format=fuller -p --stat >> "${outfile}"
+    echo "Wrote ${count} commit(s) from ${branch} (vs ${base}) to ${outfile}"
+  fi
