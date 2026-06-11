@@ -1377,9 +1377,12 @@ gisave () {
   local repo_name="$(git_repo_name)"
   local branch="$(git_branch)"
   local base="$(git_branch_default)"
-  local outfile="branch__${branch}.txt"
+  local repo_root="$(git rev-parse --show-toplevel)"
+  local outfile="${repo_root}/branch__${branch}.diff"
+  local file_url="file://${outfile}"
   {
     echo "create MR in ${repo_name} repo with the following commits, MRtitle = first commit message, and branch name the same as this file name (eg branch__dd-asd.txt -> branch = dd-asd)"
+    echo "${file_url}"
   } > "${outfile}"
   if [[ -n "${count}" ]]; then
     git log -"${count}" --format=fuller -p --stat >> "${outfile}"
@@ -1394,3 +1397,12 @@ gisave () {
     git log "${base}..HEAD" --format=fuller -p --stat >> "${outfile}"
     echo "Wrote ${count} commit(s) from ${branch} (vs ${base}) to ${outfile}"
   fi
+  if command -v wl-copy >/dev/null; then
+    printf '%s' "${file_url}" | wl-copy
+  elif command -v xclip >/dev/null; then
+    printf '%s' "${file_url}" | xclip -selection clipboard
+  else
+    echo "Install wl-clipboard or xclip for clipboard support" >&2
+  fi
+  echo "${file_url}"
+}
