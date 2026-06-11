@@ -15,6 +15,11 @@ git_branch_cutted() {
     git_branch | sed 's:.*/::'
 }
 
+git_repo_name() {
+  basename -s .git "$(git config --get remote.origin.url 2>/dev/null)" \
+    || basename "$(git rev-parse --show-toplevel)"
+}
+
 git_branch_default () {
   git config --get init.defaultBranch || echo "master"
 }
@@ -1111,6 +1116,29 @@ gisdrop0 () {
   git stash drop stash@{0}
 }
 
+# Apply git mv for parallel src/dst arrays. Uses explicit status checks so a failed
+# git mv never trips errexit and closes an interactive shell (see gimv_* callers).
+_gimv_apply_git_mv () {
+  local -n _gimv_srcs=$1
+  local -n _gimv_dsts=$2
+  local i mv_failed=0
+  for ((i = 0; i < ${#_gimv_srcs[@]}; i++)); do
+    if ! mkdir -p "$(dirname -- "${_gimv_dsts[i]}")"; then
+      echo "ERROR: mkdir -p failed for $(dirname -- "${_gimv_dsts[i]}")" >&2
+      mv_failed=1
+      continue
+    fi
+    if ! git mv -- "${_gimv_srcs[i]}" "${_gimv_dsts[i]}"; then
+      echo "ERROR: git mv failed: ${_gimv_srcs[i]} -> ${_gimv_dsts[i]}" >&2
+      mv_failed=1
+    fi
+  done
+  if ((mv_failed)); then
+    return 1
+  fi
+  return 0
+}
+
 gimv_simple () {
   local from="$1"
   local to="$2"
@@ -1164,11 +1192,8 @@ gimv_simple () {
   read -r answer
   [[ "$answer" =~ ^[Yy]$ ]] || { echo "No."; return 0; }
 
-  set -e
-  for ((i=0; i<${#srcs[@]}; i++)); do
-    mkdir -p "$(dirname -- "${dsts[i]}")"
-    git mv -- "${srcs[i]}" "${dsts[i]}"
-  done
+  _gimv_apply_git_mv srcs dsts
+  return $?
 }
 
 # --- original folder mover (your previous gimv_only logic), renamed ---
@@ -1225,13 +1250,8 @@ gimv_folder () {
   read -r answer
   [[ "$answer" =~ ^[Yy]$ ]] || { echo "No."; return 1; }  # return 1 = user said no
 
-  set -e
-  for ((i=0; i<${#srcs[@]}; i++)); do
-    mkdir -p "$(dirname -- "${dsts[i]}")"
-    git mv -- "${srcs[i]}" "${dsts[i]}"
-  done
-
-  return 0
+  _gimv_apply_git_mv srcs dsts
+  return $?
 }
 
 # --- new: file mover (moves matching */from_file to */to_file) ---
@@ -1284,13 +1304,8 @@ gimv_file () {
   [[ "$answer" =~ ^[Yy]$ ]] || printf 'Proceed with git mv (y/n)? ' && read -r answer
   [[ "$answer" =~ ^[Yy]$ ]] || { echo "No."; return 1; }
 
-  set -e
-  for ((i=0; i<${#dsts[@]}; i++)); do
-    mkdir -p "$(dirname -- "${dsts[i]}")"
-    git mv -- "${srcs[i]}" "${dsts[i]}"
-  done
-
-  return 0
+  _gimv_apply_git_mv srcs dsts
+  return $?
 }
 
 # --- gimv: decide folder vs file, then (if moved) run regexpath with suffix-stripped tokens ---
@@ -1341,4 +1356,27 @@ gimv () {
     echo "Move failed; not running regexpath."
     return $rc
   fi
+}
+
+gisave_to () {
+  local count="${1:?usage: export_commits <count> [output-file]}"
+  local outfile="${2:-last_${count}_commits.txt}"
+  git log -"${count}" --format=fuller -p --stat > "${outfile}"
+  echo "Wrote last ${count} commit(s) to ${outfile}"
+}
+
+gisave_simple () {
+  local count="${1:?usage: export_commits <count> [output-file]}"
+  local outfile="branch__$(git_branch).txt"
+  git log -"${count}" --format=fuller -p --stat > "${outfile}"
+  echo "Wrote last ${count} commit(s) to ${outfile}"
+}
+
+gisave () {
+  local count="${1:?usage: export_commits <count> [output-file]}"
+  local outfile="branch__$(git_branch).txt"
+  local repo_name="$(git_repo_name)"
+  echo "create MR in ${repo_name} repo with the following commits, MRtitle = first commit message, and branch name the same as this file name (eg branch__dd-asd.txt -> branch = dd-asd)" > "${outfile}"
+  git log -"${count}" --format=fuller -p --stat >> "${outfile}"
+  echo "Wrote last ${count} commit(s) to ${outfile}"
 }

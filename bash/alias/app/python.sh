@@ -215,9 +215,17 @@ regexit () {
   local delim='|'
   local sed_expr="s${delim}${match_re}${delim}${repl}${delim}g"
 
-  set -x
-  sed -E -i "$sed_expr" "${files[@]}"
-  set +x
+  local f sed_failed=0
+  for f in "${files[@]}"; do
+    if ! sed -E -i "$sed_expr" "$f"; then
+      echo "ERROR: sed failed for: $f" >&2
+      sed_failed=1
+    fi
+  done
+  if ((sed_failed)); then
+    return 1
+  fi
+  return 0
 }
 
 regexpath () {
