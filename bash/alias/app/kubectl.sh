@@ -205,4 +205,14 @@ kcl_deploy_revision () {
     kcl rollout undo deployment $name --to-revision=$revision_number --namespace=$namespace
 }
 
-source <(kubectl completion bash)
+if command -v kubectl &>/dev/null; then
+    __load_kubectl_completion() {
+        source <(kubectl completion bash) 2>/dev/null
+        unset -f __load_kubectl_completion
+    }
+    kubectl() {
+        unset -f kubectl
+        __load_kubectl_completion
+        command kubectl "$@"
+    }
+fi
