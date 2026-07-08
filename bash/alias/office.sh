@@ -1290,10 +1290,9 @@ gire_take_mine() {
 
 rm_empty_folders () {
   # Deletes empty directories under the current directory (does not delete ".")
-  # Safe for names with spaces/newlines.
+  find . -mindepth 1 -depth -type d -empty -exec rmdir -- {} \;
 
-  find . -depth -type d -empty -print0 | while IFS= read -r -d '' d; do
-    [ "$d" = "." ] && continue
-    rmdir -- "$d"
-  done
 }
+
+alias eth_home='nmcli connection up wired-home ifname enx00e04cd747cc'
+
