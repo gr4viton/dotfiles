@@ -35,7 +35,7 @@ gpr () {
 }
 gprbranch () {
     # concrete branch
-    git pull --rebase origin "$(1)"
+    git pull --rebase origin "$1"
 }
 gprb () {
     # current branch
@@ -284,7 +284,9 @@ gir_conflict_files () {
     set +x
 }
 vigir_conflict_files () {
+  # opens conflicted files
     vim $(git diff --name-only | uniq)
+
 }
 vigi () {
   # same as vigir_conflict_files
@@ -400,6 +402,9 @@ git_rebase_interactive_till_master() {
     git fetch
     first_common_ancestor=`git merge-base $current_branch origin/$(git_branch_default)`
     git rebase -i $first_common_ancestor
+}
+giritm () {
+  git_rebase_interactive_till_master
 }
 
 git_override_remote_master_with_local_master () {
@@ -1385,7 +1390,7 @@ gisave () {
   mkdir -p "${outdir}"
 
   {
-    echo "create MR in ${repo_name} repo with the following commits, MRtitle = bottom commit message in this file (if not in conventional-commit format - convert), and branch name the same as this file name (eg branch__dd-asd.diff -> branch = dd-asd)"
+    echo "create MR in ${repo_name} repo with the following commits, MRtitle = bottom commit message in this file (if not in conventional-commit format - convert), and branch name the same as this file name (eg branch__dd-asd.diff -> branch = dd-asd), and send message with MR link right when the MR is created (you can answer in two parts, if you want to wait for the pipelines or something)"
     echo "${file_url}"
   } > "${outfile}"
 
@@ -1416,3 +1421,68 @@ girestore_keep_this_branch () {
   git restore --theirs -- .
 }
 
+givi () {
+  # --help
+  if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
+    cat <<'EOF'
+givi — open files changed in a commit in nvim (vertical splits)
+
+Usage:
+  givi [commit] [filter]
+
+Arguments:
+  commit   Commit ref to inspect (default: HEAD)
+           Accepts anything git understands: HEAD, HEAD~1, branch, hash, etc.
+  filter   Regex matched (case-insensitive) against file paths.
+           Only matching files are opened.
+
+Examples:
+  givi                          # files from the last commit
+  givi HEAD~1                   # files from the previous commit
+  givi abc1234                  # files from a specific commit
+  givi HEAD~2 travel            # prev-prev commit, only files matching "travel"
+  givi main '\.tsx?$'           # tip of main, only .ts/.tsx files
+  givi HEAD 'src/(api|db)/'     # last commit, only files under src/api or src/db
+EOF
+    return 0
+  fi
+
+  local commit="${1:-HEAD}"
+  local filter="${2:-}"
+  local f answer
+  local existing=()
+
+  # Validate the commit ref before doing anything
+  if ! git rev-parse --verify --quiet "$commit^{commit}" >/dev/null; then
+    echo "Invalid commit: $commit" >&2
+    return 1
+  fi
+
+  # Get files changed in that commit, excluding anything under a test folder.
+  # Read line-by-line to handle paths with spaces.
+  while IFS= read -r f; do
+    [[ -f "$f" ]] && existing+=("$f")
+  done < <(git diff-tree --no-commit-id --name-only -r "$commit" \
+           | grep -viE '(^|/)(tests?|__tests__|spec)(/|$)' \
+           | { [[ -n "$filter" ]] && grep -iE -- "$filter" || cat; } || true)
+
+  local count=${#existing[@]}
+
+  if (( count == 0 )); then
+    echo "No matching non-test files to open."
+    return 0
+  fi
+
+  echo "Files to open ($count) from $commit:"
+  printf '  %s\n' "${existing[@]}"
+
+  if (( count > 5 )); then
+    read -r -p "More than 5 files. Open all? (y/N) " answer
+    if [[ "$answer" != "y" && "$answer" != "Y" ]]; then
+      echo "Aborted."
+      return 0
+    fi
+  fi
+
+  nvim -O "${existing[@]}"
+}
